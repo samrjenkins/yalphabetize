@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'yalphabetize'
-puts Yalphabetize.call
+require '../lib/yalphabetizer'
+
+Yalphabetizer.call(ARGV[0])
+puts "DONE!"
