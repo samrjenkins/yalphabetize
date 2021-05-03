@@ -1,7 +1,6 @@
 require 'yalphabetize/reader'
 require 'yalphabetize/alphabetizer'
 require 'yalphabetize/writer'
-require 'pry'
 
 class Yalphabetizer
   def self.call(path)
