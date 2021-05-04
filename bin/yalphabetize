@@ -2,5 +2,4 @@
 
 require 'yalphabetizer'
 
-Yalphabetizer.call(ARGV[0])
-puts "DONE!"
+Yalphabetizer.call(ARGV)

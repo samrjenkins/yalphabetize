@@ -128,7 +128,7 @@ def expect_reordering(original_yaml, final_yaml)
     file.write final_yaml
   end
 
-  Yalphabetizer.call("spec/tmp/original.yml")
+  Yalphabetizer.call(['-a'])
 
   expect(FileUtils.identical?("spec/tmp/original.yml", "spec/tmp/final.yml")).to eq true
 
