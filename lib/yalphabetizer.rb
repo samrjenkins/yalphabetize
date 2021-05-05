@@ -2,6 +2,7 @@ require 'yalphabetize/reader'
 require 'yalphabetize/alphabetizer'
 require 'yalphabetize/writer'
 require 'yalphabetize/offence_detector'
+require 'yalphabetize/yaml_finder'
 require 'open3'
 require 'pry'
 
@@ -19,14 +20,8 @@ class Yalphabetizer
     file_paths.each do |file_path|
       unsorted_document_node = Yalphabetize::Reader.new(file_path).to_ast
 
-      has_offences = Yalphabetize::OffenceDetector.new(unsorted_document_node).offences?
-
-      if autocorrect? && has_offences
-        sorted_document_node = Yalphabetize::Alphabetizer.new(unsorted_document_node).call
-        Yalphabetize::Writer.new(sorted_document_node, file_path).call
-      end
-
-      if has_offences
+      if offences?(unsorted_document_node)
+        autocorrect(unsorted_document_node, file_path) if autocorrect?
         offences << file_path
       end
     end
@@ -39,19 +34,19 @@ class Yalphabetizer
   attr_reader :args, :offences
 
   def file_paths
-    return if `sh -c 'command -v git'`.empty?
-
-    output, _error, status = Open3.capture3(
-      'git', 'ls-files', '-z', "./**/*.yml",
-      '--exclude-standard', '--others', '--cached', '--modified'
-    )
-
-    return unless status.success?
-
-    output.split("\0").map { |git_file| "#{Dir.pwd}/#{git_file}" }
+    Yalphabetize::YamlFinder.new.paths
   end
 
   def autocorrect?
     (args & ['-a', '--autocorrect']).any?
+  end
+
+  def autocorrect(unsorted_document_node, file_path)
+    sorted_document_node = Yalphabetize::Alphabetizer.new(unsorted_document_node).call
+    Yalphabetize::Writer.new(sorted_document_node, file_path).call
+  end
+
+  def offences?(document_node)
+    Yalphabetize::OffenceDetector.new(document_node).offences?
   end
 end
