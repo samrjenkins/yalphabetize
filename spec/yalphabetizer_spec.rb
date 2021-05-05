@@ -3,7 +3,15 @@ require 'yaml'
 
 RSpec.describe Yalphabetizer do
   describe ".call" do
-    it "alphabetises shallow yaml file" do
+    it "registers offence and corrects alphabetisation for shallow yaml file" do
+      expect_offence(<<~YAML)
+        Bananas: 2
+        Apples: 1
+        Dates: 4
+        Eggs: 5
+        Clementines: 3
+      YAML
+
       expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
         Bananas: 2
         Apples: 1
@@ -19,7 +27,32 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
-    it "alphabetises nested yaml file" do
+    it 'accepts alphabetised shallow yaml file' do
+      expect_no_offences(<<~YAML)
+        Apples: 1
+        Bananas: 2
+        Clementines: 3
+        Dates: 4
+        Eggs: 5
+      YAML
+    end
+
+    it "registers offence and corrects alphabetisation for nested yaml file" do
+      expect_offence(<<~YAML)
+        Vegetables:
+          Artichokes: 1
+          Carrots: 3
+          Beans: 2
+          Eggplant: 5
+          Dill: 4
+        Fruit:
+          Dates: 4
+          Bananas: 2
+          Clementines: 3
+          Eggs: 5
+          Apples: 1
+      YAML
+
       expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
         Vegetables:
           Artichokes: 1
@@ -49,7 +82,34 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
-    it "alphabetises heavily nested yaml" do
+    it "registers offence and corrects alphabetisation for heavily nested yaml file" do
+      expect_offence(<<~YAML)
+        Vehicles:
+          Bikes:
+            Honda: 2
+            Bmw: 1
+            Yamaha: 3
+          Spaceship: 3
+          Cars:
+            Ferrari: 1
+            Ford: 2
+            Volvo: 3
+        Food:
+          Fruit:
+            Apples: 1
+            Clementines: 3
+            Bananas: 2
+            Eggs: 5
+            Dates: 4
+          Chocolate: 1
+          Vegetables:
+            Beans: 2
+            Carrots: 3
+            Dill: 4
+            Artichokes: 1
+            Eggplant: 5
+      YAML
+
       expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
         Vehicles:
           Bikes:
@@ -115,6 +175,30 @@ RSpec.describe Yalphabetizer do
   end
 end
 
+def expect_offence(yaml)
+  FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
+
+  Dir.mkdir("spec/tmp")
+
+  File.open("spec/tmp/original.yml", 'w') do |file|
+    file.write yaml
+  end
+
+  expect(Yalphabetizer.call).to eq false
+end
+
+def expect_no_offences(yaml)
+  FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
+
+  Dir.mkdir("spec/tmp")
+
+  File.open("spec/tmp/original.yml", 'w') do |file|
+    file.write yaml
+  end
+
+  expect(Yalphabetizer.call).to eq true
+end
+
 def expect_reordering(original_yaml, final_yaml)
   FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
 
@@ -124,11 +208,11 @@ def expect_reordering(original_yaml, final_yaml)
     file.write original_yaml
   end
 
+  Yalphabetizer.call(['-a'])
+
   File.open("spec/tmp/final.yml", 'w') do |file|
     file.write final_yaml
   end
-
-  Yalphabetizer.call(['-a'])
 
   expect(FileUtils.identical?("spec/tmp/original.yml", "spec/tmp/final.yml")).to eq true
 
