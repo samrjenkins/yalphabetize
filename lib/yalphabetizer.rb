@@ -38,7 +38,10 @@ class Yalphabetizer
   end
 
   def autocorrect?
-    (args & ['-a', '--autocorrect']).any?
+    return true if args.include? '-a'
+    return true if args.include? '-autocorrect'
+
+    false
   end
 
   def autocorrect(unsorted_document_node, file_path)
