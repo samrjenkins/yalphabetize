@@ -2,19 +2,19 @@
 
 module Yalphabetize
   class Writer
-    def initialize(document_node, path)
-      @document_node = document_node
+    def initialize(stream_node, path)
+      @stream_node = stream_node
       @path = path
     end
 
     def call
       File.open(path, 'w') do |file|
-        file.write(document_node.to_yaml)
+        file.write(stream_node.to_yaml)
       end
     end
 
     private
 
-    attr_reader :document_node, :path
+    attr_reader :stream_node, :path
   end
 end

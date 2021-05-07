@@ -22,10 +22,10 @@ class Yalphabetizer
 
   def call
     file_paths.each do |file_path|
-      unsorted_document_node = reader.new(file_path).to_ast
+      unsorted_stream_node = reader.new(file_path).to_ast
 
-      if offences?(unsorted_document_node)
-        autocorrect(unsorted_document_node, file_path) if autocorrect?
+      if offences?(unsorted_stream_node)
+        autocorrect(unsorted_stream_node, file_path) if autocorrect?
         offences << file_path
       end
     end
@@ -48,12 +48,12 @@ class Yalphabetizer
     false
   end
 
-  def autocorrect(unsorted_document_node, file_path)
-    sorted_document_node = alphabetizer.new(unsorted_document_node).call
-    writer.new(sorted_document_node, file_path).call
+  def autocorrect(unsorted_stream_node, file_path)
+    sorted_stream_node = alphabetizer.new(unsorted_stream_node).call
+    writer.new(sorted_stream_node, file_path).call
   end
 
-  def offences?(document_node)
-    offence_detector.new(document_node).offences?
+  def offences?(stream_node)
+    offence_detector.new(stream_node).offences?
   end
 end

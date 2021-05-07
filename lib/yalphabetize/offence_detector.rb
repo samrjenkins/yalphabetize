@@ -2,17 +2,17 @@
 
 module Yalphabetize
   class OffenceDetector
-    def initialize(document_node)
-      @document_node = document_node
+    def initialize(stream_node)
+      @stream_node = stream_node
     end
 
     def offences?
-      !alphabetized?(document_node)
+      !alphabetized?(stream_node)
     end
 
     private
 
-    attr_reader :document_node
+    attr_reader :stream_node
 
     def alphabetized?(node)
       return false if node.mapping? && !alphabetized_children?(node)

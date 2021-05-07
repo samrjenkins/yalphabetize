@@ -2,18 +2,18 @@
 
 module Yalphabetize
   class Alphabetizer
-    def initialize(document_node)
-      @document_node = document_node
+    def initialize(stream_node)
+      @stream_node = stream_node
     end
 
     def call
-      alphabetize(document_node)
-      document_node
+      alphabetize(stream_node)
+      stream_node
     end
 
     private
 
-    attr_reader :document_node
+    attr_reader :stream_node
 
     def alphabetize(node)
       if node.mapping?

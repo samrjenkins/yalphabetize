@@ -9,16 +9,16 @@ module Yalphabetize
     end
 
     def to_ast
-      transform(document_node)
-      document_node
+      transform(stream_node)
+      stream_node
     end
 
     private
 
     attr_reader :path
 
-    def document_node
-      @document_node ||= Psych.parse_stream File.read(path)
+    def stream_node
+      @stream_node ||= Psych.parse_stream File.read(path)
     end
 
     def transform(node)
