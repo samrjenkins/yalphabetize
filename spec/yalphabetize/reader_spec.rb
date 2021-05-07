@@ -1,22 +1,11 @@
 # frozen_string_literal: true
 
 require './lib/yalphabetize/reader'
-require 'pry'
 
 RSpec.describe Yalphabetize::Reader do
   let(:file_path) { 'spec/tmp/mock.yml' }
 
-  before do
-    FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
-
-    Dir.mkdir('spec/tmp')
-
-    File.open(file_path, 'w')
-  end
-
-  after do
-    FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
-  end
+  before { File.open(file_path, 'w') }
 
   describe '#to_ast' do
     subject { Yalphabetize::Reader.new(file_path).to_ast }

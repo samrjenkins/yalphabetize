@@ -97,4 +97,10 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+
+  config.before do
+    FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
+    Dir.mkdir('spec/tmp')
+  end
+  config.after { FileUtils.remove_dir('spec/tmp', true) }
 end

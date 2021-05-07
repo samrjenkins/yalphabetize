@@ -195,10 +195,6 @@ def options
 end
 
 def expect_offence(yaml)
-  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
-
-  Dir.mkdir('spec/tmp')
-
   File.open('spec/tmp/original.yml', 'w') do |file|
     file.write yaml
   end
@@ -207,10 +203,6 @@ def expect_offence(yaml)
 end
 
 def expect_no_offences(yaml)
-  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
-
-  Dir.mkdir('spec/tmp')
-
   File.open('spec/tmp/original.yml', 'w') do |file|
     file.write yaml
   end
@@ -219,10 +211,6 @@ def expect_no_offences(yaml)
 end
 
 def expect_reordering(original_yaml, final_yaml)
-  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
-
-  Dir.mkdir('spec/tmp')
-
   File.open('spec/tmp/original.yml', 'w') do |file|
     file.write original_yaml
   end
@@ -234,8 +222,6 @@ def expect_reordering(original_yaml, final_yaml)
   end
 
   expect(FileUtils.identical?('spec/tmp/original.yml', 'spec/tmp/final.yml')).to eq true
-
-  FileUtils.remove_dir('spec/tmp', true)
 end
 
 def expect_no_reordering(original_yaml)
