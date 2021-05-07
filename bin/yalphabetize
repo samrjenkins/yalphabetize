@@ -1,5 +1,23 @@
 #!/usr/bin/env ruby
 
+require 'yalphabetize/reader'
+require 'yalphabetize/alphabetizer'
+require 'yalphabetize/writer'
+require 'yalphabetize/offence_detector'
+require 'yalphabetize/yaml_finder'
 require 'yalphabetizer'
 
-Yalphabetizer.call(ARGV)
+reader = Yalphabetize::Reader
+finder = Yalphabetize::YamlFinder
+alphabetizer = Yalphabetize::Alphabetizer
+writer = Yalphabetize::Writer
+offence_detector = Yalphabetize::OffenceDetector
+
+Yalphabetizer.call(
+  ARGV,
+  reader: reader,
+  finder: finder,
+  alphabetizer: alphabetizer,
+  writer: writer,
+  offence_detector: offence_detector
+)

@@ -175,6 +175,23 @@ RSpec.describe Yalphabetizer do
   end
 end
 
+require 'yalphabetize/reader'
+require 'yalphabetize/alphabetizer'
+require 'yalphabetize/writer'
+require 'yalphabetize/offence_detector'
+require 'yalphabetize/yaml_finder'
+require 'yalphabetizer'
+
+def options
+  {
+    reader: Yalphabetize::Reader,
+    finder: Yalphabetize::YamlFinder,
+    alphabetizer: Yalphabetize::Alphabetizer,
+    writer: Yalphabetize::Writer,
+    offence_detector: Yalphabetize::OffenceDetector
+  }
+end
+
 def expect_offence(yaml)
   FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
 
@@ -184,7 +201,7 @@ def expect_offence(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call).to eq false
+  expect(Yalphabetizer.call(**options)).to eq false
 end
 
 def expect_no_offences(yaml)
@@ -196,7 +213,7 @@ def expect_no_offences(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call).to eq true
+  expect(Yalphabetizer.call(**options)).to eq true
 end
 
 def expect_reordering(original_yaml, final_yaml)
@@ -208,7 +225,7 @@ def expect_reordering(original_yaml, final_yaml)
     file.write original_yaml
   end
 
-  Yalphabetizer.call(['-a'])
+  Yalphabetizer.call(['-a'], **options)
 
   File.open("spec/tmp/final.yml", 'w') do |file|
     file.write final_yaml

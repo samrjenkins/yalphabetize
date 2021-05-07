@@ -1,24 +1,26 @@
-require 'yalphabetize/reader'
-require 'yalphabetize/alphabetizer'
-require 'yalphabetize/writer'
-require 'yalphabetize/offence_detector'
-require 'yalphabetize/yaml_finder'
 require 'open3'
 require 'pry'
 
 class Yalphabetizer
-  def self.call(args = [])
-    new(args).call
+  def self.call(args = [], **options)
+    new(args, options).call
   end
 
-  def initialize(args)
+  def initialize(args, options)
     @args = args
+
+    @reader = options[:reader]
+    @finder = options[:finder]
+    @alphabetizer = options[:alphabetizer]
+    @writer = options[:writer]
+    @offence_detector = options[:offence_detector]
+
     @offences = []
   end
 
   def call
     file_paths.each do |file_path|
-      unsorted_document_node = Yalphabetize::Reader.new(file_path).to_ast
+      unsorted_document_node = reader.new(file_path).to_ast
 
       if offences?(unsorted_document_node)
         autocorrect(unsorted_document_node, file_path) if autocorrect?
@@ -31,10 +33,10 @@ class Yalphabetizer
 
   private
 
-  attr_reader :args, :offences
+  attr_reader :args, :offences, :reader, :finder, :alphabetizer, :writer, :offence_detector
 
   def file_paths
-    Yalphabetize::YamlFinder.new.paths
+    finder.new.paths
   end
 
   def autocorrect?
@@ -45,11 +47,11 @@ class Yalphabetizer
   end
 
   def autocorrect(unsorted_document_node, file_path)
-    sorted_document_node = Yalphabetize::Alphabetizer.new(unsorted_document_node).call
-    Yalphabetize::Writer.new(sorted_document_node, file_path).call
+    sorted_document_node = alphabetizer.new(unsorted_document_node).call
+    writer.new(sorted_document_node, file_path).call
   end
 
   def offences?(document_node)
-    Yalphabetize::OffenceDetector.new(document_node).offences?
+    offence_detector.new(document_node).offences?
   end
 end
