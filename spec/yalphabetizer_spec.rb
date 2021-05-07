@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require './lib/yalphabetizer'
 require 'yaml'
 
 RSpec.describe Yalphabetizer do
-  describe ".call" do
-    it "registers offence and corrects alphabetisation for shallow yaml file" do
+  describe '.call' do
+    it 'registers offence and corrects alphabetisation for shallow yaml file' do
       expect_offence(<<~YAML)
         Bananas: 2
         Apples: 1
@@ -37,7 +39,7 @@ RSpec.describe Yalphabetizer do
       YAML
     end
 
-    it "registers offence and corrects alphabetisation for nested yaml file" do
+    it 'registers offence and corrects alphabetisation for nested yaml file' do
       expect_offence(<<~YAML)
         Vegetables:
           Artichokes: 1
@@ -82,7 +84,7 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
-    it "registers offence and corrects alphabetisation for heavily nested yaml file" do
+    it 'registers offence and corrects alphabetisation for heavily nested yaml file' do
       expect_offence(<<~YAML)
         Vehicles:
           Bikes:
@@ -163,7 +165,7 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
-    it "does not reorder a list" do
+    it 'does not reorder a list' do
       expect_no_reordering(<<~YAML)
         - First
         - Second
@@ -193,11 +195,11 @@ def options
 end
 
 def expect_offence(yaml)
-  FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
+  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
 
-  Dir.mkdir("spec/tmp")
+  Dir.mkdir('spec/tmp')
 
-  File.open("spec/tmp/original.yml", 'w') do |file|
+  File.open('spec/tmp/original.yml', 'w') do |file|
     file.write yaml
   end
 
@@ -205,11 +207,11 @@ def expect_offence(yaml)
 end
 
 def expect_no_offences(yaml)
-  FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
+  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
 
-  Dir.mkdir("spec/tmp")
+  Dir.mkdir('spec/tmp')
 
-  File.open("spec/tmp/original.yml", 'w') do |file|
+  File.open('spec/tmp/original.yml', 'w') do |file|
     file.write yaml
   end
 
@@ -217,23 +219,23 @@ def expect_no_offences(yaml)
 end
 
 def expect_reordering(original_yaml, final_yaml)
-  FileUtils.remove_dir("spec/tmp", true) if Dir.exist?("spec/tmp")
+  FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
 
-  Dir.mkdir("spec/tmp")
+  Dir.mkdir('spec/tmp')
 
-  File.open("spec/tmp/original.yml", 'w') do |file|
+  File.open('spec/tmp/original.yml', 'w') do |file|
     file.write original_yaml
   end
 
   Yalphabetizer.call(['-a'], **options)
 
-  File.open("spec/tmp/final.yml", 'w') do |file|
+  File.open('spec/tmp/final.yml', 'w') do |file|
     file.write final_yaml
   end
 
-  expect(FileUtils.identical?("spec/tmp/original.yml", "spec/tmp/final.yml")).to eq true
+  expect(FileUtils.identical?('spec/tmp/original.yml', 'spec/tmp/final.yml')).to eq true
 
-  FileUtils.remove_dir("spec/tmp", true)
+  FileUtils.remove_dir('spec/tmp', true)
 end
 
 def expect_no_reordering(original_yaml)

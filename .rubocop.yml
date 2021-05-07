@@ -1,0 +1,10 @@
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/**/*'
+Style/Documentation:
+  Enabled: false

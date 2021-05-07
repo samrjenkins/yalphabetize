@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Yalphabetize
   class Alphabetizer
     def initialize(document_node)
