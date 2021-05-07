@@ -199,7 +199,7 @@ def expect_offence(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(**options)).to eq false
+  expect(Yalphabetizer.call(**options)).to eq 1
 end
 
 def expect_no_offences(yaml)
@@ -207,7 +207,7 @@ def expect_no_offences(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(**options)).to eq true
+  expect(Yalphabetizer.call(**options)).to eq 0
 end
 
 def expect_reordering(original_yaml, final_yaml)

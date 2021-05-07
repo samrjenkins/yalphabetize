@@ -30,7 +30,7 @@ class Yalphabetizer
       end
     end
 
-    offences.none?
+    offences.any? ? 1 : 0
   end
 
   private

@@ -14,7 +14,7 @@ alphabetizer = Yalphabetize::Alphabetizer
 writer = Yalphabetize::Writer
 offence_detector = Yalphabetize::OffenceDetector
 
-Yalphabetizer.call(
+exit Yalphabetizer.call(
   ARGV,
   reader: reader,
   finder: finder,
