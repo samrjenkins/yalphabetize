@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'psych'
+require 'pry'
 
 module Yalphabetize
   class Reader
@@ -19,6 +20,8 @@ module Yalphabetize
 
     def stream_node
       @stream_node ||= Psych.parse_stream File.read(path)
+    rescue
+      binding.pry
     end
 
     def transform(node)
