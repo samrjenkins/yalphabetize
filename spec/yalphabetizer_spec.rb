@@ -182,15 +182,17 @@ require 'yalphabetize/alphabetizer'
 require 'yalphabetize/writer'
 require 'yalphabetize/offence_detector'
 require 'yalphabetize/yaml_finder'
+require 'yalphabetize/logger'
 require 'yalphabetizer'
 
 def options
   {
     reader: Yalphabetize::Reader,
-    finder: Yalphabetize::YamlFinder,
+    finder: Yalphabetize::YamlFinder.new,
     alphabetizer: Yalphabetize::Alphabetizer,
     writer: Yalphabetize::Writer,
-    offence_detector: Yalphabetize::OffenceDetector
+    offence_detector: Yalphabetize::OffenceDetector,
+    logger: Yalphabetize::Logger.new
   }
 end
 
