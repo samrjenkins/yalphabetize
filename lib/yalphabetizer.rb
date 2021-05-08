@@ -16,26 +16,32 @@ class Yalphabetizer
     @alphabetizer = options[:alphabetizer]
     @writer = options[:writer]
     @offence_detector = options[:offence_detector]
-
-    @offences = []
+    @logger = options[:logger]
   end
 
   def call
+    logger.task_summary(file_paths)
+
     file_paths.each do |file_path|
       unsorted_stream_node = reader.new(file_path).to_ast
 
       if offences?(unsorted_stream_node)
+        logger.log_offence(file_path)
         autocorrect(unsorted_stream_node, file_path) if autocorrect?
-        offences << file_path
+      else
+        logger.log_no_offence
       end
     end
 
-    offences.any? ? 1 : 0
+    logger.log_inspected_count
+    logger.list_offences
+
+    logger.offences? ? 1 : 0
   end
 
   private
 
-  attr_reader :args, :offences, :reader, :finder, :alphabetizer, :writer, :offence_detector
+  attr_reader :args, :reader, :finder, :alphabetizer, :writer, :offence_detector, :logger
 
   def file_paths
     finder.new.paths
@@ -51,6 +57,7 @@ class Yalphabetizer
   def autocorrect(unsorted_stream_node, file_path)
     sorted_stream_node = alphabetizer.new(unsorted_stream_node).call
     writer.new(sorted_stream_node, file_path).call
+    logger.log_correction(file_path)
   end
 
   def offences?(stream_node)
