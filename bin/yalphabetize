@@ -10,7 +10,7 @@ require 'yalphabetize/logger'
 require 'yalphabetizer'
 
 reader = Yalphabetize::Reader
-finder = Yalphabetize::YamlFinder
+finder = Yalphabetize::YamlFinder.new
 alphabetizer = Yalphabetize::Alphabetizer
 writer = Yalphabetize::Writer
 offence_detector = Yalphabetize::OffenceDetector

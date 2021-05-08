@@ -44,7 +44,7 @@ class Yalphabetizer
   attr_reader :args, :reader, :finder, :alphabetizer, :writer, :offence_detector, :logger
 
   def file_paths
-    finder.new.paths
+    finder.paths
   end
 
   def autocorrect?
