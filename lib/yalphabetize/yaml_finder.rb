@@ -12,7 +12,7 @@ module Yalphabetize
 
       return unless status.success?
 
-      output.split("\0").map { |git_file| "#{Dir.pwd}/#{git_file}" }
+      output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" }
     end
   end
 end
