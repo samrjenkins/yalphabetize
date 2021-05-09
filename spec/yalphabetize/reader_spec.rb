@@ -5,7 +5,7 @@ require './lib/yalphabetize/reader'
 RSpec.describe Yalphabetize::Reader do
   let(:file_path) { 'spec/tmp/mock.yml' }
 
-  before { File.open(file_path, 'w') }
+  before { File.open(file_path, 'w').close }
 
   describe '#to_ast' do
     subject { Yalphabetize::Reader.new(file_path).to_ast }

@@ -6,5 +6,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*'
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: required
 Style/Documentation:
   Enabled: false
+Layout/EndOfLine:
+  EnforcedStyle: lf

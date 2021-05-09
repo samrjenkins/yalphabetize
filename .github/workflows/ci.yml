@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+jobs:
+  main:
+    name: >-
+      ${{ matrix.os }} ${{ matrix.ruby }}
+    runs-on: ${{ matrix.os }}-latest
+    env:
+      # See https://github.com/tmm1/test-queue#environment-variables
+      TEST_QUEUE_WORKERS: 2
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu, macos, windows ]
+        ruby: [ '2.5', '2.6', '2.7', '3.0', 'head' ]
+
+    steps:
+      - name: windows misc
+        if: matrix.os == 'windows'
+        run: |
+          # set TMPDIR, git core.autocrlf
+          echo "TMPDIR=$env:RUNNER_TEMP" >> $GITHUB_ENV
+          git config --system core.autocrlf false
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: install dependencies
+        run:  bundle install --jobs 3 --retry 3
+      - name: spec
+        run:  bundle exec rspec
+      - name: rubocop
+        run:  bundle exec rubocop

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Yalphabetize
   class Logger
     def initialize
@@ -5,7 +7,7 @@ module Yalphabetize
       @offences = {}
     end
 
-    def task_summary(file_paths)
+    def initial_summary(file_paths)
       puts "Inspecting #{file_paths.size} YAML files"
     end
 
@@ -20,11 +22,8 @@ module Yalphabetize
       print green '.'
     end
 
-    def log_inspected_count
+    def final_summary
       puts "\nInspected: #{inspected_count}"
-    end
-
-    def list_offences
       puts send(list_offences_color, "Offences: #{offences.size}")
 
       @offences.each do |file_path, status|
@@ -32,7 +31,7 @@ module Yalphabetize
         when :detected
           puts yellow file_path
         when :corrected
-          puts("#{yellow(file_path)} #{green("CORRECTED")}")
+          puts("#{yellow(file_path)} #{green('CORRECTED')}")
         end
       end
     end

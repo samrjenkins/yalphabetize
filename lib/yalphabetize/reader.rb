@@ -18,7 +18,7 @@ module Yalphabetize
     attr_reader :path
 
     def stream_node
-      @stream_node ||= Psych.parse_stream File.read(path)
+      @_stream_node ||= Psych.parse_stream File.read(path)
     end
 
     def transform(node)

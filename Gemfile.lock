@@ -23,6 +23,7 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    psych (3.3.1)
     rainbow (3.0.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
@@ -63,8 +64,9 @@ PLATFORMS
 DEPENDENCIES
   factory_bot
   pry
+  psych
   rspec
   rubocop
 
 BUNDLED WITH
-   2.2.16
+   2.2.17
