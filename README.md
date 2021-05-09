@@ -54,3 +54,7 @@ script:
 
 ## Known issues
 - Yalphabetize cannot currently preserve comments while automatically alphabetising a YAML file. Comments will have to be replaced after the alphabetisation.
+
+## Contribute
+
+We appreciate all contributions for this gem. You are very welcome to submit pull requests and issues and we will do our best to address them ASAP. Happy coding!
