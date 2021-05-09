@@ -10,3 +10,5 @@ Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
 Style/Documentation:
   Enabled: false
+Layout/EndOfLine:
+  EnforcedStyle: lf
