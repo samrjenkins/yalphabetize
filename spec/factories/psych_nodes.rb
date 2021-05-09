@@ -12,6 +12,8 @@ FactoryBot.define do
 
     factory :stream_node, class: 'Psych::Nodes::Stream'
     factory :document_node, class: 'Psych::Nodes::Document'
-    factory :scalar_node, class: 'Psych::Nodes::Scalar'
+    factory :scalar_node, class: 'Psych::Nodes::Scalar' do
+      initialize_with { new(value) }
+    end
   end
 end
