@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 jobs:
   main:
@@ -17,7 +17,6 @@ jobs:
       matrix:
         os: [ ubuntu, macos, windows ]
         ruby: [ '2.5', '2.6', '2.7', '3.0', 'head' ]
-
     steps:
       - name: windows misc
         if: matrix.os == 'windows'
@@ -31,7 +30,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-
       - name: install dependencies
         run:  bundle install --jobs 3 --retry 3
       - name: spec
