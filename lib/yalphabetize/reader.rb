@@ -18,6 +18,8 @@ module Yalphabetize
     attr_reader :path
 
     def stream_node
+      puts "*" * 1000
+      puts Psych::VERSION
       @_stream_node ||= Psych.parse_stream File.read(path)
     end
 
