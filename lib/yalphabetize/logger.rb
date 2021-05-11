@@ -2,36 +2,37 @@
 
 module Yalphabetize
   class Logger
-    def initialize
+    def initialize(output)
+      @output = output
       @inspected_count = 0
       @offences = {}
     end
 
     def initial_summary(file_paths)
-      puts "Inspecting #{file_paths.size} YAML files"
+      output.puts "Inspecting #{file_paths.size} YAML files"
     end
 
     def log_offence(file_path)
       @inspected_count += 1
       offences[file_path] = :detected
-      print red 'O'
+      output.print red 'O'
     end
 
     def log_no_offence
       @inspected_count += 1
-      print green '.'
+      output.print green '.'
     end
 
     def final_summary
-      puts "\nInspected: #{inspected_count}"
-      puts send(list_offences_color, "Offences: #{offences.size}")
+      output.puts "\nInspected: #{inspected_count}"
+      output.puts send(list_offences_color, "Offences: #{offences.size}")
 
       @offences.each do |file_path, status|
         case status
         when :detected
-          puts yellow file_path
+          output.puts yellow file_path
         when :corrected
-          puts("#{yellow(file_path)} #{green('CORRECTED')}")
+          output.puts("#{yellow(file_path)} #{green('CORRECTED')}")
         end
       end
     end
@@ -46,7 +47,7 @@ module Yalphabetize
 
     private
 
-    attr_reader :offences, :inspected_count
+    attr_reader :output, :offences, :inspected_count
 
     def list_offences_color
       if offences?
