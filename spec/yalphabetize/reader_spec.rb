@@ -4,8 +4,13 @@ require './lib/yalphabetize/reader'
 
 RSpec.describe Yalphabetize::Reader do
   let(:file_path) { 'spec/tmp/mock.yml' }
+  let(:file_content) { '' }
 
-  before { File.open(file_path, 'w').close }
+  before do
+    File.open(file_path, 'w') do |file|
+      file.write(file_content)
+    end
+  end
 
   describe '#to_ast' do
     subject { Yalphabetize::Reader.new(file_path).to_ast }
@@ -36,6 +41,22 @@ RSpec.describe Yalphabetize::Reader do
           [child2, child3]
         ]
       )
+    end
+
+    context 'when yaml contains invalid syntax' do
+      let(:file_content) do
+        <<~YAML
+          Apples: {{ 1 }} apples {{ 2 }}
+        YAML
+      end
+
+      it do
+        expect { subject }
+          .to raise_error(
+            Yalphabetize::ParsingError,
+            "(#{file_path}): did not find expected key while parsing a block mapping at line 1 column 1"
+          )
+      end
     end
   end
 end
