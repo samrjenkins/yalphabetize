@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open3'
-require 'pry'
 
 class Yalphabetizer
   def self.call(args = [], **options)
