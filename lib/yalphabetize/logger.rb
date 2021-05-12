@@ -27,14 +27,7 @@ module Yalphabetize
       output.puts "\nInspected: #{inspected_count}"
       output.puts send(list_offences_color, "Offences: #{offences.size}")
 
-      @offences.each do |file_path, status|
-        case status
-        when :detected
-          output.puts yellow file_path
-        when :corrected
-          output.puts("#{yellow(file_path)} #{green('CORRECTED')}")
-        end
-      end
+      offences.each(&method(:puts_offence))
     end
 
     def offences?
@@ -48,6 +41,15 @@ module Yalphabetize
     private
 
     attr_reader :output, :offences, :inspected_count
+
+    def puts_offence(file_path, status)
+      case status
+      when :detected
+        output.puts yellow file_path
+      when :corrected
+        output.puts("#{yellow(file_path)} #{green('CORRECTED')}")
+      end
+    end
 
     def list_offences_color
       if offences?
