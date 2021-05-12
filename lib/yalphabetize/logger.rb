@@ -27,7 +27,7 @@ module Yalphabetize
       output.puts "\nInspected: #{inspected_count}"
       output.puts send(list_offences_color, "Offences: #{offences.size}")
 
-      offences.each(&method(:puts_offence))
+      offences.each { |file_path, status| puts_offence(file_path, status) }
     end
 
     def offences?
