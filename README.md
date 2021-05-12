@@ -21,7 +21,9 @@ gem 'yalphabetize', require: false
 
 ## Quickstart
 
-Running yalphabetize on your project is easy too:
+Yalphabetize is inspired by the brilliant [Rubocop](https://github.com/rubocop/rubocop) gem. Yalphabetize's CLI will be familiar to anybody already familiar with Rubocop.
+
+Running yalphabetize on your project is a doddle!
 
 ```sh
 $ cd my/unalphabetised/project
@@ -51,6 +53,13 @@ script:
   - bundle exec rspec
 
 ```
+
+## Compatibility
+
+We aim for yalphabetize to be compatible with all actively maintained Ruby versions.
+
+We currently support:
+- MRI 2.5+
 
 ## Known issues
 - Yalphabetize cannot currently preserve comments while automatically alphabetising a YAML file. Comments will have to be replaced after the alphabetisation.
