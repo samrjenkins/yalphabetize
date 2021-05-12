@@ -192,7 +192,7 @@ def options
     alphabetizer: Yalphabetize::Alphabetizer,
     writer: Yalphabetize::Writer,
     offence_detector: Yalphabetize::OffenceDetector,
-    logger: Yalphabetize::Logger.new
+    logger: Yalphabetize::Logger.new(StringIO.new)
   }
 end
 
