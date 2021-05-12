@@ -56,7 +56,7 @@ script:
 
 ## Compatibility
 
-We aim for yalphabetize to be compatible for all actively maintained Ruby versions.
+We aim for yalphabetize to be compatible with all actively maintained Ruby versions.
 
 We currently support:
 - MRI 2.5+
