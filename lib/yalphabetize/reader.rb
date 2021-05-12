@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'psych'
+require 'yalphabetize/parsing_error'
 
 module Yalphabetize
   class Reader
@@ -19,6 +20,15 @@ module Yalphabetize
 
     def stream_node
       @_stream_node ||= Psych.parse_stream File.read(path)
+    rescue Psych::SyntaxError => e
+      raise Yalphabetize::ParsingError.new(
+        path,
+        e.line,
+        e.column,
+        e.offset,
+        e.problem,
+        e.context
+      )
     end
 
     def transform(node)
