@@ -14,6 +14,31 @@ module Yalphabetize
       new_array.map(&:join)
     end
 
+    def compile(s)
+      enc = s.encoding
+      raise ArgumentError, "#{enc} is not ASCII compatible" if enc.dummy?
+      s = s.b # see String#b
+      magic_comment = detect_magic_comment(s, enc)
+      out = Buffer.new(self, *magic_comment)
+
+      self.content = +''
+      scanner = make_scanner(s)
+      scanner.instance_variable_set(:@stags, scanner.stags + ['%{'])
+      scanner.instance_variable_set(:@etags, scanner.etags + ['}'])
+      scanner.scan do |token|
+        next if token.nil?
+        next if token == ''
+        if scanner.stag.nil?
+          compile_stag(token, out, scanner)
+        else
+          compile_etag(token, out, scanner)
+        end
+      end
+      add_put_cmd(out, content) if content.size > 0
+      out.close
+      return out.script, *magic_comment
+    end
+
     def compile_stag(stag, out, scanner)
       case stag
       when PercentLine
@@ -23,7 +48,7 @@ module Yalphabetize
         out.cr
       when :cr
         out.cr
-      when '<%', '<%=', '<%#'
+      when '<%', '<%=', '<%#', '%{'
         scanner.stag = stag
         add_put_cmd(out, content) if content.size > 0
         self.content = +''
@@ -43,7 +68,7 @@ module Yalphabetize
 
     def compile_etag(etag, out, scanner)
       case etag
-      when '%>'
+      when '%>', '}'
         compile_content(scanner.stag, out)
         scanner.stag = nil
         self.content = +''
@@ -57,23 +82,6 @@ module Yalphabetize
       else
         content << etag
         @tmp_array << etag
-      end
-    end
-
-    def compile_content(stag, out)
-      case stag
-      when '<%'
-        if content[-1] == ?\n
-          content.chop!
-          out.push(content)
-          out.cr
-        else
-          out.push(content)
-        end
-      when '<%='
-        add_insert_cmd(out, content)
-      when '<%#'
-        # commented out
       end
     end
   end

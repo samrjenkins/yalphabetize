@@ -58,20 +58,5 @@ RSpec.describe Yalphabetize::Reader do
           )
       end
     end
-
-    context 'when parsing erb interpolations within yaml' do
-      let(:file_content) do
-        <<~YAML
-          erb_interpolation1: <% a_bit_of_ruby1 %>
-          erb_interpolation2: <%= a_bit_of_ruby2 %>
-          erb_interpolation3: <%# a_bit_of_ruby3 %>
-          erb_interpolation4: <%% a_bit_of_ruby4 %%>
-        YAML
-      end
-
-      it do
-        subject
-      end
-    end
   end
 end

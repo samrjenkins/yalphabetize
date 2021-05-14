@@ -186,6 +186,21 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
+    it 'registers offence and corrects alphabetisation for yaml with I18n interpolation' do
+      expect_offence(<<~YAML)
+        Bananas: %{ a_bit_of_ruby2 }
+        Apples: %{ a_bit_of_ruby1 }
+      YAML
+
+      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
+        Bananas: %{ a_bit_of_ruby2 }
+        Apples: %{ a_bit_of_ruby1 }
+      YAML_ORIGINAL
+        Apples: %{ a_bit_of_ruby1 }
+        Bananas: %{ a_bit_of_ruby2 }
+      YAML_FINAL
+    end
+
     it 'does not reorder a list' do
       expect_no_reordering(<<~YAML)
         - First
