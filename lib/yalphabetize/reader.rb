@@ -2,24 +2,45 @@
 
 require 'psych'
 require 'yalphabetize/parsing_error'
+require 'pry'
+require 'yalphabetize/erb_compiler'
 
 module Yalphabetize
   class Reader
     def initialize(path)
       @path = path
+      @interpolations_mapping = {}
     end
 
     def to_ast
+      substitute_interpolations
       transform(stream_node)
       stream_node
     end
+
+    attr_reader :interpolations_mapping
 
     private
 
     attr_reader :path
 
+    def substitute_interpolations
+      erb_compiler = Yalphabetize::ErbCompiler.new(nil)
+      erb_compiler.compile(file)
+
+      erb_compiler.erb_interpolations.each do |interpolation|
+        uuid = SecureRandom.uuid
+        file.sub!(interpolation, uuid)
+        interpolations_mapping[uuid] = interpolation
+      end
+    end
+
+    def file
+      @_file ||= File.read(path)
+    end
+
     def stream_node
-      @_stream_node ||= Psych.parse_stream File.read(path)
+      @_stream_node ||= Psych.parse_stream file
     rescue Psych::SyntaxError => e
       raise Yalphabetize::ParsingError.new(
         path,
