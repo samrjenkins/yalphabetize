@@ -25,10 +25,10 @@ module Yalphabetize
     attr_reader :path
 
     def substitute_interpolations
-      erb_compiler = Yalphabetize::ErbCompiler.new(nil)
+      erb_compiler = Yalphabetize::ErbCompiler.new
       erb_compiler.compile(file)
 
-      erb_compiler.erb_interpolations.each do |interpolation|
+      erb_compiler.content.each do |interpolation|
         uuid = SecureRandom.uuid
         file.sub!(interpolation, uuid)
         interpolations_mapping[uuid] = interpolation

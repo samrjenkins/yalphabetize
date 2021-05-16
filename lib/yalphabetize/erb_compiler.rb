@@ -1,88 +1,81 @@
-# frozen_string_literal: true
+# Inspired by ERB::Compiler (https://github.com/ruby/erb/blob/b58b188028fbb403f75d48d62717373fc0908f7a/lib/erb.rb)
 
 module Yalphabetize
-  class ErbCompiler < ERB::Compiler
-    def initialize(trim_mode)
-      @new_array = []
-      @tmp_array = []
-      super
+  class ErbCompiler
+    DEFAULT_STAGS = %w(<%% <%= <%# <% %{).freeze
+    DEFAULT_ETAGS = %w(%%> %> }).freeze
+
+    class Scanner
+      STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m
+      ETAG_REG = /(.*?)(#{DEFAULT_ETAGS.join('|')}|\z)/m
+
+      def initialize(src)
+        @src = src
+        @stag = nil
+      end
+
+      def scan
+        while !scanner.eos?
+          scanner.scan(stag ? ETAG_REG : STAG_REG)
+          yield(scanner[1])
+          yield(scanner[2])
+        end
+      end
+
+      attr_accessor :stag
+
+      private
+
+      attr_reader :src
+
+      def scanner
+        @_scanner ||= StringScanner.new(src)
+      end
     end
 
-    attr_reader :new_array
-
-    def erb_interpolations
-      new_array.map(&:join)
+    def initialize
+      @buffer = []
+      @content = []
     end
 
     def compile(s)
-      enc = s.encoding
-      raise ArgumentError, "#{enc} is not ASCII compatible" if enc.dummy?
-      s = s.b # see String#b
-      magic_comment = detect_magic_comment(s, enc)
-      out = Buffer.new(self, *magic_comment)
-
-      self.content = +''
-      scanner = make_scanner(s)
-      scanner.instance_variable_set(:@stags, scanner.stags + ['%{'])
-      scanner.instance_variable_set(:@etags, scanner.etags + ['}'])
+      scanner = Scanner.new(s.b)
       scanner.scan do |token|
         next if token.nil?
         next if token == ''
+
         if scanner.stag.nil?
-          compile_stag(token, out, scanner)
+          compile_stag(token, scanner)
         else
-          compile_etag(token, out, scanner)
+          compile_etag(token, scanner)
         end
       end
-      add_put_cmd(out, content) if content.size > 0
-      out.close
-      return out.script, *magic_comment
     end
 
-    def compile_stag(stag, out, scanner)
+    def compile_stag(stag, scanner)
       case stag
-      when PercentLine
-        add_put_cmd(out, content) if content.size > 0
-        self.content = +''
-        out.push(stag.to_s)
-        out.cr
-      when :cr
-        out.cr
-      when '<%', '<%=', '<%#', '%{'
+      when *DEFAULT_STAGS
         scanner.stag = stag
-        add_put_cmd(out, content) if content.size > 0
-        self.content = +''
-        @tmp_array << stag
-      when "\n"
-        content << "\n"
-        add_put_cmd(out, content)
-        self.content = +''
-      when '<%%'
-        scanner.stag = stag
-        content << '<%'
-        @tmp_array << stag
-      else
-        content << stag
+        buffer << stag
       end
     end
 
-    def compile_etag(etag, out, scanner)
+    def compile_etag(etag, scanner)
       case etag
-      when '%>', '}'
-        compile_content(scanner.stag, out)
+      when *DEFAULT_ETAGS
+        buffer << etag
+        content << buffer.join
+        self.buffer = []
         scanner.stag = nil
-        self.content = +''
-        @new_array << (@tmp_array << etag)
-        @tmp_array = []
-      when '%%>'
-        scanner.stag = nil
-        content << '%>'
-        @new_array << (@tmp_array << etag)
-        @tmp_array = []
       else
-        content << etag
-        @tmp_array << etag
+        buffer << etag
       end
     end
+
+    attr_reader :content
+
+    private
+
+    attr_accessor :buffer
   end
 end
