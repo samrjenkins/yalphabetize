@@ -10,38 +10,44 @@ class Yalphabetizer
   def initialize(args, options)
     @args = args
 
-    @reader_class = options[:reader]
+    @reader_class = options[:reader_class]
     @finder = options[:finder]
-    @alphabetizer = options[:alphabetizer]
-    @writer = options[:writer]
-    @offence_detector = options[:offence_detector]
+    @alphabetizer_class = options[:alphabetizer_class]
+    @writer_class = options[:writer_class]
+    @offence_detector_class = options[:offence_detector_class]
     @logger = options[:logger]
+    @file_yalphabetizer_class = options[:file_yalphabetizer_class]
   end
 
   def call
-    logger.initial_summary(file_paths)
-    file_paths.each(&method(:process_file))
-    logger.final_summary
-    logger.offences? ? 1 : 0
+    initial_log
+    process_files
+    final_log
   end
 
   private
 
-  attr_reader :args, :reader_class, :finder, :alphabetizer, :writer, :offence_detector, :logger
+  attr_reader :args, :reader_class, :finder, :alphabetizer_class, :writer_class,
+              :offence_detector_class, :logger, :file_yalphabetizer_class
+
+  def initial_log
+    logger.initial_summary(file_paths)
+  end
+
+  def process_files
+    file_paths.each(&method(:process_file))
+  end
 
   def process_file(file_path)
-    reader = reader_class.new(file_path)
-    unsorted_stream_node = reader.to_ast
-    interpolations_mapping = reader.interpolations_mapping
-
-    if offences?(unsorted_stream_node)
-      logger.log_offence(file_path)
-      autocorrect(unsorted_stream_node, file_path) if autocorrect?
-    else
-      logger.log_no_offence
-    end
-
-    replace_interpolations(interpolations_mapping, file_path)
+    file_yalphabetizer_class.new(
+      file_path,
+      reader_class: reader_class,
+      offence_detector_class: offence_detector_class,
+      logger: logger,
+      autocorrect: autocorrect?,
+      alphabetizer_class: alphabetizer_class,
+      writer_class: writer_class
+    ).call
   end
 
   def file_paths
@@ -56,23 +62,8 @@ class Yalphabetizer
     false
   end
 
-  def autocorrect(unsorted_stream_node, file_path)
-    sorted_stream_node = alphabetizer.new(unsorted_stream_node).call
-    writer.new(sorted_stream_node, file_path).call
-    logger.log_correction(file_path)
-  end
-
-  def offences?(stream_node)
-    offence_detector.new(stream_node).offences?
-  end
-
-  def replace_interpolations(interpolations_mapping, file_path)
-    interpolations_mapping.each do |uuid, interpolation|
-      file_content = File.read(file_path)
-      file_content.sub!(uuid, interpolation)
-      File.open(file_path, 'w') do |file|
-        file.write file_content
-      end
-    end
+  def final_log
+    logger.final_summary
+    logger.offences? ? 1 : 0
   end
 end

@@ -219,16 +219,18 @@ require 'yalphabetize/writer'
 require 'yalphabetize/offence_detector'
 require 'yalphabetize/yaml_finder'
 require 'yalphabetize/logger'
+require 'yalphabetize/file_yalphabetizer'
 require 'yalphabetizer'
 
 def options
   {
-    reader: Yalphabetize::Reader,
+    reader_class: Yalphabetize::Reader,
     finder: Yalphabetize::YamlFinder.new,
-    alphabetizer: Yalphabetize::Alphabetizer,
-    writer: Yalphabetize::Writer,
-    offence_detector: Yalphabetize::OffenceDetector,
-    logger: Yalphabetize::Logger.new(StringIO.new)
+    alphabetizer_class: Yalphabetize::Alphabetizer,
+    writer_class: Yalphabetize::Writer,
+    offence_detector_class: Yalphabetize::OffenceDetector,
+    logger: Yalphabetize::Logger.new(StringIO.new),
+    file_yalphabetizer_class: Yalphabetize::FileYalphabetizer
   }
 end
 

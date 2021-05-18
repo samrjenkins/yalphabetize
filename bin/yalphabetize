@@ -11,19 +11,21 @@ require 'yalphabetize/yaml_finder'
 require 'yalphabetize/logger'
 require 'yalphabetizer'
 
-reader = Yalphabetize::Reader
+reader_class = Yalphabetize::Reader
 finder = Yalphabetize::YamlFinder.new
-alphabetizer = Yalphabetize::Alphabetizer
-writer = Yalphabetize::Writer
-offence_detector = Yalphabetize::OffenceDetector
+alphabetizer_class = Yalphabetize::Alphabetizer
+writer_class = Yalphabetize::Writer
+offence_detector_class = Yalphabetize::OffenceDetector
 logger = Yalphabetize::Logger.new($stdout)
+file_yalphabetizer_class = Yalphabetize::FileYalphabetizer
 
 exit Yalphabetizer.call(
   ARGV,
-  reader: reader,
+  reader_class: reader_class,
   finder: finder,
-  alphabetizer: alphabetizer,
-  writer: writer,
-  offence_detector: offence_detector,
-  logger: logger
+  alphabetizer_class: alphabetizer_class,
+  writer_class: writer_class,
+  offence_detector_class: offence_detector_class,
+  logger: logger,
+  file_yalphabetizer_class: file_yalphabetizer_class
 )
