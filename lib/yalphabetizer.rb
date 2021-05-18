@@ -41,13 +41,7 @@ class Yalphabetizer
       logger.log_no_offence
     end
 
-    interpolations_mapping.each do |uuid, interpolation|
-      file_content = File.read(file_path)
-      file_content.sub!(uuid, interpolation)
-      File.open(file_path, 'w') do |file|
-        file.write file_content
-      end
-    end
+    replace_interpolations(interpolations_mapping, file_path)
   end
 
   def file_paths
@@ -70,5 +64,15 @@ class Yalphabetizer
 
   def offences?(stream_node)
     offence_detector.new(stream_node).offences?
+  end
+
+  def replace_interpolations(interpolations_mapping, file_path)
+    interpolations_mapping.each do |uuid, interpolation|
+      file_content = File.read(file_path)
+      file_content.sub!(uuid, interpolation)
+      File.open(file_path, 'w') do |file|
+        file.write file_content
+      end
+    end
   end
 end

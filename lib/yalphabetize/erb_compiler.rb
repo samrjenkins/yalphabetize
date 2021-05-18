@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 # Inspired by ERB::Compiler (https://github.com/ruby/erb/blob/b58b188028fbb403f75d48d62717373fc0908f7a/lib/erb.rb)
 
 module Yalphabetize
   class ErbCompiler
-    DEFAULT_STAGS = %w(<%% <%= <%# <% %{).freeze
-    DEFAULT_ETAGS = %w(%%> %> }).freeze
+    DEFAULT_STAGS = ['<%%', '<%=', '<%#', '<%', '%{'].freeze
+    DEFAULT_ETAGS = ['%%>', '%>', '}'].freeze
 
     class Scanner
-      STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m
-      ETAG_REG = /(.*?)(#{DEFAULT_ETAGS.join('|')}|\z)/m
+      STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m.freeze
+      ETAG_REG = /(.*?)(#{DEFAULT_ETAGS.join('|')}|\z)/m.freeze
 
       def initialize(src)
         @src = src
@@ -15,7 +17,7 @@ module Yalphabetize
       end
 
       def scan
-        while !scanner.eos?
+        until scanner.eos?
           scanner.scan(stag ? ETAG_REG : STAG_REG)
           yield(scanner[1])
           yield(scanner[2])
@@ -38,8 +40,8 @@ module Yalphabetize
       @content = []
     end
 
-    def compile(s)
-      scanner = Scanner.new(s.b)
+    def compile(string)
+      scanner = Scanner.new(string.b)
       scanner.scan do |token|
         next if token.nil?
         next if token == ''
@@ -61,14 +63,13 @@ module Yalphabetize
     end
 
     def compile_etag(etag, scanner)
+      buffer << etag
+
       case etag
       when *DEFAULT_ETAGS
-        buffer << etag
         content << buffer.join
         self.buffer = []
         scanner.stag = nil
-      else
-        buffer << etag
       end
     end
 

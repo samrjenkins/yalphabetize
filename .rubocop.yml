@@ -1,5 +1,9 @@
+AllCops:
+  NewCops: enable
 Gemspec/RequiredRubyVersion:
   Enabled: false
+Layout/EndOfLine:
+  EnforcedStyle: lf
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
@@ -10,5 +14,3 @@ Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
 Style/Documentation:
   Enabled: false
-Layout/EndOfLine:
-  EnforcedStyle: lf
