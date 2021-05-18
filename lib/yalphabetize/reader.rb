@@ -4,6 +4,7 @@ require 'psych'
 require 'yalphabetize/parsing_error'
 require 'pry'
 require 'yalphabetize/erb_compiler'
+require 'securerandom'
 
 module Yalphabetize
   class Reader
