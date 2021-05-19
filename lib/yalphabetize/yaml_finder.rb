@@ -30,7 +30,7 @@ module Yalphabetize
 
       return unless status.success?
 
-      output.split("\0").uniq.map { |git_file| "#{git_file}" }
+      output.split("\0").uniq
     end
 
     def process_explicit_path(path)
