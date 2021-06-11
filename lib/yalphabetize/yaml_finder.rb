@@ -41,14 +41,14 @@ module Yalphabetize
     end
 
     def files_in_dir(dir = Dir.pwd)
-      unless `sh -c 'command -v git'`.empty?
-        output, _error, status = Open3.capture3(
-          'git', 'ls-files', '-z', *Array(dir),
-          '--exclude-standard', '--others', '--cached', '--modified'
-        )
+      return if `sh -c 'command -v git'`.empty?
 
-        output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" } if status.success?
-      end
+      output, _error, status = Open3.capture3(
+        'git', 'ls-files', '-z', *Array(dir),
+        '--exclude-standard', '--others', '--cached', '--modified'
+      )
+
+      output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" } if status.success?
     end
 
     def valid?(path)
