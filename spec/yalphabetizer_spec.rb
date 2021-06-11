@@ -167,20 +167,20 @@ RSpec.describe Yalphabetizer do
 
     it 'registers offence and corrects alphabetisation for yaml with ERB interpolation' do
       expect_offence(<<~YAML)
-        Bananas: <% a_bit_of_ruby2 %>
+        Bananas: <%= a_bit_of_ruby2 %>
         Apples: <% a_bit_of_ruby1 %>
         Dates: <%% a_bit_of_ruby4 %%>
         Clementines: <%# a_bit_of_ruby3 %>
       YAML
 
       expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
-        Bananas: <% a_bit_of_ruby2 %>
+        Bananas: <%= a_bit_of_ruby2 %>
         Apples: <% a_bit_of_ruby1 %>
         Dates: <%% a_bit_of_ruby4 %%>
         Clementines: <%# a_bit_of_ruby3 %>
       YAML_ORIGINAL
         Apples: <% a_bit_of_ruby1 %>
-        Bananas: <% a_bit_of_ruby2 %>
+        Bananas: <%= a_bit_of_ruby2 %>
         Clementines: <%# a_bit_of_ruby3 %>
         Dates: <%% a_bit_of_ruby4 %%>
       YAML_FINAL
