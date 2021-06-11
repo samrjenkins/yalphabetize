@@ -201,7 +201,7 @@ def expect_offence(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(**options)).to eq 1
+  expect(Yalphabetizer.call(['spec/tmp'], **options)).to eq 1
 end
 
 def expect_no_offences(yaml)
@@ -209,7 +209,7 @@ def expect_no_offences(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(**options)).to eq 0
+  expect(Yalphabetizer.call(['spec/tmp'], **options)).to eq 0
 end
 
 def expect_reordering(original_yaml, final_yaml)
@@ -217,7 +217,7 @@ def expect_reordering(original_yaml, final_yaml)
     file.write original_yaml
   end
 
-  Yalphabetizer.call(['-a'], **options)
+  Yalphabetizer.call(['spec/tmp', '-a'], **options)
 
   File.open('spec/tmp/final.yml', 'w') do |file|
     file.write final_yaml

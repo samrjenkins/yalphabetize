@@ -41,12 +41,13 @@ class Yalphabetizer
   end
 
   def file_paths
-    finder.paths
+    explicit_paths = args.reject { |arg| arg[0] == '-' }
+    finder.paths(explicit_paths)
   end
 
   def autocorrect?
     return true if args.include? '-a'
-    return true if args.include? '-autocorrect'
+    return true if args.include? '--autocorrect'
 
     false
   end

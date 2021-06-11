@@ -1,20 +1,72 @@
 # frozen_string_literal: true
 
+require 'open3'
+
 module Yalphabetize
   class YamlFinder
-    def paths
-      @_paths ||= begin
-        return if `sh -c 'command -v git'`.empty?
+    YAML_EXTENSIONS = %w[.yml .yaml].freeze
 
-        output, _error, status = Open3.capture3(
-          'git', 'ls-files', '-z', './**/*.yml',
-          '--exclude-standard', '--others', '--cached', '--modified'
-        )
+    def initialize
+      @files = []
+    end
 
-        return unless status.success?
-
-        output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" }
+    def paths(paths)
+      if paths.empty?
+        files << files_in_dir
+      else
+        process_paths(paths)
       end
+
+      files.flatten.select(&method(:valid?)).map { |f| File.expand_path(f) }.uniq
+    end
+
+    private
+
+    attr_reader :files
+
+    def process_paths(paths)
+      paths.uniq.each do |path|
+        files << if glob?(path)
+                   files_in_glob(path)
+                 elsif File.directory?(path)
+                   files_in_dir(path)
+                 else
+                   path
+                 end
+      end
+    end
+
+    def files_in_glob(glob)
+      files_in_dir([glob, glob.gsub('**', '')].uniq)
+    end
+
+    def files_in_dir(dir = Dir.pwd)
+      return if `sh -c 'command -v git'`.empty?
+
+      output, _error, status = Open3.capture3(
+        'git', 'ls-files', '-z', *Array(dir),
+        '--exclude-standard', '--others', '--cached', '--modified'
+      )
+
+      return unless status.success?
+
+      output.split("\0").uniq
+    end
+
+    def valid?(path)
+      exists?(path) && yml?(path)
+    end
+
+    def exists?(path)
+      File.exist?(path)
+    end
+
+    def yml?(path)
+      YAML_EXTENSIONS.include? File.extname(path)
+    end
+
+    def glob?(path)
+      path.include?('*')
     end
   end
 end
