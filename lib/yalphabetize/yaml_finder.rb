@@ -18,7 +18,7 @@ module Yalphabetize
         process_paths(paths)
       end
 
-      files.flatten.map { |f| File.expand_path(f) }.uniq
+      files.flatten.select(&method(:valid?)).map { |f| File.expand_path(f) }.uniq
     end
 
     private
@@ -27,21 +27,25 @@ module Yalphabetize
 
     def process_paths(paths)
       paths.uniq.each do |path|
-        files << if File.directory?(path)
+        files << if glob?(path)
+                   files_in_glob(path)
+                 elsif File.directory?(path)
                    files_in_dir(path)
                  else
-                   next unless valid?(path)
-
-                   process_explicit_path(path)
+                   path
                  end
       end
+    end
+
+    def files_in_glob(glob)
+      files_in_dir([glob, glob.gsub('**', '')].uniq)
     end
 
     def files_in_dir(dir = Dir.pwd)
       return if `sh -c 'command -v git'`.empty?
 
       output, _error, status = Open3.capture3(
-        'git', 'ls-files', '-z', "#{dir}/*.yml", "#{dir}/*.yaml",
+        'git', 'ls-files', '-z', *Array(dir),
         '--exclude-standard', '--others', '--cached', '--modified'
       )
 
@@ -51,11 +55,19 @@ module Yalphabetize
     end
 
     def valid?(path)
-      File.exist?(path) && YAML_EXTENSIONS.include?(File.extname(path))
+      exists?(path) && yml?(path)
     end
 
-    def process_explicit_path(path)
-      path.include?('*') ? Dir[path] : [path]
+    def exists?(path)
+      File.exist?(path)
+    end
+
+    def yml?(path)
+      YAML_EXTENSIONS.include? File.extname(path)
+    end
+
+    def glob?(path)
+      path.include?('*')
     end
   end
 end

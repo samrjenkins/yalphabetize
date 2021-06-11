@@ -77,6 +77,19 @@ RSpec.describe Yalphabetize::YamlFinder do
       end
     end
 
+    context 'when given a glob' do
+      let(:arg) { ["spec/tmp/**/*.yml"] }
+
+      it 'lists all matching files' do
+        is_expected.to match_array(
+          [
+            File.expand_path('spec/tmp/yml_in_top_dir.yml'),
+            File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml')
+          ]
+        )
+      end
+    end
+
     context 'when given file that does not exist' do
       let(:arg) { ['file_that_does_not_exist.yml'] }
 
