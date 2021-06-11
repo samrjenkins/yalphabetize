@@ -7,27 +7,35 @@ module Yalphabetize
   class YamlFinder
     YAML_EXTENSIONS = %w[.yml .yaml].freeze
 
+    def initialize
+      @files = []
+    end
+
     def paths(paths)
       if paths.empty?
-        files = files_in_dir
+        files << files_in_dir
       else
-        files = []
-
-        paths.uniq.each do |path|
-          files += if File.directory?(path)
-                     files_in_dir(path)
-                   else
-                     next unless File.exist? path
-                     next unless YAML_EXTENSIONS.include? File.extname path
-                     process_explicit_path(path)
-                   end
-        end
+        process_paths(paths)
       end
 
-      files.map { |f| File.expand_path(f) }.uniq
+      files.flatten.map { |f| File.expand_path(f) }.uniq
     end
 
     private
+
+    attr_reader :files
+
+    def process_paths(paths)
+      paths.uniq.each do |path|
+        files << if File.directory?(path)
+                   files_in_dir(path)
+                 else
+                   next unless valid?(path)
+
+                   process_explicit_path(path)
+                 end
+      end
+    end
 
     def files_in_dir(dir = Dir.pwd)
       return if `sh -c 'command -v git'`.empty?
@@ -40,6 +48,10 @@ module Yalphabetize
       return unless status.success?
 
       output.split("\0").uniq
+    end
+
+    def valid?(path)
+      File.exist?(path) && YAML_EXTENSIONS.include?(File.extname(path))
     end
 
     def process_explicit_path(path)
