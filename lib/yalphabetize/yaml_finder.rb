@@ -48,9 +48,7 @@ module Yalphabetize
         '--exclude-standard', '--others', '--cached', '--modified'
       )
 
-      return unless status.success?
-
-      output.split("\0").uniq
+      output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" } if status.success?
     end
 
     def valid?(path)

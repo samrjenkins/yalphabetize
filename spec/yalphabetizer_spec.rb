@@ -165,6 +165,42 @@ RSpec.describe Yalphabetizer do
       YAML_FINAL
     end
 
+    it 'registers offence and corrects alphabetisation for yaml with ERB interpolation' do
+      expect_offence(<<~YAML)
+        Bananas: <%= a_bit_of_ruby2 %>
+        Apples: <% a_bit_of_ruby1 %>
+        Dates: <%% a_bit_of_ruby4 %%>
+        Clementines: <%# a_bit_of_ruby3 %>
+      YAML
+
+      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
+        Bananas: <%= a_bit_of_ruby2 %>
+        Apples: <% a_bit_of_ruby1 %>
+        Dates: <%% a_bit_of_ruby4 %%>
+        Clementines: <%# a_bit_of_ruby3 %>
+      YAML_ORIGINAL
+        Apples: <% a_bit_of_ruby1 %>
+        Bananas: <%= a_bit_of_ruby2 %>
+        Clementines: <%# a_bit_of_ruby3 %>
+        Dates: <%% a_bit_of_ruby4 %%>
+      YAML_FINAL
+    end
+
+    it 'registers offence and corrects alphabetisation for yaml with I18n interpolation' do
+      expect_offence(<<~YAML)
+        Bananas: %{ a_bit_of_ruby2 }
+        Apples: %{ a_bit_of_ruby1 }
+      YAML
+
+      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
+        Bananas: %{ a_bit_of_ruby2 }
+        Apples: %{ a_bit_of_ruby1 }
+      YAML_ORIGINAL
+        Apples: %{ a_bit_of_ruby1 }
+        Bananas: %{ a_bit_of_ruby2 }
+      YAML_FINAL
+    end
+
     it 'does not reorder a list' do
       expect_no_reordering(<<~YAML)
         - First
@@ -183,16 +219,18 @@ require 'yalphabetize/writer'
 require 'yalphabetize/offence_detector'
 require 'yalphabetize/yaml_finder'
 require 'yalphabetize/logger'
+require 'yalphabetize/file_yalphabetizer'
 require 'yalphabetizer'
 
 def options
   {
-    reader: Yalphabetize::Reader,
+    reader_class: Yalphabetize::Reader,
     finder: Yalphabetize::YamlFinder.new,
-    alphabetizer: Yalphabetize::Alphabetizer,
-    writer: Yalphabetize::Writer,
-    offence_detector: Yalphabetize::OffenceDetector,
-    logger: Yalphabetize::Logger.new(StringIO.new)
+    alphabetizer_class: Yalphabetize::Alphabetizer,
+    writer_class: Yalphabetize::Writer,
+    offence_detector_class: Yalphabetize::OffenceDetector,
+    logger: Yalphabetize::Logger.new(StringIO.new),
+    file_yalphabetizer_class: Yalphabetize::FileYalphabetizer
   }
 end
 
