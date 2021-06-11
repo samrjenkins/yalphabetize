@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require './lib/yalphabetize/writer'
-require 'pry'
 
 RSpec.describe Yalphabetize::Writer do
   describe '#call' do
