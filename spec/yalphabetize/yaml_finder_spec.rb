@@ -78,7 +78,7 @@ RSpec.describe Yalphabetize::YamlFinder do
     end
 
     context 'when given a glob' do
-      let(:arg) { ["spec/tmp/**/*.yml"] }
+      let(:arg) { ['spec/tmp/**/*.yml'] }
 
       it 'lists all matching files' do
         is_expected.to match_array(
