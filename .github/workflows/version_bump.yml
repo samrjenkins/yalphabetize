@@ -4,6 +4,7 @@ on:
     paths: ['lib/yalphabetize/version.rb']
     branches: ['main']
 jobs:
-  empty:
+  echo:
+    runs-on: 'ubuntu-latest'
     steps:
       - run: 'echo Version bumped!'
