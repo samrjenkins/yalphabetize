@@ -1,7 +1,8 @@
 name: Version bump
 on:
   push:
-    paths: 'lib/yalphabetize/version.rb'
+    paths: ['lib/yalphabetize/version.rb']
+    branches: ['main']
 jobs:
   empty:
     steps:
