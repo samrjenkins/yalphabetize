@@ -9,6 +9,7 @@ require 'yalphabetize/writer'
 require 'yalphabetize/offence_detector'
 require 'yalphabetize/yaml_finder'
 require 'yalphabetize/logger'
+require 'yalphabetize/file_yalphabetizer'
 require 'yalphabetizer'
 
 reader_class = Yalphabetize::Reader
