@@ -37,6 +37,15 @@ $ cd my/unalphabetised/project
 $ yalphabetize -a
 ```
 
+To only run yalphabetize on a specific directory or file:
+
+```sh
+$ cd my/unalphabetised/project
+$ yalphabetize path/to/directory path/to/file.yml
+```
+
+will run yalphabetize on all files within the `path/to/directory` directory as well as the `path/to/file.yml` file.
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable exits with exit code `0` when no offences are detected, or exits with `1` if offences are detected.
