@@ -2,3 +2,5 @@ name: Version bump
 on:
   push:
     paths: 'lib/yalphabetize/version'
+jobs:
+  empty:
