@@ -11,12 +11,16 @@ module Yalphabetize
 
     def call
       File.open(path, 'w') do |file|
-        file.write(stream_node.to_yaml(nil, line_width: MAX_LINE_WIDTH))
+        file.write new_file_content
       end
     end
 
     private
 
     attr_reader :stream_node, :path
+
+    def new_file_content
+      stream_node.to_yaml nil, line_width: MAX_LINE_WIDTH
+    end
   end
 end
