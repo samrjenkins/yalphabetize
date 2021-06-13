@@ -5,4 +5,4 @@ on:
 jobs:
   empty:
     steps:
-      empty:
+      - run: 'echo Version bumped!'
