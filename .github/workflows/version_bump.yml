@@ -4,3 +4,5 @@ on:
     paths: 'lib/yalphabetize/version'
 jobs:
   empty:
+    steps:
+      empty:
