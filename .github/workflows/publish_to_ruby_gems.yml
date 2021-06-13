@@ -1,9 +1,7 @@
 name: Publish to RubyGems
 on:
-  workflow_run:
-    workflows: ['CI', 'Version bump']
-    types: ['completed']
-    branches: ['main']
+  release:
+    types: ['published']
 jobs:
   build:
     name: Build + Publish
