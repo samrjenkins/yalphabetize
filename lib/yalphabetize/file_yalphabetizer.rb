@@ -20,6 +20,7 @@ module Yalphabetize
         logger.log_no_offence
       end
 
+      replace_comments
       replace_interpolations
     end
 
@@ -48,6 +49,16 @@ module Yalphabetize
       end
     end
 
+    def replace_comments
+      comments_mapping.each do |pattern, comment|
+        insert_at = File.read(file_path).index(pattern) + pattern.length
+        file_content = File.read(file_path).insert(insert_at, comment)
+        File.open(file_path, 'w') do |file|
+          file.write file_content
+        end
+      end
+    end
+
     def reader
       @_reader ||= reader_class.new(file_path)
     end
@@ -58,6 +69,10 @@ module Yalphabetize
 
     def interpolations_mapping
       reader.interpolations_mapping
+    end
+
+    def comments_mapping
+      reader.comments_mapping
     end
   end
 end
