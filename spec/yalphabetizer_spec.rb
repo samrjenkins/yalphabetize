@@ -245,6 +245,16 @@ RSpec.describe Yalphabetizer do
         Bananas: '2 # not a comment 2'
       YAML_FINAL
     end
+
+    it 'autocorrect handles many "#"s on the same line' do
+      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
+        Bananas: '#2' # comment #2
+        Apples: '#1' # comment #1
+      YAML_ORIGINAL
+        Apples: '#1' # comment #1
+        Bananas: '#2' # comment #2
+      YAML_FINAL
+    end
   end
 end
 
