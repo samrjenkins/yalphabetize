@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'psych'
+
 FactoryBot.define do
   factory :psych_node, class: 'Psych::Nodes::Node' do
     transient do
