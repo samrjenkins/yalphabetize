@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'psych'
-require 'yalphabetize/parsing_error'
-require 'yalphabetize/erb_compiler'
 require 'securerandom'
+require 'yalphabetize/erb_compiler'
+require 'yalphabetize/parsing_error'
 
 module Yalphabetize
   class Reader

@@ -2,13 +2,13 @@
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")
 
-require 'yalphabetize/reader'
 require 'yalphabetize/alphabetizer'
-require 'yalphabetize/writer'
-require 'yalphabetize/offence_detector'
-require 'yalphabetize/yaml_finder'
-require 'yalphabetize/logger'
 require 'yalphabetize/file_yalphabetizer'
+require 'yalphabetize/logger'
+require 'yalphabetize/offence_detector'
+require 'yalphabetize/reader'
+require 'yalphabetize/writer'
+require 'yalphabetize/yaml_finder'
 require 'yalphabetizer'
 
 module Yalphabetize
