@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetizer'
-require 'yaml'
+require './lib/yalphabetize/cli'
 
-RSpec.describe Yalphabetizer do
+RSpec.describe Yalphabetize::CLI do
   describe '.call' do
+    before do
+      allow($stdout).to receive(:puts)
+      allow($stdout).to receive(:print)
+    end
+
     it 'registers offence and corrects alphabetisation for shallow yaml file' do
       expect_offence(<<~YAML)
         Bananas: 2
@@ -228,33 +232,12 @@ RSpec.describe Yalphabetizer do
   end
 end
 
-require 'yalphabetize/reader'
-require 'yalphabetize/alphabetizer'
-require 'yalphabetize/writer'
-require 'yalphabetize/offence_detector'
-require 'yalphabetize/yaml_finder'
-require 'yalphabetize/logger'
-require 'yalphabetize/file_yalphabetizer'
-require 'yalphabetizer'
-
-def options
-  {
-    reader_class: Yalphabetize::Reader,
-    finder: Yalphabetize::YamlFinder.new,
-    alphabetizer_class: Yalphabetize::Alphabetizer,
-    writer_class: Yalphabetize::Writer,
-    offence_detector_class: Yalphabetize::OffenceDetector,
-    logger: Yalphabetize::Logger.new(StringIO.new),
-    file_yalphabetizer_class: Yalphabetize::FileYalphabetizer
-  }
-end
-
 def expect_offence(yaml)
   File.open('spec/tmp/original.yml', 'w') do |file|
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(['spec/tmp'], **options)).to eq 1
+  expect(Yalphabetize::CLI.call(['spec/tmp'])).to eq 1
 end
 
 def expect_no_offences(yaml)
@@ -262,7 +245,7 @@ def expect_no_offences(yaml)
     file.write yaml
   end
 
-  expect(Yalphabetizer.call(['spec/tmp'], **options)).to eq 0
+  expect(Yalphabetize::CLI.call(['spec/tmp'])).to eq 0
 end
 
 def expect_reordering(original_yaml, final_yaml)
@@ -270,7 +253,7 @@ def expect_reordering(original_yaml, final_yaml)
     file.write original_yaml
   end
 
-  Yalphabetizer.call(['spec/tmp', '-a'], **options)
+  Yalphabetize::CLI.call(['spec/tmp', '-a'])
 
   File.open('spec/tmp/final.yml', 'w') do |file|
     file.write final_yaml
