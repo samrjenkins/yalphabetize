@@ -10,19 +10,27 @@ module Yalphabetize
     def initialize(path)
       @path = path
       @interpolations_mapping = {}
+      @comments_mapping = {}
     end
 
     def to_ast
       substitute_interpolations
+      parse_comments
       transform(stream_node)
       stream_node
     end
 
-    attr_reader :interpolations_mapping
+    attr_reader :interpolations_mapping, :comments_mapping
 
     private
 
     attr_reader :path
+
+    def parse_comments
+      file.scan(/(^[^"'#]*\S)(\s*#[^"'#]*)\n/).each do |pattern, comment|
+        comments_mapping[pattern] = comment
+      end
+    end
 
     def substitute_interpolations
       erb_compiler = Yalphabetize::ErbCompiler.new
