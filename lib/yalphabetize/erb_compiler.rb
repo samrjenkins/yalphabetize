@@ -4,8 +4,8 @@
 
 module Yalphabetize
   class ErbCompiler
-    DEFAULT_STAGS = ['<%%', '<%=', '<%#', '<%', '%{'].freeze
-    DEFAULT_ETAGS = ['%%>', '%>', '}'].freeze
+    DEFAULT_STAGS = ['<%%', '<%=', '<%#', '<%', '%{', '{{'].freeze
+    DEFAULT_ETAGS = ['%%>', '%>', '}}', '}'].freeze
 
     class Scanner
       STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m.freeze

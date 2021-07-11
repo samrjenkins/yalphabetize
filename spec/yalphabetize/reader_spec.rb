@@ -46,7 +46,7 @@ RSpec.describe Yalphabetize::Reader do
     context 'when yaml contains invalid syntax' do
       let(:file_content) do
         <<~YAML
-          Apples: {{ 1 }} apples {{ 2 }}
+          `Apples: 1
         YAML
       end
 
@@ -54,7 +54,8 @@ RSpec.describe Yalphabetize::Reader do
         expect { subject }
           .to raise_error(
             Yalphabetize::ParsingError,
-            "(#{file_path}): did not find expected key while parsing a block mapping at line 1 column 1"
+            "(#{file_path}): found character that cannot start any "\
+            'token while scanning for the next token at line 1 column 1'
           )
       end
     end
