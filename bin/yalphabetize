@@ -1,32 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")
+require 'yalphabetize/cli'
 
-require 'yalphabetize/reader'
-require 'yalphabetize/alphabetizer'
-require 'yalphabetize/writer'
-require 'yalphabetize/offence_detector'
-require 'yalphabetize/yaml_finder'
-require 'yalphabetize/logger'
-require 'yalphabetize/file_yalphabetizer'
-require 'yalphabetizer'
-
-reader_class = Yalphabetize::Reader
-finder = Yalphabetize::YamlFinder.new
-alphabetizer_class = Yalphabetize::Alphabetizer
-writer_class = Yalphabetize::Writer
-offence_detector_class = Yalphabetize::OffenceDetector
-logger = Yalphabetize::Logger.new($stdout)
-file_yalphabetizer_class = Yalphabetize::FileYalphabetizer
-
-exit Yalphabetizer.call(
-  ARGV,
-  reader_class: reader_class,
-  finder: finder,
-  alphabetizer_class: alphabetizer_class,
-  writer_class: writer_class,
-  offence_detector_class: offence_detector_class,
-  logger: logger,
-  file_yalphabetizer_class: file_yalphabetizer_class
-)
+exit Yalphabetize::CLI.call(ARGV)

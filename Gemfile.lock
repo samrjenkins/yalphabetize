@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    yalphabetize (1.0.1)
+      psych
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -18,7 +24,7 @@ GEM
     parallel (1.20.1)
     parser (3.0.1.1)
       ast (~> 2.4.1)
-    psych (3.3.1)
+    psych (4.0.1)
     rainbow (3.0.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
@@ -53,14 +59,15 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  ruby
   universal-darwin-20
   x86_64-darwin-19
 
 DEPENDENCIES
   factory_bot
-  psych
   rspec
   rubocop
+  yalphabetize!
 
 BUNDLED WITH
    2.2.17
