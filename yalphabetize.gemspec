@@ -9,4 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Sam Jenkins']
   s.files       = Dir['{bin,lib}/**/*']
   s.executables << 'yalphabetize'
+  s.add_runtime_dependency 'psych'
+  s.add_development_dependency 'factory_bot'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rubocop'
 end
