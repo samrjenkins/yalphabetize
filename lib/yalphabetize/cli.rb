@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")
-
 require 'yalphabetize/alphabetizer'
 require 'yalphabetize/file_yalphabetizer'
 require 'yalphabetize/logger'
