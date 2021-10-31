@@ -1,4 +1,4 @@
-require 'pry'
+# frozen_string_literal: true
 
 module Yalphabetize
   class Aliaser

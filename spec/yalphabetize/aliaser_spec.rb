@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require './lib/yalphabetize/aliaser'
-require 'pry'
 
 RSpec.describe Yalphabetize::Aliaser do
   describe '#call' do
