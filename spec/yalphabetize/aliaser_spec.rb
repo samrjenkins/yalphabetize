@@ -6,8 +6,8 @@ RSpec.describe Yalphabetize::Aliaser do
   describe '#call' do
     subject { described_class.new(node).call }
 
-    let(:alias_node) { build(:alias_node, anchor: "anchor") }
-    let(:scalar_node) { build(:scalar_node, anchor: "anchor", value: "anchor_value") }
+    let(:alias_node) { build(:alias_node, anchor: 'anchor') }
+    let(:scalar_node) { build(:scalar_node, anchor: 'anchor', value: 'anchor_value') }
 
     context 'when alias comes before anchor' do
       let(:node) { build(:document_node, children: [alias_node, scalar_node]) }

@@ -11,11 +11,7 @@ module Yalphabetize
       nodes.each do |node|
         next unless node.respond_to?(:anchor) && node.anchor
 
-        if node.alias?
-          aliases[node.anchor] ||= node
-        elsif aliases[node.anchor]
-          swap(node, aliases[node.anchor])
-        end
+        ensure_anchor_then_alias(node)
       end
       stream_node
     end
@@ -24,16 +20,18 @@ module Yalphabetize
 
     attr_reader :stream_node, :aliases
 
+    def ensure_anchor_then_alias(node)
+      if node.alias?
+        aliases[node.anchor] ||= node
+      elsif aliases[node.anchor]
+        swap(node, aliases[node.anchor])
+      end
+    end
+
     def swap(anchor_node, alias_node)
       stream_node.each do |node|
         node.children&.map! do |child_node|
-          if child_node == anchor_node
-            alias_node
-          elsif child_node == alias_node
-            anchor_node
-          else
-            child_node
-          end
+          convert_node(child_node, anchor_node, alias_node)
         end
       end
     end
@@ -44,14 +42,14 @@ module Yalphabetize
       end
     end
 
-    def anchor_nodes
-      stream_node.select do |node|
-        node.respond_to?(:anchor) && node.anchor && !node.alias?
+    def convert_node(child_node, anchor_node, alias_node)
+      if child_node == anchor_node
+        alias_node
+      elsif child_node == alias_node
+        anchor_node
+      else
+        child_node
       end
-    end
-
-    def alias_nodes
-      stream_node.select(&:alias?)
     end
   end
 end
