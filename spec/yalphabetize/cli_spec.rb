@@ -229,42 +229,23 @@ RSpec.describe Yalphabetize::CLI do
         - Fifth
       YAML
     end
+
+    it 'swaps anchor and alias when necessary' do
+      expect_offence(<<~YAML)
+        Bananas: &shared
+          shared1: 1
+        Apples: *shared
+      YAML
+
+      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
+        Bananas: &shared
+          shared1: 1
+        Apples: *shared
+      YAML_ORIGINAL
+        Apples: &shared
+          shared1: 1
+        Bananas: *shared
+      YAML_FINAL
+    end
   end
-end
-
-def expect_offence(yaml)
-  File.open('spec/tmp/original.yml', 'w') do |file|
-    file.write yaml
-  end
-
-  expect(Yalphabetize::CLI.call(['spec/tmp'])).to eq 1
-end
-
-def expect_no_offences(yaml)
-  File.open('spec/tmp/original.yml', 'w') do |file|
-    file.write yaml
-  end
-
-  expect(Yalphabetize::CLI.call(['spec/tmp'])).to eq 0
-end
-
-def expect_reordering(original_yaml, final_yaml)
-  File.open('spec/tmp/original.yml', 'w') do |file|
-    file.write original_yaml
-  end
-
-  Yalphabetize::CLI.call(['spec/tmp', '-a'])
-
-  File.open('spec/tmp/final.yml', 'w') do |file|
-    file.write final_yaml
-  end
-
-  original = File.read 'spec/tmp/original.yml'
-  final = File.read 'spec/tmp/final.yml'
-
-  expect(final).to eq original
-end
-
-def expect_no_reordering(original_yaml)
-  expect_reordering(original_yaml, original_yaml)
 end
