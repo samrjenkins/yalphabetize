@@ -3,8 +3,6 @@
 require './lib/yalphabetize/yaml_finder'
 
 RSpec.describe Yalphabetize::YamlFinder do
-  include FileHelper
-
   describe '#paths' do
     subject { Yalphabetize::YamlFinder.new.paths(arg) }
 
