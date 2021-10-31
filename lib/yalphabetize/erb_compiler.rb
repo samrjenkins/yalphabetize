@@ -41,7 +41,7 @@ module Yalphabetize
     end
 
     def compile(string)
-      scanner = Scanner.new(string.b)
+      scanner = Scanner.new(string)
       scanner.scan do |token|
         next if token.nil?
         next if token == ''

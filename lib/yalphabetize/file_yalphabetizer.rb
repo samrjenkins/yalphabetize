@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yalphabetize/aliaser'
+
 module Yalphabetize
   class FileYalphabetizer
     def initialize(file_path, **options)
@@ -30,7 +32,8 @@ module Yalphabetize
 
     def autocorrect_file
       sorted_stream_node = alphabetizer_class.new(unsorted_stream_node).call
-      writer_class.new(sorted_stream_node, file_path).call
+      aliased_stream_node = Aliaser.new(sorted_stream_node).call
+      writer_class.new(aliased_stream_node, file_path).call
       logger.log_correction(file_path)
     end
 
