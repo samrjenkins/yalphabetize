@@ -229,23 +229,5 @@ RSpec.describe Yalphabetize::CLI do
         - Fifth
       YAML
     end
-
-    it 'swaps anchor and alias when necessary' do
-      expect_offence(<<~YAML)
-        Bananas: &shared
-          shared1: 1
-        Apples: *shared
-      YAML
-
-      expect_reordering(<<~YAML_ORIGINAL, <<~YAML_FINAL)
-        Bananas: &shared
-          shared1: 1
-        Apples: *shared
-      YAML_ORIGINAL
-        Apples: &shared
-          shared1: 1
-        Bananas: *shared
-      YAML_FINAL
-    end
   end
 end
