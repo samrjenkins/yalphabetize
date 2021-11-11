@@ -2,9 +2,9 @@
 
 module Yalphabetize
   class Logger
-    STDOUT = $stdout
+    DEFAULT_OUTPUT = $stdout
 
-    def initialize(output = STDOUT)
+    def initialize(output = DEFAULT_OUTPUT)
       @output = output
       @inspected_count = 0
       @offences = {}

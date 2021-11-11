@@ -104,7 +104,7 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 
   config.before do
-    stub_const('Yalphabetize::Logger::STDOUT', double.as_null_object)
+    stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object)
   end
 
   config.before do
