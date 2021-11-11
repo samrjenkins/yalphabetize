@@ -7,7 +7,7 @@ require 'yalphabetize/offence_detector'
 require 'yalphabetize/reader'
 require 'yalphabetize/writer'
 require 'yalphabetize/yaml_finder'
-require 'yalphabetizer'
+require 'yalphabetize/yalphabetizer'
 
 module Yalphabetize
   class CLI
