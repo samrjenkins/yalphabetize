@@ -27,7 +27,7 @@ module Yalphabetize
         alphabetizer_class: Yalphabetize::Alphabetizer,
         writer_class: Yalphabetize::Writer,
         offence_detector_class: Yalphabetize::OffenceDetector,
-        logger: Yalphabetize::Logger.new($stdout),
+        logger: Yalphabetize::Logger.new,
         file_yalphabetizer_class: Yalphabetize::FileYalphabetizer
       )
     end
