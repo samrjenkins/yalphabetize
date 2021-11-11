@@ -4,11 +4,6 @@ require './lib/yalphabetize/cli'
 
 RSpec.describe Yalphabetize::CLI do
   describe '.call' do
-    before do
-      allow($stdout).to receive(:puts)
-      allow($stdout).to receive(:print)
-    end
-
     it 'registers offence and corrects alphabetisation for shallow yaml file' do
       expect_offence(<<~YAML)
         Bananas: 2

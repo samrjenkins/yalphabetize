@@ -2,7 +2,9 @@
 
 module Yalphabetize
   class Logger
-    def initialize(output)
+    STDOUT = $stdout
+
+    def initialize(output = STDOUT)
       @output = output
       @inspected_count = 0
       @offences = {}
@@ -40,7 +42,7 @@ module Yalphabetize
 
     private
 
-    attr_reader :output, :offences, :inspected_count
+    attr_reader :offences, :inspected_count, :output
 
     def puts_offence(file_path, status)
       case status

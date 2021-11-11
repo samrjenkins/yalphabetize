@@ -104,6 +104,10 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 
   config.before do
+    stub_const('Yalphabetize::Logger::STDOUT', double.as_null_object)
+  end
+
+  config.before do
     FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
     Dir.mkdir('spec/tmp')
   end
