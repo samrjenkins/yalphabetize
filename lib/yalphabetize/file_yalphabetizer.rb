@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yalphabetize/aliaser'
+
 module Yalphabetize
   class FileYalphabetizer
     def initialize(file_path, **options)
@@ -29,13 +31,14 @@ module Yalphabetize
                 :logger, :autocorrect, :alphabetizer_class, :writer_class
 
     def autocorrect_file
-      sorted_stream_node = alphabetizer_class.new(unsorted_stream_node).call
-      writer_class.new(sorted_stream_node, file_path).call
-      logger.log_correction(file_path)
+      alphabetize
+      handle_aliases
+      rewrite_yml_file
+      print_to_log
     end
 
     def offences?
-      offence_detector_class.new(unsorted_stream_node).offences?
+      offence_detector_class.new(stream_node).offences?
     end
 
     def replace_interpolations
@@ -48,12 +51,28 @@ module Yalphabetize
       end
     end
 
+    def alphabetize
+      alphabetizer_class.new(stream_node).call
+    end
+
+    def handle_aliases
+      Aliaser.new(stream_node).call
+    end
+
+    def rewrite_yml_file
+      writer_class.new(stream_node, file_path).call
+    end
+
+    def print_to_log
+      logger.log_correction(file_path)
+    end
+
     def reader
       @_reader ||= reader_class.new(file_path)
     end
 
-    def unsorted_stream_node
-      @_unsorted_stream_node ||= reader.to_ast
+    def stream_node
+      @_stream_node ||= reader.to_ast
     end
 
     def interpolations_mapping
