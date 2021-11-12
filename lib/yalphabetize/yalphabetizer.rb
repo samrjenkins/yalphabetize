@@ -87,7 +87,7 @@ module Yalphabetize
     end
 
     def logger
-      @logger ||= Yalphabetize::Logger.new
+      @_logger ||= Yalphabetize::Logger.new
     end
 
     def file_yalphabetizer_class

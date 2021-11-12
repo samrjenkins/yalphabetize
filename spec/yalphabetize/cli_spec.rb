@@ -17,10 +17,10 @@ RSpec.describe Yalphabetize::CLI do
     end
 
     context 'when ARGV is not empty' do
-      let(:argv) { ['arg1', 'arg2'] }
+      let(:argv) { %w[arg1 arg2] }
 
       it 'calls yalphabetizer with those arguments' do
-        expect(Yalphabetize::Yalphabetizer).to receive(:call).with(['arg1', 'arg2'])
+        expect(Yalphabetize::Yalphabetizer).to receive(:call).with(%w[arg1 arg2])
 
         subject
       end
