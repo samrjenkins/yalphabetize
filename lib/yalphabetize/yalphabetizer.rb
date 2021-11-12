@@ -1,23 +1,22 @@
 # frozen_string_literal: true
 
 require 'open3'
+require 'yalphabetize/alphabetizer'
+require 'yalphabetize/file_yalphabetizer'
+require 'yalphabetize/logger'
+require 'yalphabetize/offence_detector'
+require 'yalphabetize/reader'
+require 'yalphabetize/writer'
+require 'yalphabetize/yaml_finder'
 
 module Yalphabetize
   class Yalphabetizer
-    def self.call(args = [], **options)
-      new(args, options).call
+    def self.call(args = [])
+      new(args).call
     end
 
-    def initialize(args, options)
+    def initialize(args)
       @args = args
-
-      @reader_class = options[:reader_class]
-      @finder = options[:finder]
-      @alphabetizer_class = options[:alphabetizer_class]
-      @writer_class = options[:writer_class]
-      @offence_detector_class = options[:offence_detector_class]
-      @logger = options[:logger]
-      @file_yalphabetizer_class = options[:file_yalphabetizer_class]
     end
 
     def call
@@ -28,8 +27,7 @@ module Yalphabetize
 
     private
 
-    attr_reader :args, :reader_class, :finder, :alphabetizer_class, :writer_class,
-                :offence_detector_class, :logger, :file_yalphabetizer_class
+    attr_reader :args
 
     def initial_log
       logger.initial_summary(file_paths)
@@ -66,6 +64,34 @@ module Yalphabetize
     def final_log
       logger.final_summary
       logger.offences? ? 1 : 0
+    end
+
+    def reader_class
+      Yalphabetize::Reader
+    end
+
+    def finder
+      Yalphabetize::YamlFinder.new
+    end
+
+    def alphabetizer_class
+      Yalphabetize::Alphabetizer
+    end
+
+    def writer_class
+      Yalphabetize::Writer
+    end
+
+    def offence_detector_class
+      Yalphabetize::OffenceDetector
+    end
+
+    def logger
+      @_logger ||= Yalphabetize::Logger.new
+    end
+
+    def file_yalphabetizer_class
+      Yalphabetize::FileYalphabetizer
     end
   end
 end
