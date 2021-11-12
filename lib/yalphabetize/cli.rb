@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'yalphabetize/yalphabetizer'
+require 'yalphabetize/option_parser'
 
 module Yalphabetize
   class CLI
@@ -13,11 +14,15 @@ module Yalphabetize
     end
 
     def call
-      Yalphabetizer.call argv
+      Yalphabetizer.call argv, options
     end
 
     private
 
     attr_reader :argv
+
+    def options
+      OptionParser.parse!(argv)
+    end
   end
 end
