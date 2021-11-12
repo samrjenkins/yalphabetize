@@ -4,6 +4,28 @@ require './lib/yalphabetize/cli'
 
 RSpec.describe Yalphabetize::CLI do
   describe '.call' do
+    subject { described_class.call(argv) }
+
+    context 'when ARGV is empty' do
+      let(:argv) { [] }
+
+      it 'calls yalphabetizer with empty array' do
+        expect(Yalphabetize::Yalphabetizer).to receive(:call).with([])
+
+        subject
+      end
+    end
+
+    context 'when ARGV is not empty' do
+      let(:argv) { ['arg1', 'arg2'] }
+
+      it 'calls yalphabetizer with those arguments' do
+        expect(Yalphabetize::Yalphabetizer).to receive(:call).with(['arg1', 'arg2'])
+
+        subject
+      end
+    end
+
     it 'registers offence and corrects alphabetisation for shallow yaml file' do
       expect_offence(<<~YAML)
         Bananas: 2
