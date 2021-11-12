@@ -11,12 +11,13 @@ require 'yalphabetize/yaml_finder'
 
 module Yalphabetize
   class Yalphabetizer
-    def self.call(args = [])
-      new(args).call
+    def self.call(args = [], options = {})
+      new(args, options).call
     end
 
-    def initialize(args)
+    def initialize(args, options)
       @args = args
+      @options = options
     end
 
     def call
@@ -27,7 +28,7 @@ module Yalphabetize
 
     private
 
-    attr_reader :args
+    attr_reader :args, :options
 
     def initial_log
       logger.initial_summary(file_paths)
@@ -43,7 +44,7 @@ module Yalphabetize
         reader_class: reader_class,
         offence_detector_class: offence_detector_class,
         logger: logger,
-        autocorrect: autocorrect?,
+        autocorrect: options[:autocorrect],
         alphabetizer_class: alphabetizer_class,
         writer_class: writer_class
       ).call
@@ -52,13 +53,6 @@ module Yalphabetize
     def file_paths
       explicit_paths = args.reject { |arg| arg[0] == '-' }
       finder.paths(explicit_paths)
-    end
-
-    def autocorrect?
-      return true if args.include? '-a'
-      return true if args.include? '--autocorrect'
-
-      false
     end
 
     def final_log
