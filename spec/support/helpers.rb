@@ -46,7 +46,7 @@ module Helpers
 
     return_value = nil
 
-    expect { return_value = system('bin/yalphabetize spec/tmp') }
+    expect { return_value = system('bin/yalphabetize spec/tmp', exception: true) }
       .to_not output(SecureRandom.uuid)
       .to_stdout_from_any_process
 
