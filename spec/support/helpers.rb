@@ -31,11 +31,7 @@ module Helpers
     end
 
     return_value = nil
-
-    expect { return_value = system('bin/yalphabetize spec/tmp') }
-      .to_not output(SecureRandom.uuid)
-      .to_stdout_from_any_process
-
+    expect { return_value = system('ruby bin/yalphabetize spec/tmp') }.to output.to_stdout_from_any_process
     expect(return_value).to be false
   end
 
@@ -45,11 +41,7 @@ module Helpers
     end
 
     return_value = nil
-
-    expect { return_value = system('bin/yalphabetize spec/tmp', exception: true) }
-      .to_not output(SecureRandom.uuid)
-      .to_stdout_from_any_process
-
+    expect { return_value = system('ruby bin/yalphabetize spec/tmp') }.to output.to_stdout_from_any_process
     expect(return_value).to be true
   end
 
@@ -58,9 +50,7 @@ module Helpers
       file.write original_yaml
     end
 
-    expect { system('bin/yalphabetize spec/tmp -a') }
-      .to_not output(SecureRandom.uuid)
-      .to_stdout_from_any_process
+    expect { system('ruby bin/yalphabetize spec/tmp -a') }.to output.to_stdout_from_any_process
 
     File.open('spec/tmp/final.yml', 'w') do |file|
       file.write final_yaml
