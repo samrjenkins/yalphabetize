@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'open3'
-require 'yalphabetize/alphabetizer'
-require 'yalphabetize/file_yalphabetizer'
-require 'yalphabetize/logger'
-require 'yalphabetize/offence_detector'
-require 'yalphabetize/reader'
-require 'yalphabetize/writer'
-require 'yalphabetize/yaml_finder'
+require_relative 'alphabetizer'
+require_relative 'file_yalphabetizer'
+require_relative 'logger'
+require_relative 'offence_detector'
+require_relative 'reader'
+require_relative 'writer'
+require_relative 'yaml_finder'
 
 module Yalphabetize
   class Yalphabetizer

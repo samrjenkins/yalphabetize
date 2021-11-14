@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'yalphabetize/cli'
+require_relative '../lib/yalphabetize/cli'
 
 exit Yalphabetize::CLI.call(ARGV)

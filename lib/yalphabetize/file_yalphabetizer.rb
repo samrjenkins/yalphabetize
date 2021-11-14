@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yalphabetize/aliaser'
+require_relative 'aliaser'
 
 module Yalphabetize
   class FileYalphabetizer

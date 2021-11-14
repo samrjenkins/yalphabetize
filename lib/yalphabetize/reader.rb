@@ -2,8 +2,8 @@
 
 require 'psych'
 require 'securerandom'
-require 'yalphabetize/erb_compiler'
-require 'yalphabetize/parsing_error'
+require_relative 'erb_compiler'
+require_relative 'parsing_error'
 
 module Yalphabetize
   class Reader

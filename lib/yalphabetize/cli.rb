@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'yalphabetize/yalphabetizer'
-require 'yalphabetize/option_parser'
+require_relative 'yalphabetizer'
+require_relative 'option_parser'
 
 module Yalphabetize
   class CLI
