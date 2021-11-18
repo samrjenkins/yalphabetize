@@ -25,7 +25,7 @@ module Yalphabetize
     end
 
     def alphabetized_children?(node)
-      node.children.each_cons(2).all? { |a, b| (a.first.value <=> b.first.value) <= 0 }
+      node.children.each_slice(2).each_cons(2).all? { |a, b| (a.first.value <=> b.first.value) <= 0 }
     end
 
     def each_child_also_alphabetized?(children)

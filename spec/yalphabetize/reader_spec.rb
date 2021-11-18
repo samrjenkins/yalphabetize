@@ -19,28 +19,9 @@ RSpec.describe Yalphabetize::Reader do
 
     it 'opens and parses the file' do
       expect(File).to receive(:read).with(file_path).and_return('the_file')
-      expect(Psych).to receive(:parse_stream).with('the_file').and_return(Psych::Nodes::Stream.new)
+      expect(Psych).to receive(:parse_stream).with('the_file').and_return('the_parsed_file')
 
-      subject
-    end
-
-    it 'pairs up the children of a mapping node' do
-      mapping = Psych::Nodes::Mapping.new
-      child0 = Psych::Nodes::Scalar.new(0)
-      child1 = Psych::Nodes::Scalar.new(1)
-      child2 = Psych::Nodes::Scalar.new(2)
-      child3 = Psych::Nodes::Scalar.new(3)
-
-      mapping.children.push(child0, child1, child2, child3)
-
-      allow(Psych).to receive(:parse_stream).and_return(mapping)
-
-      expect(subject.children).to eq(
-        [
-          [child0, child1],
-          [child2, child3]
-        ]
-      )
+      expect(subject).to eq 'the_parsed_file'
     end
 
     context 'when yaml contains invalid syntax' do
