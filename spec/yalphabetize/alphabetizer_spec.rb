@@ -23,7 +23,6 @@ RSpec.describe Yalphabetize::Alphabetizer do
         expect { subject }.not_to change(node, :children)
       end
 
-
       context 'when provided with nested mappings' do
         let(:node) do
           build(
@@ -100,8 +99,3 @@ RSpec.describe Yalphabetize::Alphabetizer do
     end
   end
 end
-
-
-
-
-
