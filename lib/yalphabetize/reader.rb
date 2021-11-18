@@ -14,7 +14,6 @@ module Yalphabetize
 
     def to_ast
       substitute_interpolations
-      transform(stream_node)
       stream_node
     end
 
@@ -50,24 +49,6 @@ module Yalphabetize
         e.problem,
         e.context
       )
-    end
-
-    def transform(node)
-      node.children&.each(&method(:transform))
-
-      return unless node.mapping?
-
-      pair_up_children(node)
-    end
-
-    def pair_up_children(node)
-      children_clone = node.children.dup
-
-      children_clone.each_slice(2) do |slice|
-        node.children.push(slice)
-        node.children.shift
-        node.children.shift
-      end
     end
   end
 end
