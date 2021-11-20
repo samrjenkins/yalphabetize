@@ -51,8 +51,7 @@ module Yalphabetize
     end
 
     def file_paths
-      explicit_paths = args.reject { |arg| arg[0] == '-' }
-      finder.paths(explicit_paths)
+      finder.paths(args)
     end
 
     def final_log
