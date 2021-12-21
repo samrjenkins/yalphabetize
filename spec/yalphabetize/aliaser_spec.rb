@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/aliaser'
-
 RSpec.describe Yalphabetize::Aliaser do
   describe '#call' do
     subject { described_class.new(node).call }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/writer'
-
 RSpec.describe Yalphabetize::Writer do
   describe '#call' do
     subject { Yalphabetize::Writer.new(stream_node, file_path).call }

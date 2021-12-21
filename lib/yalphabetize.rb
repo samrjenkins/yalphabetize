@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require_relative 'yalphabetize/aliaser'
+require_relative 'yalphabetize/alphabetizer'
+require_relative 'yalphabetize/cli'
+require_relative 'yalphabetize/erb_compiler'
+require_relative 'yalphabetize/file_yalphabetizer'
+require_relative 'yalphabetize/logger'
+require_relative 'yalphabetize/offence_detector'
+require_relative 'yalphabetize/option_parser'
+require_relative 'yalphabetize/parsing_error'
+require_relative 'yalphabetize/reader'
+require_relative 'yalphabetize/version'
+require_relative 'yalphabetize/writer'
+require_relative 'yalphabetize/yalphabetizer'
+require_relative 'yalphabetize/yaml_finder'

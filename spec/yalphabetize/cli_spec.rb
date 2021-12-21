@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/cli'
-
 RSpec.describe Yalphabetize::CLI do
   describe '.call' do
     subject { described_class.call(argv) }

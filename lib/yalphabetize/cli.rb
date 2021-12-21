@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'yalphabetizer'
-require_relative 'option_parser'
-
 module Yalphabetize
   class CLI
     def self.call(argv)

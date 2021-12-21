@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/yaml_finder'
-
 RSpec.describe Yalphabetize::YamlFinder do
   describe '#paths' do
     subject { Yalphabetize::YamlFinder.new.paths(arg) }
