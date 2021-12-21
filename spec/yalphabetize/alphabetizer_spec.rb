@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/alphabetizer'
-require 'pry'
 RSpec.describe Yalphabetize::Alphabetizer do
   describe '#call' do
     subject { described_class.new(node).call }

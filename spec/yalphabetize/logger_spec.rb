@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/logger'
-
 RSpec.describe Yalphabetize::Logger do
   subject { described_class.new($stdout) }
 

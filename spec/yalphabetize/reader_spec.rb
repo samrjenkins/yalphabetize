@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/yalphabetize/reader'
-
 RSpec.describe Yalphabetize::Reader do
   let(:file_path) { 'spec/tmp/mock.yml' }
   let(:file_content) { '' }
