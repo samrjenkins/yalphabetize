@@ -30,9 +30,8 @@ module Helpers
       file.write yaml
     end
 
-    return_value = nil
-    expect { return_value = system('ruby bin/yalphabetize spec/tmp') }.to output.to_stdout_from_any_process
-    expect(return_value).to be false
+    return_value = Yalphabetize::CLI.call(['spec/tmp'])
+    expect(return_value).to eq 1
   end
 
   def expect_no_offences(yaml)
@@ -40,9 +39,8 @@ module Helpers
       file.write yaml
     end
 
-    return_value = nil
-    expect { return_value = system('ruby bin/yalphabetize spec/tmp') }.to output.to_stdout_from_any_process
-    expect(return_value).to be true
+    return_value = Yalphabetize::CLI.call(['spec/tmp'])
+    expect(return_value).to eq 0
   end
 
   def expect_reordering(original_yaml, final_yaml)
@@ -50,7 +48,7 @@ module Helpers
       file.write original_yaml
     end
 
-    expect { system('ruby bin/yalphabetize spec/tmp -a') }.to output.to_stdout_from_any_process
+    Yalphabetize::CLI.call(['spec/tmp', '-a'])
 
     File.open('spec/tmp/final.yml', 'w') do |file|
       file.write final_yaml
