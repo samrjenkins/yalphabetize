@@ -103,6 +103,8 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 
+  require 'yalphabetize'
+
   config.before do
     stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object)
   end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'aliaser'
-
 module Yalphabetize
   class FileYalphabetizer
     def initialize(file_path, **options)

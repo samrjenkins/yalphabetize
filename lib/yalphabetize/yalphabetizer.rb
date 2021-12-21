@@ -1,14 +1,5 @@
 # frozen_string_literal: true
 
-require 'open3'
-require_relative 'alphabetizer'
-require_relative 'file_yalphabetizer'
-require_relative 'logger'
-require_relative 'offence_detector'
-require_relative 'reader'
-require_relative 'writer'
-require_relative 'yaml_finder'
-
 module Yalphabetize
   class Yalphabetizer
     def self.call(args = [], options = {})

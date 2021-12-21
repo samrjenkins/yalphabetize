@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/yalphabetize/cli'
+require './lib/yalphabetize/yalphabetizer'
 
 RSpec.describe Yalphabetize::CLI do
   describe '.call' do
