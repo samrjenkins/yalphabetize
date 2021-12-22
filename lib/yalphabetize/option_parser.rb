@@ -10,7 +10,7 @@ module Yalphabetize
       o.on('-a', '--autocorrect', 'Automatically alphabetize inspected yaml files')
       o.on('-h', '--help', 'Prints this help') do
         puts o
-        exit
+        Kernel.exit
       end
     end
 

@@ -10,12 +10,7 @@ module Helpers
     FileUtils.makedirs dir_path unless File.exist?(dir_path)
 
     File.open(file_path, 'w') do |file|
-      case content
-      when String
-        file.puts content
-      when Array
-        file.puts content.join("\n")
-      end
+      file.puts content
     end
 
     file_path
