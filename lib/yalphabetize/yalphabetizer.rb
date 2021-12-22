@@ -42,7 +42,15 @@ module Yalphabetize
     end
 
     def file_paths
-      @_file_paths ||= finder.paths(only: args, exclude: [])
+      @_file_paths ||= finder.paths(only: args, exclude: excluded_paths)
+    end
+
+    def excluded_paths
+      if File.exist?('.yalphabetize.yml')
+        Psych.load_file('.yalphabetize.yml')['exclude'] || []
+      else
+        []
+      end
     end
 
     def final_log
