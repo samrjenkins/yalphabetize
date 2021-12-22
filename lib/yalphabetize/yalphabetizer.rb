@@ -42,7 +42,7 @@ module Yalphabetize
     end
 
     def file_paths
-      finder.paths(args)
+      @_file_paths ||= finder.paths(only: args, exclude: [])
     end
 
     def final_log
@@ -55,7 +55,7 @@ module Yalphabetize
     end
 
     def finder
-      Yalphabetize::YamlFinder.new
+      Yalphabetize::YamlFinder
     end
 
     def alphabetizer_class

@@ -6,6 +6,14 @@ module Yalphabetize
   class YamlFinder
     YAML_EXTENSIONS = %w[.yml .yaml].freeze
 
+    def self.paths(only:, exclude:)
+      if exclude.any?
+        new.paths(only) - new.paths(exclude)
+      else
+        new.paths(only)
+      end
+    end
+
     def initialize
       @files = []
     end
@@ -37,7 +45,7 @@ module Yalphabetize
     end
 
     def files_in_glob(glob)
-      files_in_dir([glob, glob.gsub('**', '')].uniq)
+      files_in_dir([glob, glob.gsub('**/', '').gsub('**', '')].uniq)
     end
 
     def files_in_dir(dir = Dir.pwd)
