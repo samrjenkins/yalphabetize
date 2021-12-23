@@ -46,6 +46,41 @@ $ yalphabetize path/to/directory path/to/file.yml
 
 will run yalphabetize on all files within the `path/to/directory` directory as well as the `path/to/file.yml` file.
 
+## Configuration
+
+Yalphabetize can be configured through a `.yalphabetize.yml` file in your projects root directory.
+
+### `only`
+
+`only` is used to specify the yaml files which yalphabetize will inspect. When unspecified or empty, the default is to inspect all yaml files in the project.
+When files are specified as command line arguments, `only` configuration is ignored.
+
+Example:
+
+```yml
+# .yalphabetize.yml
+
+only:
+  - a_file.yml
+  - a/directory/
+  - a/glob/**/*.yml
+```
+
+### `exclude`
+
+`exclude` is used to specify the yaml files which yalphabetize should not inspect within your project.
+
+Example:
+
+```yml
+# .yalphabetize.yml
+
+exclude:
+  - a_file.yml
+  - a/directory/
+  - a/glob/**/*.yml
+```
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable exits with exit code `0` when no offences are detected, or exits with `1` if offences are detected.
