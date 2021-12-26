@@ -2,7 +2,9 @@
 
 RSpec.describe Yalphabetize::Alphabetizer do
   describe '#call' do
-    subject { described_class.new(node).call }
+    subject { described_class.new(node, order_checker_class: order_checker_class).call }
+
+    let(:order_checker_class) { Yalphabetize::OrderCheckers::DEFAULT }
 
     context 'when node is already alphabetized' do
       let(:node) do

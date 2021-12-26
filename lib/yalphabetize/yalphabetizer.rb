@@ -37,7 +37,8 @@ module Yalphabetize
         logger: logger,
         autocorrect: options[:autocorrect],
         alphabetizer_class: alphabetizer_class,
-        writer_class: writer_class
+        writer_class: writer_class,
+        order_checker_class: order_checker_class
       ).call
     end
 
@@ -100,6 +101,14 @@ module Yalphabetize
 
     def file_yalphabetizer_class
       Yalphabetize::FileYalphabetizer
+    end
+
+    def order_checker_class
+      OrderCheckers::TOKEN_MAPPING[order_checker_name] || OrderCheckers::DEFAULT
+    end
+
+    def order_checker_name
+      config && config['sort_by']
     end
   end
 end
