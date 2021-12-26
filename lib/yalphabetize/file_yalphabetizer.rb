@@ -10,6 +10,7 @@ module Yalphabetize
       @autocorrect = options[:autocorrect]
       @alphabetizer_class = options[:alphabetizer_class]
       @writer_class = options[:writer_class]
+      @order_checker_class = options[:order_checker_class]
     end
 
     def call
@@ -25,8 +26,8 @@ module Yalphabetize
 
     private
 
-    attr_reader :file_path, :reader_class, :offence_detector_class,
-                :logger, :autocorrect, :alphabetizer_class, :writer_class
+    attr_reader :file_path, :reader_class, :offence_detector_class, :logger, :autocorrect,
+                :alphabetizer_class, :writer_class, :order_checker_class
 
     def autocorrect_file
       alphabetize
@@ -36,7 +37,7 @@ module Yalphabetize
     end
 
     def offences?
-      offence_detector_class.new(stream_node).offences?
+      offence_detector_class.new(stream_node, order_checker_class: order_checker_class).offences?
     end
 
     def replace_interpolations
@@ -50,7 +51,7 @@ module Yalphabetize
     end
 
     def alphabetize
-      alphabetizer_class.new(stream_node).call
+      alphabetizer_class.new(stream_node, order_checker_class: order_checker_class).call
     end
 
     def handle_aliases

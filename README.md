@@ -81,6 +81,44 @@ exclude:
   - a/glob/**/*.yml
 ```
 
+### `sort_by`
+
+`sort_by` is used to specify the ordering which Yalphabetize uses when sorting a yaml file.
+
+Examples of the four possible configuration values and their corresponding yaml ordering:
+
+`sort_by: 'ABab'` (default)
+```yml
+Apples: 1
+Bananas: 2
+apples: 3
+bananas: 4
+```
+
+`sort_by: 'abAB'`
+```yml
+apples: 1
+bananas: 2
+Apples: 3
+Bananas: 4
+```
+
+`sort_by: AaBb`
+```yml
+Apples: 1
+apples: 2
+Bananas: 3
+bananas: 4
+```
+
+`sort_by: aAbB`
+```yml
+apples: 1
+Apples: 2
+bananas: 3
+Bananas: 4
+```
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable exits with exit code `0` when no offences are detected, or exits with `1` if offences are detected.

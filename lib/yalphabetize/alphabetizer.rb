@@ -2,8 +2,9 @@
 
 module Yalphabetize
   class Alphabetizer
-    def initialize(stream_node)
+    def initialize(stream_node, order_checker_class:)
       @stream_node = stream_node
+      @order_checker_class = order_checker_class
     end
 
     def call
@@ -14,7 +15,7 @@ module Yalphabetize
 
     private
 
-    attr_reader :stream_node
+    attr_reader :stream_node, :order_checker_class
 
     def alphabetize(node)
       if node.mapping?
@@ -26,7 +27,9 @@ module Yalphabetize
     end
 
     def alphabetize_children(node)
-      node.children.sort_by! { |key, _value| key.value }
+      node.children.sort! do |a, b|
+        order_checker_class.compare(a.first.value, b.first.value)
+      end
     end
 
     def unpair_children(node)
