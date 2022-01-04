@@ -8,8 +8,8 @@ module Yalphabetize
     DEFAULT_ETAGS = ['%%>', '%>', '}}', '}'].freeze
 
     class Scanner
-      STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m.freeze
-      ETAG_REG = /(.*?)(#{DEFAULT_ETAGS.join('|')}|\z)/m.freeze
+      STAG_REG = /(.*?)(#{DEFAULT_STAGS.join('|')}|\z)/m
+      ETAG_REG = /(.*?)(#{DEFAULT_ETAGS.join('|')}|\z)/m
 
       def initialize(src)
         @src = src
