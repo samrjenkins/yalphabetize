@@ -25,7 +25,7 @@ require_relative 'yalphabetize/yaml_finder'
 module Yalphabetize
   class << self
     DEFAULT_CONFIG = {
-      'indent_sequences_within_mapping' => true,
+      'indent_sequences' => true,
       'exclude' => [],
       'only' => [],
       'sort_by' => 'ABab'

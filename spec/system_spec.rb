@@ -260,4 +260,28 @@ RSpec.describe 'system' do
           - Beans
     YAML
   end
+
+  context 'when configured to not indent sequences' do
+    include_context 'configuration', 'indent_sequences' => false
+
+    it 'preserves sequence indentation' do
+      expect_offence(<<~YAML)
+        - Vegeatables:
+          - Aubergines
+          - Beans
+          Fruit:
+          - Apples
+          - Bananas
+      YAML
+
+      expect_reordering(<<~YAML)
+        - Fruit:
+          - Apples
+          - Bananas
+          Vegeatables:
+          - Aubergines
+          - Beans
+      YAML
+    end
+  end
 end
