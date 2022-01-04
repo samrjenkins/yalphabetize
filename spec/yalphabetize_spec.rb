@@ -6,7 +6,7 @@ RSpec.describe Yalphabetize do
 
     let(:expected_default_config) do
       {
-        'indent_sequences_within_mapping' => true,
+        'indent_sequences' => true,
         'exclude' => [],
         'only' => [],
         'sort_by' => 'ABab'

@@ -73,5 +73,17 @@ RSpec.describe Yalphabetize::SequenceIndenter do
         expect(subject).to eq yaml
       end
     end
+
+    context 'when sequence is flow style' do
+      let(:yaml) do
+        <<~YAML
+          Fruit: [Apples]
+        YAML
+      end
+
+      it 'does not change the indentation' do
+        expect(subject).to eq yaml
+      end
+    end
   end
 end

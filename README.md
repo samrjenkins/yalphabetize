@@ -119,6 +119,26 @@ bananas: 3
 Bananas: 4
 ```
 
+### `indent_sequences`
+
+`indent_sequences` is used to specify the indentation style of block sequences within mappings when the autocorrector is generating new YAML.
+
+Examples:
+
+`indent_sequences: true` (default)
+```yml
+Fruit:
+  - Apples
+  - Bananas
+```
+
+`indent_sequences: false`
+```yml
+Fruit:
+- Apples
+- Bananas
+```
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable exits with exit code `0` when no offences are detected, or exits with `1` if offences are detected.
