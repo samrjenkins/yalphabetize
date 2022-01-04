@@ -110,6 +110,10 @@ RSpec.configure do |config|
   require 'yalphabetize'
 
   config.before do
+    Yalphabetize.instance_variable_set(:@_config, nil)
+  end
+
+  config.before do
     stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object)
   end
 
