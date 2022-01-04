@@ -11,7 +11,9 @@ module Yalphabetize
     end
 
     def call
+      indent_sequences
       replace_interpolations
+
       File.open(path, 'w') do |file|
         file.write new_file_content
       end
@@ -29,6 +31,10 @@ module Yalphabetize
       interpolations_mapping.each do |uuid, interpolation|
         new_file_content.sub!(uuid, interpolation)
       end
+    end
+
+    def indent_sequences
+      @_new_file_content = SequenceIndenter.call(new_file_content)
     end
   end
 end
