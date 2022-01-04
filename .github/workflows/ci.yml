@@ -36,3 +36,5 @@ jobs:
         run:  bundle exec rspec
       - name: rubocop
         run:  bundle exec rubocop
+      - name: yalphabetize
+        run: bundle exec yalphabetize
