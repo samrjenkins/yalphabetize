@@ -161,7 +161,7 @@ script:
 We aim for yalphabetize to be compatible with all actively maintained Ruby versions.
 
 We currently support:
-- MRI 2.5+
+- MRI 2.6+
 
 ## Known issues
 - Yalphabetize cannot currently preserve comments while automatically alphabetising a YAML file. Comments will have to be replaced after the alphabetisation.
