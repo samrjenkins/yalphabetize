@@ -16,6 +16,7 @@ require_relative 'yalphabetize/order_checkers/capitalized_first_then_alphabetica
 require_relative 'yalphabetize/order_checkers'
 require_relative 'yalphabetize/parsing_error'
 require_relative 'yalphabetize/reader'
+require_relative 'yalphabetize/sequence_indenter'
 require_relative 'yalphabetize/version'
 require_relative 'yalphabetize/writer'
 require_relative 'yalphabetize/yalphabetizer'
@@ -24,6 +25,7 @@ require_relative 'yalphabetize/yaml_finder'
 module Yalphabetize
   class << self
     DEFAULT_CONFIG = {
+      'indent_sequences_within_mapping' => true,
       'exclude' => [],
       'only' => [],
       'sort_by' => 'ABab'

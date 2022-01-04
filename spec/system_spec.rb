@@ -240,4 +240,24 @@ RSpec.describe 'system' do
       YAML
     end
   end
+
+  it 'preserves sequence indentation' do
+    expect_offence(<<~YAML)
+      - Vegeatables:
+          - Aubergines
+          - Beans
+        Fruit:
+          - Apples
+          - Bananas
+    YAML
+
+    expect_reordering(<<~YAML)
+      - Fruit:
+          - Apples
+          - Bananas
+        Vegeatables:
+          - Aubergines
+          - Beans
+    YAML
+  end
 end
