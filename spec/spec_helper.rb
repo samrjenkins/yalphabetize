@@ -111,6 +111,8 @@ RSpec.configure do |config|
 
   config.before do
     Yalphabetize.instance_variable_set(:@_config, nil)
+    allow(File).to receive(:exist?).and_call_original
+    allow(File).to receive(:exist?).with('.yalphabetize.yml').and_return(false)
   end
 
   config.before do
