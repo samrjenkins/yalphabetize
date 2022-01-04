@@ -43,31 +43,15 @@ module Yalphabetize
     end
 
     def file_paths
-      @_file_paths ||= finder.paths(only: only_paths, exclude: excluded_paths)
+      @_file_paths ||= finder.paths(only: only_paths, exclude: Yalphabetize.config['exclude'])
     end
 
     def only_paths
       if args.any?
         args
-      elsif config
-        config['only'] || []
       else
-        []
+        Yalphabetize.config['only']
       end
-    end
-
-    def excluded_paths
-      if config
-        config['exclude'] || []
-      else
-        []
-      end
-    end
-
-    def config
-      return unless File.exist?('.yalphabetize.yml')
-
-      @_config ||= Psych.load_file('.yalphabetize.yml') || {}
     end
 
     def final_log
@@ -104,11 +88,7 @@ module Yalphabetize
     end
 
     def order_checker_class
-      OrderCheckers::TOKEN_MAPPING[order_checker_name] || OrderCheckers::DEFAULT
-    end
-
-    def order_checker_name
-      config && config['sort_by']
+      OrderCheckers::TOKEN_MAPPING[Yalphabetize.config['sort_by']]
     end
   end
 end

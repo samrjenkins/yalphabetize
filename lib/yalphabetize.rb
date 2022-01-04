@@ -20,3 +20,25 @@ require_relative 'yalphabetize/version'
 require_relative 'yalphabetize/writer'
 require_relative 'yalphabetize/yalphabetizer'
 require_relative 'yalphabetize/yaml_finder'
+
+module Yalphabetize
+  class << self
+    DEFAULT_CONFIG = {
+      'exclude' => [],
+      'only' => [],
+      'sort_by' => 'ABab'
+    }.freeze
+
+    def config
+      @_config ||= begin
+        specified = if File.exist?('.yalphabetize.yml')
+                      Psych.load_file('.yalphabetize.yml') || {}
+                    else
+                      {}
+                    end
+
+        DEFAULT_CONFIG.merge(specified)
+      end
+    end
+  end
+end
