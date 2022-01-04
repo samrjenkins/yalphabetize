@@ -20,8 +20,6 @@ module Yalphabetize
       else
         logger.log_no_offence
       end
-
-      replace_interpolations
     end
 
     private
@@ -40,16 +38,6 @@ module Yalphabetize
       offence_detector_class.new(stream_node, order_checker_class: order_checker_class).offences?
     end
 
-    def replace_interpolations
-      interpolations_mapping.each do |uuid, interpolation|
-        file_content = File.read(file_path)
-        file_content.sub!(uuid, interpolation)
-        File.open(file_path, 'w') do |file|
-          file.write file_content
-        end
-      end
-    end
-
     def alphabetize
       alphabetizer_class.new(stream_node, order_checker_class: order_checker_class).call
     end
@@ -59,7 +47,7 @@ module Yalphabetize
     end
 
     def rewrite_yml_file
-      writer_class.new(stream_node, file_path).call
+      writer_class.new(stream_node, file_path, interpolations_mapping).call
     end
 
     def print_to_log

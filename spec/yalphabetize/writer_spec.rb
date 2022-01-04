@@ -2,7 +2,7 @@
 
 RSpec.describe Yalphabetize::Writer do
   describe '#call' do
-    subject { Yalphabetize::Writer.new(stream_node, file_path).call }
+    subject { Yalphabetize::Writer.new(stream_node, file_path, {}).call }
 
     let(:file_path) { 'spec/tmp/mock.yml' }
     let(:file) { double('File', write: nil) }
