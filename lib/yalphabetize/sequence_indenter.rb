@@ -27,10 +27,8 @@ module Yalphabetize
     def find_lines_to_indent
       @nodes_to_indent = []
 
-      stream_node.each do |node|
-        next if node.document?
-
-        block_sequence_nodes(node)&.each do |sequence_node|
+      stream_node.select(&:mapping?).each do |mapping_node|
+        block_sequence_nodes(mapping_node)&.each do |sequence_node|
           @nodes_to_indent.push(*sequence_node.children)
         end
       end
@@ -46,7 +44,9 @@ module Yalphabetize
 
     def indent!
       @nodes_to_indent.each do |node|
-        file_lines[node.start_line..node.end_line].each do |line|
+        node_end_line = node.start_line == node.end_line ? node.end_line : node.end_line - 1
+
+        file_lines[node.start_line..node_end_line].each do |line|
           line.gsub!(line, "  #{line}")
         end
       end
