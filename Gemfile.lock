@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yalphabetize (0.4.0)
+    yalphabetize (0.4.1)
       psych (~> 3)
 
 GEM
