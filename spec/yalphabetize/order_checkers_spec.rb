@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Yalphabetize::OrderCheckers do
-  describe '::DEFAULT' do
-    subject { described_class::DEFAULT }
-
-    it { is_expected.to eq Yalphabetize::OrderCheckers::CapitalizedFirstThenAlphabetical }
-  end
-
   describe '::TOKEN_MAPPING[token]' do
     subject { described_class::TOKEN_MAPPING[token] }
 
