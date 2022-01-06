@@ -2,8 +2,6 @@
 
 module Yalphabetize
   module OrderCheckers
-    DEFAULT = CapitalizedFirstThenAlphabetical
-
     TOKEN_MAPPING = {
       'abAB' => CapitalizedLastThenAlphabetical,
       'aAbB' => AlphabeticalThenCapitalizedLast,
