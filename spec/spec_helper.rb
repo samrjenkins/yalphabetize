@@ -120,7 +120,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    FileUtils.remove_dir('spec/tmp', true) if Dir.exist?('spec/tmp')
+    FileUtils.remove_dir('spec/tmp', true)
     Dir.mkdir('spec/tmp')
   end
 
