@@ -48,7 +48,7 @@ module Helpers
     original = File.read 'spec/tmp/original.yml'
     final = File.read 'spec/tmp/final.yml'
 
-    expect(final).to eq original
+    expect(original).to eq final
   end
 
   def expect_no_reordering(yaml)
