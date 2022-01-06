@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ABab
 module Yalphabetize
   module OrderCheckers
     class CapitalizedFirstThenAlphabetical < Base
