@@ -10,7 +10,7 @@ Yalphabetize is a static code analyser and code formatter for alphabetising key-
 Installing yalphabetize is easy:
 
 ```sh
-$ gem install yalphabetize
+$ gem install yalphabetizee
 ```
 
 To install with bundler add the following to your Gemfile (set the `require` option to `false`, as it is a standalone tool):
