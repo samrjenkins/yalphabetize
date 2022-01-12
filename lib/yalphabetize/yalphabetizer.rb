@@ -2,7 +2,7 @@
 
 module Yalphabetize
   class Yalphabetizer
-    def self.call(args = [], options = {})
+    def self.call(*args, **options)
       new(args, options).call
     end
 
@@ -15,6 +15,7 @@ module Yalphabetize
       initial_log
       process_files
       final_log
+      logger.offences? ? 1 : 0
     end
 
     private
@@ -56,7 +57,6 @@ module Yalphabetize
 
     def final_log
       logger.final_summary
-      logger.offences? ? 1 : 0
     end
 
     def reader_class

@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.describe Yalphabetize do
+  describe '.call' do
+    subject { described_class.call('1', '2', a: 'a', b: 'b') }
+
+    it 'calls Yalphabetizer' do
+      expect(Yalphabetize::Yalphabetizer).to receive(:call).with('1', '2', a: 'a', b: 'b')
+      subject
+    end
+  end
+
   describe '.config' do
     subject { described_class.config }
 

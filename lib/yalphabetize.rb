@@ -42,5 +42,9 @@ module Yalphabetize
         DEFAULT_CONFIG.merge(specified)
       end
     end
+
+    def call(*args)
+      Yalphabetize::Yalphabetizer.call(*args)
+    end
   end
 end
