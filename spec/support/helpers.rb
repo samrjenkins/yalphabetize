@@ -25,7 +25,7 @@ module Helpers
       file.write yaml
     end
 
-    return_value = Yalphabetize::CLI.call(['spec/tmp'])
+    return_value = Yalphabetize.call('spec/tmp')
     expect(return_value).to eq 1
   end
 
@@ -34,12 +34,12 @@ module Helpers
       file.write yaml
     end
 
-    return_value = Yalphabetize::CLI.call(['spec/tmp'])
+    return_value = Yalphabetize.call('spec/tmp')
     expect(return_value).to eq 0
   end
 
   def expect_reordering(yaml)
-    Yalphabetize::CLI.call(['spec/tmp', '-a'])
+    Yalphabetize.call('spec/tmp', autocorrect: true)
 
     File.open('spec/tmp/final.yml', 'w') do |file|
       file.write yaml

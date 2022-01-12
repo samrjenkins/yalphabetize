@@ -46,6 +46,16 @@ $ yalphabetize path/to/directory path/to/file.yml
 
 will run yalphabetize on all files within the `path/to/directory` directory as well as the `path/to/file.yml` file.
 
+### Calling the Yalphabetize module directly
+
+Sometimes you might want to trigger Yalphabetize from within a ruby script, for example a rake task:
+
+```ruby
+Yalphabetize.call # runs against all YAML files in project
+Yalphabetize.call(autocorrect: true) # runs against all YAML files in project with autocorrect
+Yalphabetize.call('path/to/file1.yml', 'path/to/file2.yml') # runs against specified YAML filed
+```
+
 ## Configuration
 
 Yalphabetize can be configured through a `.yalphabetize.yml` file in your projects root directory.
