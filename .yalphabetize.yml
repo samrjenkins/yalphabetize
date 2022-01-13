@@ -1,3 +1,4 @@
 exclude:
   - .github/workflows/ci.yml
   - .github/workflows/publish_to_ruby_gems.yml
+  - spec/fixtures/
