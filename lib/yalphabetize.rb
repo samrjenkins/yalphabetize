@@ -3,7 +3,6 @@
 require_relative 'yalphabetize/aliaser'
 require_relative 'yalphabetize/alphabetizer'
 require_relative 'yalphabetize/cli'
-require_relative 'yalphabetize/erb_compiler'
 require_relative 'yalphabetize/file_yalphabetizer'
 require_relative 'yalphabetize/logger'
 require_relative 'yalphabetize/offence_detector'

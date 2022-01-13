@@ -135,25 +135,25 @@ RSpec.describe 'system' do
 
   it 'registers offence and corrects alphabetisation for yaml with I18n interpolation' do
     expect_offence(<<~YAML)
-      Bananas: %{ a_bit_of_ruby2 }
-      Apples: %{ a_bit_of_ruby1 }
+      Bananas: '%{ a_bit_of_ruby2 }'
+      Apples: '%{ a_bit_of_ruby1 }'
     YAML
 
     expect_reordering(<<~YAML)
-      Apples: %{ a_bit_of_ruby1 }
-      Bananas: %{ a_bit_of_ruby2 }
+      Apples: '%{ a_bit_of_ruby1 }'
+      Bananas: '%{ a_bit_of_ruby2 }'
     YAML
   end
 
   it 'registers offence and corrects alphabetisation for yaml with `{{  }}` interpolation' do
     expect_offence(<<~YAML)
-      Bananas: {{ a_bit_of_ruby2 }}
-      Apples: {{ a_bit_of_ruby1 }}
+      Bananas: '{{ a_bit_of_ruby2 }}'
+      Apples: '{{ a_bit_of_ruby1 }}'
     YAML
 
     expect_reordering(<<~YAML)
-      Apples: {{ a_bit_of_ruby1 }}
-      Bananas: {{ a_bit_of_ruby2 }}
+      Apples: '{{ a_bit_of_ruby1 }}'
+      Bananas: '{{ a_bit_of_ruby2 }}'
     YAML
   end
 
