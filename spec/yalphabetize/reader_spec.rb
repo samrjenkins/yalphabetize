@@ -15,14 +15,20 @@ RSpec.describe Yalphabetize::Reader do
       expect(subject).to eq 'the_parsed_file'
     end
 
-    context 'when yaml contains invalid syntax' do
-      let(:file_path) { 'spec/fixtures/invalid.yml' }
+    context 'when yaml contains parseable i18n interpolations' do
+      let(:file_path) { 'spec/fixtures/parseable_interpolations.yml' }
+
+      it { is_expected.to be_a Psych::Nodes::Stream }
+    end
+
+    context 'when yaml contains unparseable i18n interpolation' do
+      let(:file_path) { 'spec/fixtures/unparseable_i18n_interpolation.yml' }
 
       it do
         expect { subject }.to raise_error(
           Yalphabetize::ParsingError,
           "(#{file_path}): found character that cannot start any "\
-          'token while scanning for the next token at line 1 column 1'
+          'token while scanning for the next token at line 1 column 9'
         )
       end
     end
