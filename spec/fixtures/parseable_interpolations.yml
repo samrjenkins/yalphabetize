@@ -1,0 +1,11 @@
+i18n:
+  Apples: a scalar containing an %{ interpolation }
+  Bananas: '%{ interpolation }'
+  Clementines: "%{ interpolation }"
+  Dates: |
+    %{ interpolation }
+erb:
+  Apples: <% interpolation %>
+  Bananas: <%= interpolation %>
+  Clementines: <%# interpolation %>
+  Dates: <%% interpolation %%>

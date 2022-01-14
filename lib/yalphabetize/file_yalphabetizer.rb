@@ -47,7 +47,7 @@ module Yalphabetize
     end
 
     def rewrite_yml_file
-      writer_class.new(stream_node, file_path, interpolations_mapping).call
+      writer_class.new(stream_node, file_path).call
     end
 
     def print_to_log
@@ -60,10 +60,6 @@ module Yalphabetize
 
     def stream_node
       @_stream_node ||= reader.to_ast
-    end
-
-    def interpolations_mapping
-      reader.interpolations_mapping
     end
   end
 end
