@@ -2,7 +2,7 @@
 
 RSpec.describe Yalphabetize::Yalphabetizer do
   describe '.call' do
-    subject { described_class.call(args, opts) }
+    subject { described_class.call(*args, **opts) }
 
     let(:args) { [] }
     let(:opts) { {} }
