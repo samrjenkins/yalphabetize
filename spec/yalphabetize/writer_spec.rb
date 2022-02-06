@@ -20,7 +20,7 @@ RSpec.describe Yalphabetize::Writer do
     let(:document_children) { [build(:scalar_node, value: 'value')] }
 
     it 'writes yaml to file' do
-      expect_to_write "--- value\n"
+      expect(File).to receive(:write).with(file_path, "--- value\n")
       subject
     end
 
@@ -29,16 +29,9 @@ RSpec.describe Yalphabetize::Writer do
       let(:document_children) { [build(:scalar_node, value: a_long_string)] }
 
       it 'does not add extra line breaks' do
-        expect_to_write "--- #{a_long_string}\n"
+        expect(File).to receive(:write).with(file_path, "--- #{a_long_string}\n")
         subject
       end
-    end
-
-    def expect_to_write(content)
-      expect(File).to receive(:open).with(file_path, 'w') do |_, &block|
-        block.call(file)
-      end
-      expect(file).to receive(:write).with(content)
     end
   end
 end

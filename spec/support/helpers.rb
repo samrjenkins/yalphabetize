@@ -21,18 +21,14 @@ module Helpers
   end
 
   def expect_offence(yaml)
-    File.open('spec/tmp/original.yml', 'w') do |file|
-      file.write yaml
-    end
+    File.write('spec/tmp/original.yml', yaml)
 
     return_value = Yalphabetize::CLI.call(['spec/tmp'])
     expect(return_value).to eq 1
   end
 
   def expect_no_offences(yaml)
-    File.open('spec/tmp/original.yml', 'w') do |file|
-      file.write yaml
-    end
+    File.write('spec/tmp/original.yml', yaml)
 
     return_value = Yalphabetize::CLI.call(['spec/tmp'])
     expect(return_value).to eq 0
@@ -41,9 +37,7 @@ module Helpers
   def expect_reordering(yaml)
     Yalphabetize::CLI.call(['spec/tmp', '-a'])
 
-    File.open('spec/tmp/final.yml', 'w') do |file|
-      file.write yaml
-    end
+    File.write('spec/tmp/final.yml', yaml)
 
     original = File.read 'spec/tmp/original.yml'
     final = File.read 'spec/tmp/final.yml'
@@ -52,9 +46,7 @@ module Helpers
   end
 
   def expect_no_reordering(yaml)
-    File.open('spec/tmp/original.yml', 'w') do |file|
-      file.write yaml
-    end
+    File.write('spec/tmp/original.yml', yaml)
 
     expect_reordering(yaml)
   end
