@@ -12,9 +12,7 @@ module Yalphabetize
     def call
       indent_sequences
 
-      File.open(path, 'w') do |file|
-        file.write new_file_content
-      end
+      File.write(path, new_file_content)
     end
 
     private
