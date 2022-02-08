@@ -17,18 +17,18 @@ RSpec.describe 'custom ordering' do
       zero: 0
     YAML
 
-    # expect_reordering(<<~YAML)
-    #   zero: 0
-    #   one: 1
-    #   two: 2
-    #   three: 3
-    #   four: 4
-    #   five: 5
-    #   six: 6
-    #   seven: 7
-    #   eight: 8
-    #   nine: 9
-    # YAML
+    expect_reordering(<<~YAML)
+      zero: 0
+      one: 1
+      two: 2
+      three: 3
+      four: 4
+      five: 5
+      six: 6
+      seven: 7
+      eight: 8
+      nine: 9
+    YAML
   end
 
   it 'sorts according to the configured order' do
@@ -39,12 +39,12 @@ RSpec.describe 'custom ordering' do
       zero: 0
     YAML
 
-    # expect_reordering(<<~YAML)
-    #   zero: 0
-    #   one: 1
-    #   two: 2
-    #   three: 3
-    # YAML
+    expect_reordering(<<~YAML)
+      zero: 0
+      one: 1
+      two: 2
+      three: 3
+    YAML
   end
 
   it 'sorts according to the configured order' do
