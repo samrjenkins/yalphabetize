@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Yalphabetize::OrderCheckers::AlphabeticalThenCapitalizedFirst do
-  subject { described_class.compare(string, other_string) }
+  subject { described_class.new.compare(string, other_string) }
 
   context 'when both strings are identical uppercase' do
     let(:string) { 'A' }

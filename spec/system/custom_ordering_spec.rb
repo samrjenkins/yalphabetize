@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'custom ordering' do
-  include_context 'configuration', 'allowed_orders' => %w[zero one two three four five six seven eight nine]
+  include_context 'configuration', 'allowed_orders' => [%w[zero one two three four five six seven eight nine]]
 
   it 'sorts according to the configured order' do
     expect_offence(<<~YAML)
