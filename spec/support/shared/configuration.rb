@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'configuration' do |config|
+RSpec.shared_context 'with configuration' do |config|
   before do
     allow(File).to receive(:exist?).and_call_original
     allow(File).to receive(:exist?).with('.yalphabetize.yml').and_return(true)

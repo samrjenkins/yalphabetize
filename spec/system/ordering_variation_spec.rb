@@ -2,7 +2,7 @@
 
 RSpec.describe 'ordering variation' do
   context 'when configured to sort by abAB' do
-    include_context 'configuration', 'sort_by' => 'abAB'
+    include_context 'with configuration', 'sort_by' => 'abAB'
 
     it 'registers offence when capitalized come before uncapitalized' do
       expect_offence(<<~YAML)
@@ -22,7 +22,7 @@ RSpec.describe 'ordering variation' do
   end
 
   context 'when configured to sort by aAbB' do
-    include_context 'configuration', 'sort_by' => 'aAbB'
+    include_context 'with configuration', 'sort_by' => 'aAbB'
 
     it 'registers offence when capitalized come before uncapitalized' do
       expect_offence(<<~YAML)
@@ -42,7 +42,7 @@ RSpec.describe 'ordering variation' do
   end
 
   context 'when configured to sort by AaBb' do
-    include_context 'configuration', 'sort_by' => 'AaBb'
+    include_context 'with configuration', 'sort_by' => 'AaBb'
 
     it 'registers offence when capitalized come before uncapitalized' do
       expect_offence(<<~YAML)

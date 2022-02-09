@@ -32,7 +32,7 @@ RSpec.describe 'sequence' do
   end
 
   context 'when configured to not indent sequences' do
-    include_context 'configuration', 'indent_sequences' => false
+    include_context 'with configuration', 'indent_sequences' => false
 
     it 'preserves sequence indentation' do
       expect_offence(<<~YAML)

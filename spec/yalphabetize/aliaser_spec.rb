@@ -19,7 +19,7 @@ RSpec.describe Yalphabetize::Aliaser do
       let(:node) { build(:document_node, children: [scalar_node, alias_node]) }
 
       it do
-        expect { subject }.to_not change(node, :children).from([scalar_node, alias_node])
+        expect { subject }.not_to change(node, :children).from([scalar_node, alias_node])
       end
     end
   end

@@ -2,7 +2,7 @@
 
 RSpec.describe Yalphabetize::Reader do
   describe '#to_ast' do
-    subject { Yalphabetize::Reader.new(file_path).to_ast }
+    subject { described_class.new(file_path).to_ast }
 
     let(:file_path) { 'spec/fixtures/empty.yml' }
 

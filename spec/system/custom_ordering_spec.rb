@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe 'custom ordering' do
-  include_context 'configuration', 'allowed_orders' => [%w[zero one two three four five six seven eight nine]]
+  include_context 'with configuration', 'allowed_orders' => [%w[zero one two three four five six seven eight nine]]
 
-  it 'sorts according to the configured order' do
+  it 'when keys match allowed order it sorts according to the configured order' do
     expect_offence(<<~YAML)
       eight: 8
       five: 5
@@ -31,7 +31,7 @@ RSpec.describe 'custom ordering' do
     YAML
   end
 
-  it 'sorts according to the configured order' do
+  it 'when keys match subset of allowed order it sorts according to the configured order' do
     expect_offence(<<~YAML)
       one: 1
       three: 3
@@ -47,7 +47,7 @@ RSpec.describe 'custom ordering' do
     YAML
   end
 
-  it 'sorts according to the configured order' do
+  it 'when keys do not match allowed order sorts according to the configured order' do
     expect_no_offences(<<~YAML)
       one: 1
       other: foo

@@ -19,37 +19,37 @@ RSpec.describe Yalphabetize::OrderCheckers::Base do
       end
 
       context 'when mapping keys match configured allowed order exactly' do
-        include_context 'configuration', 'allowed_orders' => [%w[foo bar baz]]
+        include_context 'with configuration', 'allowed_orders' => [%w[foo bar baz]]
 
         it { is_expected.to be_a Yalphabetize::OrderCheckers::Custom }
       end
 
       context 'when mapping keys match configured allowed order but are not in the specified order' do
-        include_context 'configuration', 'allowed_orders' => [%w[bar foo baz]]
+        include_context 'with configuration', 'allowed_orders' => [%w[bar foo baz]]
 
         it { is_expected.to be_a Yalphabetize::OrderCheckers::Custom }
       end
 
       context 'when mapping keys match subset of configured allowed order exactly' do
-        include_context 'configuration', 'allowed_orders' => [%w[foo bar baz bing]]
+        include_context 'with configuration', 'allowed_orders' => [%w[foo bar baz bing]]
 
         it { is_expected.to be_a Yalphabetize::OrderCheckers::Custom }
       end
 
       context 'when mapping keys match subset of configured allowed order but are not in the specified order' do
-        include_context 'configuration', 'allowed_orders' => [%w[foo baz bar bing]]
+        include_context 'with configuration', 'allowed_orders' => [%w[foo baz bar bing]]
 
         it { is_expected.to be_a Yalphabetize::OrderCheckers::Custom }
       end
 
       context 'when mapping keys match configured allowed order but with extra keys' do
-        include_context 'configuration', 'allowed_orders' => [%w[foo bar]]
+        include_context 'with configuration', 'allowed_orders' => [%w[foo bar]]
 
         it { is_expected.to be_a order_checker_class }
       end
 
       context 'when mapping keys match subset of configured allowed order but with extra keys' do
-        include_context 'configuration', 'allowed_orders' => [%w[foo bar bing]]
+        include_context 'with configuration', 'allowed_orders' => [%w[foo bar bing]]
 
         it { is_expected.to be_a order_checker_class }
       end
