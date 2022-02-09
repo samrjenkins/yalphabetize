@@ -9,8 +9,9 @@ module Yalphabetize
 
     def call
       stream_node.select(&:mapping?).each do |node|
+        order_checker = order_checker_class.new_for(node)
         pair_up_children(node)
-        alphabetize_children(node)
+        alphabetize_children(node, order_checker)
         unpair_children(node)
       end
     end
@@ -19,9 +20,9 @@ module Yalphabetize
 
     attr_reader :stream_node, :order_checker_class
 
-    def alphabetize_children(node)
+    def alphabetize_children(node, order_checker)
       node.children.sort! do |a, b|
-        order_checker_class.compare(a.first.value, b.first.value)
+        order_checker.compare(a.first.value, b.first.value)
       end
     end
 
