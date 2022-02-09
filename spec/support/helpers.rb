@@ -21,17 +21,11 @@ module Helpers
   end
 
   def expect_offence(yaml)
-    File.write('spec/tmp/original.yml', yaml)
-
-    return_value = Yalphabetize::CLI.call(['spec/tmp'])
-    expect(return_value).to eq 1
+    expect(yaml).to have_offence
   end
 
   def expect_no_offences(yaml)
-    File.write('spec/tmp/original.yml', yaml)
-
-    return_value = Yalphabetize::CLI.call(['spec/tmp'])
-    expect(return_value).to eq 0
+    expect(yaml).not_to have_offence
   end
 
   def expect_reordering(yaml)
