@@ -15,3 +15,5 @@ Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
 Style/Documentation:
   Enabled: false
+require:
+  - rubocop-performance

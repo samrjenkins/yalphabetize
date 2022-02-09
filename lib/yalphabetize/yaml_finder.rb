@@ -25,7 +25,7 @@ module Yalphabetize
         process_paths(paths)
       end
 
-      files.flatten.select(&method(:valid?)).map { |f| File.expand_path(f) }.uniq
+      files.flatten.select { |file| valid?(file) }.map { |f| File.expand_path(f) }.uniq
     end
 
     private
