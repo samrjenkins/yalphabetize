@@ -139,6 +139,41 @@ Fruit:
 - Bananas
 ```
 
+### `allowed_orders`
+
+`allowed_orders` is used to specify custom sorting orders for matching sets (or subsets) of keys which you want to sort in an order that is not alphabetical.
+
+Example:
+
+```yml
+allowed_orders:
+  - [one two three four five]
+  - [january february march april may]
+```
+```yml
+months:
+# The keys in this mapping match an allowed order exactly.
+# They are ordered according to the matching allowed order.
+  january: 1
+  february: 2
+  march: 3
+  april: 4
+  may: 5
+numbers:
+# The keys in this mapping match a subset of an allowed order.
+# They are ordered according to the matching allowed order.
+  one: 1
+  two: 2
+  three: 3
+numbers_extended: 
+# The keys in this mapping do not match an allow order or a subset of an allowed order (notice the extra `zero` key which does not appear in the allowed order of numbers).
+# They are ordered alphabetically.
+  one: 1
+  three: 3
+  two: 2
+  zero: 0
+```
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable exits with exit code `0` when no offences are detected, or exits with `1` if offences are detected.
