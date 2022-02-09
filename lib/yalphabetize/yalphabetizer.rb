@@ -26,7 +26,7 @@ module Yalphabetize
     end
 
     def process_files
-      file_paths.each(&method(:process_file))
+      file_paths.each { |file_path| process_file(file_path) }
     end
 
     def process_file(file_path)
