@@ -5,7 +5,6 @@ RSpec.describe Yalphabetize::Writer do
     subject { described_class.new(stream_node, file_path).call }
 
     let(:file_path) { 'spec/tmp/mock.yml' }
-    let(:file) { double('File', write: nil) }
     let(:stream_node) do
       build(
         :stream_node,

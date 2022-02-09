@@ -13,6 +13,18 @@ Metrics/MethodLength:
     - 'spec/**/*'
 Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
+RSpec/ExampleLength:
+  CountAsOne: ['array', 'heredoc']
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/NestedGroups:
+  Max: 4
+RSpec/StubbedMock:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 require:
