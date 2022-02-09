@@ -29,7 +29,7 @@ RSpec.describe 'interpolation' do
     YAML
   end
 
-  it 'registers offence and corrects alphabetisation for yaml with `{{  }}` interpolation' do
+  it 'registers offence and corrects alphabetisation for yaml with `{{ }}` interpolation' do
     expect_offence(<<~YAML)
       Bananas: '{{ a_bit_of_ruby2 }}'
       Apples: '{{ a_bit_of_ruby1 }}'

@@ -23,7 +23,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml'),
@@ -40,7 +40,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory except those in excluded directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml')
@@ -55,7 +55,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory excluding the one file' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml'),
@@ -71,7 +71,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml'),
@@ -88,7 +88,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory excluding those matching the glob' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yaml_in_top_dir.yaml'),
                 File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
@@ -103,7 +103,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml'),
@@ -120,7 +120,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('yml_in_top_dir.yml'),
                 File.expand_path('yaml_in_top_dir.yaml'),
@@ -137,7 +137,7 @@ RSpec.describe Yalphabetize::YamlFinder do
 
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
-            is_expected.to match_array(
+            expect(subject).to match_array(
               [
                 File.expand_path('sub_dir/yml_in_sub_dir.yml'),
                 File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
@@ -152,7 +152,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/sub_dir'] }
 
       it 'lists all yaml files in specified directory' do
-        is_expected.to match_array(
+        expect(subject).to match_array(
           [
             File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml'),
             File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')
@@ -164,7 +164,7 @@ RSpec.describe Yalphabetize::YamlFinder do
         let(:exclude) { ['spec/tmp/sub_dir/yml_in_sub_dir.yml'] }
 
         it 'lists all yaml files in specified directory excluding the specified file' do
-          is_expected.to match_array [File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')]
+          expect(subject).to match_array [File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')]
         end
       end
     end
@@ -173,7 +173,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/sub_dir/yml_in_sub_dir.yml'] }
 
       it 'lists only the specified file' do
-        is_expected.to match_array [File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml')]
+        expect(subject).to match_array [File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml')]
       end
     end
 
@@ -181,7 +181,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/rb_in_top_dir.rb'] }
 
       it 'lists nothing' do
-        is_expected.to match_array []
+        expect(subject).to match_array []
       end
     end
 
@@ -189,7 +189,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/sub_dir', 'spec/tmp/yml_in_top_dir.yml'] }
 
       it 'lists all specified yaml files and yaml files in specified directories' do
-        is_expected.to match_array(
+        expect(subject).to match_array(
           [
             File.expand_path('spec/tmp/yml_in_top_dir.yml'),
             File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml'),
@@ -203,7 +203,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/**/*.yml'] }
 
       it 'lists all matching files' do
-        is_expected.to match_array(
+        expect(subject).to match_array(
           [
             File.expand_path('spec/tmp/yml_in_top_dir.yml'),
             File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml')
@@ -216,7 +216,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['file_that_does_not_exist.yml'] }
 
       it 'lists nothing' do
-        is_expected.to match_array []
+        expect(subject).to match_array []
       end
     end
 
@@ -224,7 +224,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/directory_that_does_not_exist'] }
 
       it 'lists nothing' do
-        is_expected.to match_array []
+        expect(subject).to match_array []
       end
     end
   end
