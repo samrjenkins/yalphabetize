@@ -14,12 +14,10 @@ module Yalphabetize
     end
 
     def call
-      if offences?
-        logger.log_offence(file_path)
-        autocorrect_file if autocorrect
-      else
-        logger.log_no_offence
-      end
+      return logger.log_no_offence unless offences?
+
+      logger.log_offence(file_path)
+      autocorrect_file if autocorrect
     end
 
     private
