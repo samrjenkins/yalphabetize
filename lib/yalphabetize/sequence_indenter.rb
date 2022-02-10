@@ -47,7 +47,7 @@ module Yalphabetize
         node_end_line = node.start_line == node.end_line ? node.end_line : node.end_line - 1
 
         file_lines[node.start_line..node_end_line].each do |line|
-          line.gsub!(line, "  #{line}")
+          line.prepend('  ')
         end
       end
     end

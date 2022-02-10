@@ -133,5 +133,23 @@ RSpec.describe Yalphabetize::SequenceIndenter do
         expect(subject).to eq yaml
       end
     end
+
+    context 'when sequence contains double backslash characters' do
+      let(:yaml) do
+        <<~YAML
+          some_regexps:
+          - "[A-Za-z0-9áÁóÓúÚíÍéÉ\\\\/\\\\-'\\\\s]+"
+          - "(0|([1-9]{1}[0-9]{0,9}))(\\\\.[0-9]{1,2})?$"
+        YAML
+      end
+
+      it 'indents the sequence while preserving the backslashes' do
+        expect(subject).to eq(<<~YAML)
+          some_regexps:
+            - "[A-Za-z0-9áÁóÓúÚíÍéÉ\\\\/\\\\-'\\\\s]+"
+            - "(0|([1-9]{1}[0-9]{0,9}))(\\\\.[0-9]{1,2})?$"
+        YAML
+      end
+    end
   end
 end
