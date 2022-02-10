@@ -1,10 +1,13 @@
 name: Publish to RubyGems
 on:
-  release:
-    types: ['published']
+  workflow_run:
+    workflows: ['Publish Release']
+    types: [completed]
+    branches: [main]
 jobs:
   build:
     name: Build + Publish
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       packages: write

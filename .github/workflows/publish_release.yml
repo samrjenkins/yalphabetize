@@ -1,0 +1,23 @@
+name: Publish Release
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+jobs:
+  publish_release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - run: bundle install
+      - id: published_version
+        run: echo ::set-output name=published_version::$(gem list yalphabetize --remote | tail -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
+      - id: bundled_version
+        run: echo ::set-output name=bundled_version::$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
+      - name: Publish release
+        if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
+        uses: softprops/action-gh-release@v1
