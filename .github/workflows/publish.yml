@@ -19,12 +19,12 @@ jobs:
       - id: bundled_version
         run: echo ::set-output name=bundled_version::$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
       - name: Publish release
-        if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
+        if: ${{ steps.published_version.outputs.published_version < steps.bundled_version.outputs.bundled_version }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.bundled_version.bundled_version }}
+          tag_name: v${{ steps.bundled_version.outputs.bundled_version }}
       - name: Publish to RubyGems
-        if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
+        if: ${{ steps.published_version.outputs.published_version < steps.bundled_version.outputs.bundled_version }}
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
