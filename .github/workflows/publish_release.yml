@@ -21,3 +21,5 @@ jobs:
       - name: Publish release
         if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
         uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.bundled_version.bundled_version }}
