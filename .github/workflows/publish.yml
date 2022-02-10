@@ -21,3 +21,16 @@ jobs:
       - name: Publish release
         if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
         uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.bundled_version.bundled_version }}
+      - name: Publish to RubyGems
+        if: ${{ steps.published_version.published_version < steps.bundled_version.bundled_version }}
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem build *.gemspec
+          gem push *.gem
+        env:
+          GEM_HOST_API_KEY: "${{secrets.RUBYGEMS_AUTH_TOKEN}}"
