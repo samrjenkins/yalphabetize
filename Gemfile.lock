@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yalphabetize (0.6.0)
+    yalphabetize (0.6.1)
 
 GEM
   remote: https://rubygems.org/
@@ -59,6 +59,8 @@ GEM
     rubocop-performance (1.13.2)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
+    rubocop-rspec (2.8.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     simplecov (0.21.2)
       docile (~> 1.1)
@@ -82,6 +84,7 @@ DEPENDENCIES
   rspec
   rubocop
   rubocop-performance
+  rubocop-rspec
   simplecov
   yalphabetize!
 
