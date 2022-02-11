@@ -3,16 +3,38 @@
 module Yalphabetize
   module OrderCheckers
     class Base
-      def self.new_for(node)
-        node_keys = node.children.select.each_with_index do |_, i|
-          i.even?
-        end.map(&:value)
+      class << self
+        def new_for(node)
+          node_keys = keys_for(node)
 
-        matched_allowed_order = Yalphabetize.config['allowed_orders']&.find do |allowed_order|
-          (node_keys - allowed_order).empty?
+          if matched_allowed_order(node_keys)
+            Custom.new matched_allowed_order(node_keys)
+          elsif matched_allowed_patterns_order(node_keys)
+            CustomPattern.new matched_allowed_patterns_order(node_keys)
+          else
+            new
+          end
         end
 
-        matched_allowed_order ? Custom.new(matched_allowed_order) : new
+        private
+
+        def matched_allowed_order(node_keys)
+          Yalphabetize.config['allowed_orders']&.find do |allowed_order|
+            (node_keys - allowed_order).empty?
+          end
+        end
+
+        def matched_allowed_patterns_order(node_keys)
+          Yalphabetize.config['allowed_patterns_orders']&.find do |allowed_patterns_order|
+            node_keys.grep_v(/#{allowed_patterns_order.join('|')}/).empty?
+          end
+        end
+
+        def keys_for(node)
+          node.children.select.each_with_index do |_, i|
+            i.even?
+          end.map(&:value)
+        end
       end
 
       def ordered?(string, other_string)
