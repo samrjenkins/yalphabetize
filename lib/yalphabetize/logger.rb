@@ -15,13 +15,13 @@ module Yalphabetize
     end
 
     def log_offence(file_path)
-      @inspected_count += 1
+      self.inspected_count += 1
       offences[file_path] = :detected
       output.print red 'O'
     end
 
     def log_no_offence
-      @inspected_count += 1
+      self.inspected_count += 1
       output.print green '.'
     end
 
@@ -45,7 +45,8 @@ module Yalphabetize
 
     private
 
-    attr_reader :offences, :inspected_count, :output
+    attr_reader :offences, :output
+    attr_accessor :inspected_count
 
     def puts_offence(file_path, status)
       case status
@@ -57,11 +58,7 @@ module Yalphabetize
     end
 
     def list_offences_color
-      if offences?
-        :red
-      else
-        :green
-      end
+      offences? ? :red : :green
     end
 
     def red(string)
