@@ -20,7 +20,7 @@ module Yalphabetize
     attr_reader :stream_node, :path
 
     def new_file_content
-      @_new_file_content ||= stream_node.to_yaml(nil, line_width: MAX_LINE_WIDTH)
+      @_new_file_content ||= Psych::Comments.emit_yaml stream_node
     end
 
     def indent_sequences

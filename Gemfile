@@ -6,6 +6,7 @@ gemspec
 
 gem 'factory_bot'
 gem 'pry'
+gem 'psych-comments', git: 'https://github.com/boblail/psych-comments', branch: 'line-end-comments'
 gem 'rspec'
 gem 'rubocop'
 gem 'rubocop-performance'
