@@ -7,7 +7,7 @@ module Helpers
     file_path = File.expand_path("spec/tmp/#{file_path}")
 
     dir_path = File.dirname(file_path)
-    FileUtils.makedirs dir_path unless File.exist?(dir_path)
+    FileUtils.makedirs dir_path
 
     File.open(file_path, 'w') do |file|
       file.puts content

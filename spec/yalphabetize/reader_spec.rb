@@ -27,7 +27,7 @@ RSpec.describe Yalphabetize::Reader do
       it do
         expect { subject }.to raise_error(
           Yalphabetize::ParsingError,
-          "(#{file_path}): found character that cannot start any "\
+          "(#{file_path}): found character that cannot start any " \
           'token while scanning for the next token at line 1 column 9'
         )
       end
