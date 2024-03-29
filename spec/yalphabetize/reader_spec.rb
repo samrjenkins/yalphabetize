@@ -10,7 +10,7 @@ RSpec.describe Yalphabetize::Reader do
 
     it 'opens and parses the file' do
       expect(File).to receive(:read).with(file_path).and_return('the_file')
-      expect(Psych).to receive(:parse_stream).with('the_file').and_return('the_parsed_file')
+      expect(Psych::Comments).to receive(:parse_stream).with('the_file').and_return('the_parsed_file')
 
       expect(subject).to eq 'the_parsed_file'
     end
