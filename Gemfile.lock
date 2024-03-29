@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yalphabetize (0.6.2)
+    yalphabetize (0.7.0)
 
 GEM
   remote: https://rubygems.org/
