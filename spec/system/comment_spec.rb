@@ -66,4 +66,32 @@ RSpec.describe 'comment' do
       # comment
     YAML
   end
+
+  it 'correctly preserves comments in a more complex reordering case' do
+      expect_offence(<<~YAML)
+        # comment3
+        Bananas: 'string # not a comment2' # comment4
+        # comment1
+        Apples: string# not a comment1 # comment2
+        Clementines: | # comment5
+          string # not a comment3
+          # not a comment4
+          hi # not a comment5
+          # not a comment6
+        #comment6
+      YAML
+
+      expect_reordering(<<~YAML)
+        # comment1
+        Apples: string# not a comment1 # comment2
+        # comment3
+        Bananas: 'string # not a comment2' # comment4
+        Clementines: | # comment5
+          string # not a comment3
+          # not a comment4
+          hi # not a comment5
+          # not a comment6
+        #comment6
+      YAML
+    end
 end
