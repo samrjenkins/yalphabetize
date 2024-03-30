@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows, macos, ubuntu ]
-        ruby: [ '3.0', '3.1', '3.2', '3.3', 'head' ]
+        ruby: [ '3.1', '3.2', '3.3', 'head' ]
     steps:
       - name: windows misc
         if: matrix.os == 'windows'
@@ -25,13 +25,12 @@ jobs:
           echo "TMPDIR=$env:RUNNER_TEMP" >> $GITHUB_ENV
           git config --system core.autocrlf false
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: install dependencies
-        run:  bundle install --jobs 3 --retry 3
+          bundler-cache: true
       - name: spec
         run:  bundle exec rspec
       - name: rubocop

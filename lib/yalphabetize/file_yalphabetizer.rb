@@ -33,11 +33,11 @@ module Yalphabetize
     end
 
     def offences?
-      offence_detector_class.new(stream_node, order_checker_class: order_checker_class).offences?
+      offence_detector_class.new(stream_node, order_checker_class:).offences?
     end
 
     def alphabetize
-      alphabetizer_class.new(stream_node, order_checker_class: order_checker_class).call
+      alphabetizer_class.new(stream_node, order_checker_class:).call
     end
 
     def handle_aliases
