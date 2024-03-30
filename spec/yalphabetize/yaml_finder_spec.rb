@@ -2,7 +2,7 @@
 
 RSpec.describe Yalphabetize::YamlFinder do
   describe '.paths' do
-    subject { described_class.paths(only: only, exclude: exclude) }
+    subject { described_class.paths(only:, exclude:) }
 
     before do
       create_empty_file('yml_in_top_dir.yml')

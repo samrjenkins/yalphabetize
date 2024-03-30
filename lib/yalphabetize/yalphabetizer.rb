@@ -32,13 +32,13 @@ module Yalphabetize
     def process_file(file_path)
       file_yalphabetizer_class.new(
         file_path,
-        reader_class: reader_class,
-        offence_detector_class: offence_detector_class,
-        logger: logger,
+        reader_class:,
+        offence_detector_class:,
+        logger:,
         autocorrect: options[:autocorrect],
-        alphabetizer_class: alphabetizer_class,
-        writer_class: writer_class,
-        order_checker_class: order_checker_class
+        alphabetizer_class:,
+        writer_class:,
+        order_checker_class:
       ).call
     end
 
