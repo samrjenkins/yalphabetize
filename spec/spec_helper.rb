@@ -127,7 +127,7 @@ RSpec.configure do |config|
   config.after { FileUtils.remove_dir('spec/tmp', true) }
 
   require 'factory_bot'
-  require 'pry'
+  require 'debug'
 
   config.include FactoryBot::Syntax::Methods
 
