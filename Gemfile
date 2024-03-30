@@ -6,6 +6,7 @@ gemspec
 
 gem 'factory_bot'
 gem 'pry'
+gem 'rake'
 gem 'rspec'
 gem 'rubocop'
 gem 'rubocop-performance'
