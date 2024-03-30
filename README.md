@@ -183,6 +183,52 @@ numbers_extended:
   zero: 0
 ```
 
+## Handling YAML comments
+
+Yalphabetize will preserve all YAML comments which start on their own line. Yaml will not preserve inline comments (see
+[known issues](#known-issues)). When Yalphabetize autocorrects the ordering of a YAML file, comments will be reordered
+with the YAML line immediately following them. For example:
+```yml
+# Bananas are long
+bananas: 2
+# Apples are round
+apples: 1
+```
+becomes
+```yml
+# Apples are round
+apples: 1
+# Bananas are long
+bananas: 2
+```
+Comments at the end of a YAML document remain at the end of the document. For example:
+```yml
+bananas: 2
+apples: 1
+# This comment is at the end
+```
+becomes
+```yml
+apples: 1
+bananas: 2
+# This comment is at the end
+```
+To ensure comments remain at the top of a YAML file, they should be placed before the start of the YAML document. For
+example:
+```yml
+# This comment is at the start
+---
+bananas: 2
+apples: 1
+```
+becomes
+```yml
+# This comment is at the start
+---
+apples: 1
+bananas: 2
+```
+
 ## Adding yalphabetize to your project's CI
 
 Yalphabetize is a great addition to any linting you might currently perform as part of CI. The `yalphabetize` executable
@@ -209,8 +255,9 @@ We currently support:
 - MRI 3.1 - 3.3
 
 ## Known issues
-- Yalphabetize cannot currently preserve comments while automatically alphabetising a YAML file. Comments will have to
-be replaced after the alphabetisation.
+- Yalphabetize cannot currently preserve inline comments while automatically alphabetising a YAML file. We recommend
+that you refactor any inline comments onto their own line. Otherwise, any inline comments will have to be replaced after
+alphabetisation.
 
 ## Contribute
 
