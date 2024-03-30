@@ -9,7 +9,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
@@ -20,7 +20,7 @@ jobs:
         run: echo ::set-output name=bundled_version::$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
       - name: Publish release
         if: ${{ steps.published_version.outputs.published_version < steps.bundled_version.outputs.bundled_version }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.bundled_version.outputs.bundled_version }}
       - name: Publish to RubyGems
