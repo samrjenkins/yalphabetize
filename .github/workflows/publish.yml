@@ -13,7 +13,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
-      - run: bundle install
+          bundler-cache: true
       - id: published_version
         run: echo ::set-output name=published_version::$(gem list yalphabetize --remote | tail -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
       - id: bundled_version
