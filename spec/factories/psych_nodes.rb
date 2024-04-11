@@ -16,7 +16,7 @@ FactoryBot.define do
     factory :document_node, class: 'Psych::Nodes::Document'
     factory :mapping_node, class: 'Psych::Nodes::Mapping'
     factory :scalar_node, class: 'Psych::Nodes::Scalar' do
-      initialize_with { new(value) }
+      initialize_with { new(value, nil, nil, true, false, 1) }
     end
     factory :alias_node, class: 'Psych::Nodes::Alias' do
       initialize_with { new(anchor) }
