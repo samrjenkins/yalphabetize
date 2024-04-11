@@ -28,5 +28,6 @@ RSpec/StubbedMock:
 Style/Documentation:
   Enabled: false
 require:
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rspec
