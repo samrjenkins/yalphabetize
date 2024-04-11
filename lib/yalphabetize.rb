@@ -28,7 +28,8 @@ module Yalphabetize
       'indent_sequences' => true,
       'exclude' => [],
       'only' => [],
-      'sort_by' => 'ABab'
+      'sort_by' => 'ABab',
+      'preserve_comments' => true
     }.freeze
 
     def config
