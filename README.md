@@ -183,11 +183,18 @@ numbers_extended:
   zero: 0
 ```
 
-## Handling YAML comments
+### preserve_comments
 
-Yalphabetize will preserve all YAML comments which start on their own line. Yaml will not preserve inline comments (see
-[known issues](#known-issues)). When Yalphabetize autocorrects the ordering of a YAML file, comments will be reordered
-with the YAML line immediately following them. For example:
+Yalphabetize will preserve all YAML comments which start on their own line. This is an experiemental feature which can
+be disabled via `preserve_comments`:
+```yml
+preserve_comments: false
+```
+
+**Please note:** Yalphabetize will not preserve inline/line-end comments (see [known issues](#known-issues)).
+
+When Yalphabetize autocorrects the
+ordering of a YAML file, comments will be reordered with the YAML line immediately following them. For example:
 ```yml
 # Bananas are long
 bananas: 2
