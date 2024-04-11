@@ -14,7 +14,7 @@ Metrics/MethodLength:
 Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
 RSpec/ExampleLength:
-  CountAsOne: ['array', 'heredoc']
+  CountAsOne: ['method_call', 'heredoc']
 RSpec/MessageSpies:
   EnforcedStyle: receive
 RSpec/MultipleExpectations:
