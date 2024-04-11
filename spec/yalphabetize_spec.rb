@@ -9,7 +9,8 @@ RSpec.describe Yalphabetize do
         'indent_sequences' => true,
         'exclude' => [],
         'only' => [],
-        'sort_by' => 'ABab'
+        'sort_by' => 'ABab',
+        'preserve_comments' => true
       }
     end
 

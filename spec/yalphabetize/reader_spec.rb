@@ -8,11 +8,26 @@ RSpec.describe Yalphabetize::Reader do
 
     it { is_expected.to be_a Psych::Nodes::Stream }
 
-    it 'opens and parses the file' do
-      expect(File).to receive(:read).with(file_path).and_return('the_file')
-      expect(Psych::Comments).to receive(:parse_stream).with('the_file').and_return('the_parsed_file')
+    context 'when preserve_comments is enabled' do
+      include_context 'with configuration', 'preserve_comments' => true
 
-      expect(subject).to eq 'the_parsed_file'
+      it 'opens and parses the file' do
+        expect(File).to receive(:read).with(file_path).and_return('the_file')
+        expect(Psych::Comments).to receive(:parse_stream).with('the_file').and_return('the_parsed_file_with_comments')
+
+        expect(subject).to eq 'the_parsed_file_with_comments'
+      end
+    end
+
+    context 'when preserve_comments is disabled' do
+      include_context 'with configuration', 'preserve_comments' => false
+
+      it 'opens and parses the file' do
+        expect(File).to receive(:read).with(file_path).and_return('the_file')
+        expect(Psych).to receive(:parse_stream).with('the_file').and_return('the_parsed_file_without_comments')
+
+        expect(subject).to eq 'the_parsed_file_without_comments'
+      end
     end
 
     context 'when yaml contains parseable i18n interpolations' do

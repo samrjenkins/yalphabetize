@@ -84,4 +84,24 @@ RSpec.describe 'comment' do
       # Comment 2
     YAML
   end
+
+  context 'when preserve_comments is disabled' do
+    include_context 'with configuration', 'preserve_comments' => false
+
+    it 'removes comments during autocorrect' do
+      expect_offence(<<~YAML)
+        # Bananas comment 1
+        # Bananas comment 2
+        Bananas: 2
+        # Apples comment 1
+        # Apples comment 2
+        Apples: 1
+      YAML
+
+      expect_reordering(<<~YAML)
+        Apples: 1
+        Bananas: 2
+      YAML
+    end
+  end
 end
