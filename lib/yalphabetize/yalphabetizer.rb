@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'parallel'
+
 module Yalphabetize
   class Yalphabetizer
     def self.call(args = [], options = {})
@@ -9,16 +11,19 @@ module Yalphabetize
     def initialize(args, options)
       @args = args
       @options = options
+      @offences = []
     end
 
     def call
       initial_log
       process_files
       final_log
+      offences.any? ? 1 : 0
     end
 
     private
 
+    attr_accessor :offences
     attr_reader :args, :options
 
     def initial_log
@@ -26,7 +31,16 @@ module Yalphabetize
     end
 
     def process_files
-      file_paths.each { |file_path| process_file(file_path) }
+      self.offences = Parallel.filter_map(
+        file_paths,
+        in_processes: 100,
+        finish: -> (item, i, result) { result ? logger.log_offence : logger.log_no_offence }
+      ) do |file_path|
+        file_result = process_file(file_path)
+        next if file_result.nil?
+
+        [file_path, file_result]
+      end
     end
 
     def process_file(file_path)
@@ -34,7 +48,6 @@ module Yalphabetize
         file_path,
         reader_class:,
         offence_detector_class:,
-        logger:,
         autocorrect: options[:autocorrect],
         alphabetizer_class:,
         writer_class:,
@@ -55,8 +68,7 @@ module Yalphabetize
     end
 
     def final_log
-      logger.final_summary
-      logger.offences? ? 1 : 0
+      logger.final_summary(file_paths.size, offences)
     end
 
     def reader_class

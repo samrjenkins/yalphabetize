@@ -12,5 +12,6 @@ Gem::Specification.new do |s|
   s.metadata = {
     'rubygems_mfa_required' => 'true'
   }
+  s.add_runtime_dependency 'parallel', '~> 1.24'
   s.add_runtime_dependency 'psych-comments'
 end
