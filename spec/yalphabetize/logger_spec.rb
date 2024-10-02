@@ -41,4 +41,31 @@ RSpec.describe Yalphabetize::Logger do
       end
     end
   end
+
+  describe '#uncorrected_offences?' do
+    before do
+      # silence offence output
+      allow($stdout).to receive(:write)
+    end
+
+    context 'when there is at least one uncorrected offence' do
+      subject do
+        logger.log_correction('corrected_dummy_path')
+        logger.log_offence('uncorrected_dummy_path')
+        logger.uncorrected_offences?
+      end
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when all offences have been corrected' do
+      subject do
+        logger.log_correction('correction_dummy_path1')
+        logger.log_correction('correction_dummy_path2')
+        logger.uncorrected_offences?
+      end
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end

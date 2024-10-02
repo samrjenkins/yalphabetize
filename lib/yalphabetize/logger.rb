@@ -39,6 +39,10 @@ module Yalphabetize
       @offences.any?
     end
 
+    def uncorrected_offences?
+      @offences.value?(:detected)
+    end
+
     def log_correction(file_path)
       offences[file_path] = :corrected
     end
