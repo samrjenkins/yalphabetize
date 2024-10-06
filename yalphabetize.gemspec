@@ -12,5 +12,5 @@ Gem::Specification.new do |s|
   s.metadata = {
     'rubygems_mfa_required' => 'true'
   }
-  s.add_runtime_dependency 'psych-comments'
+  s.add_dependency 'psych-comments'
 end
