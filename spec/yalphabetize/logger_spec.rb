@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Yalphabetize::Logger do
-  let(:logger) { described_class.new($stdout) }
+  let(:logger) { described_class.new }
 
   describe '#initial_summary' do
     subject { logger.initial_summary(%w[path1 path2 path3]) }
+
+    let(:logger) { described_class.new($stdout) }
 
     it 'logs the number of YAML files being inspected' do
       expect { subject }.to output("Inspecting 3 YAML files\n").to_stdout
@@ -13,6 +15,8 @@ RSpec.describe Yalphabetize::Logger do
 
   describe '#final_summary' do
     subject { logger.final_summary }
+
+    let(:logger) { described_class.new($stdout) }
 
     context 'when no offences have been detected' do
       it 'logs the expected output' do
@@ -43,11 +47,6 @@ RSpec.describe Yalphabetize::Logger do
   end
 
   describe '#uncorrected_offences?' do
-    before do
-      # silence offence output
-      allow($stdout).to receive(:write)
-    end
-
     context 'when there is at least one uncorrected offence' do
       subject do
         logger.log_correction('corrected_dummy_path')
