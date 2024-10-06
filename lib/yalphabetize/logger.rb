@@ -35,7 +35,6 @@ module Yalphabetize
       output.puts 'Offences can be automatically fixed with `-a` or `--autocorrect`'
     end
 
-
     def uncorrected_offences?
       @offences.value?(:detected)
     end
