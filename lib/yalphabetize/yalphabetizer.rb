@@ -56,7 +56,7 @@ module Yalphabetize
 
     def final_log
       logger.final_summary
-      logger.offences? ? 1 : 0
+      logger.uncorrected_offences? ? 1 : 0
     end
 
     def reader_class
