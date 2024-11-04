@@ -36,7 +36,7 @@ module Yalphabetize
     end
 
     def uncorrected_offences?
-      @offences.value?(:detected)
+      offences.value?(:detected)
     end
 
     def log_correction(file_path)
@@ -58,7 +58,7 @@ module Yalphabetize
     end
 
     def list_offences_color
-      uncorrected_offences? ? :red : :green
+      offences.any? ? :red : :green
     end
 
     def red(string)
