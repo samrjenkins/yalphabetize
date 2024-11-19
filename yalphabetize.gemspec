@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.metadata = {
     'rubygems_mfa_required' => 'true'
   }
-  s.add_runtime_dependency 'psych-comments'
+  s.add_dependency 'psych-comments'
   s.post_install_message = <<~MESSAGE
     yalphabetize 0.10.0 now supports YAML comments!
     For more info: https://github.com/samrjenkins/yalphabetize?tab=readme-ov-file#preserve_comments

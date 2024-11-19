@@ -30,13 +30,13 @@ module Yalphabetize
       output.puts send(list_offences_color, "Offences: #{offences.size}")
 
       offences.each { |file_path, status| puts_offence(file_path, status) }
-      return unless offences?
+      return unless uncorrected_offences?
 
       output.puts 'Offences can be automatically fixed with `-a` or `--autocorrect`'
     end
 
-    def offences?
-      @offences.any?
+    def uncorrected_offences?
+      offences.value?(:detected)
     end
 
     def log_correction(file_path)
@@ -58,7 +58,7 @@ module Yalphabetize
     end
 
     def list_offences_color
-      offences? ? :red : :green
+      offences.any? ? :red : :green
     end
 
     def red(string)
