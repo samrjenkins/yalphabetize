@@ -19,7 +19,7 @@ jobs:
       - id: bundled_version
         run: echo "BUNDLED_VERSION=$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)" >> $GITHUB_OUTPUT
       - name: Check if version has changed
-        uses: jackbilestech/semver-compare@1
+        uses: jackbilestech/semver-compare@1.0.4
         with:
           head: ${{ steps.bundled_version.outputs.BUNDLED_VERSION }}
           base: ${{ steps.published_version.outputs.PUBLISHED_VERSION }}
