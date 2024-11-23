@@ -18,13 +18,17 @@ jobs:
         run: echo "PUBLISHED_VERSION=$(gem list yalphabetize --remote | tail -n 1 | cut -d "(" -f2 | cut -d ")" -f1)" >> $GITHUB_OUTPUT
       - id: bundled_version
         run: echo "BUNDLED_VERSION=$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)" >> $GITHUB_OUTPUT
+      - name: Check if version has changed
+        uses: jackbilestech/semver-compare@1
+        with:
+          head: ${{ steps.bundled_version.outputs.BUNDLED_VERSION }}
+          base: ${{ steps.published_version.outputs.PUBLISHED_VERSION }}
+          operator: '>'
       - name: Publish release
-        if: ${{ steps.published_version.outputs.PUBLISHED_VERSION < steps.bundled_version.outputs.BUNDLED_VERSION }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.bundled_version.outputs.BUNDLED_VERSION }}
       - name: Publish to RubyGems
-        if: ${{ steps.published_version.outputs.PUBLISHED_VERSION < steps.bundled_version.outputs.BUNDLED_VERSION }}
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
