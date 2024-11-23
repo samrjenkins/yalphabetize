@@ -15,16 +15,16 @@ jobs:
           ruby-version: 3.1
           bundler-cache: true
       - id: published_version
-        run: echo ::set-output name=published_version::$(gem list yalphabetize --remote | tail -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
+        run: echo "PUBLISHED_VERSION=$(gem list yalphabetize --remote | tail -n 1 | cut -d "(" -f2 | cut -d ")" -f1)" >> $GITHUB_OUTPUT
       - id: bundled_version
-        run: echo ::set-output name=bundled_version::$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)
+        run: echo "BUNDLED_VERSION=$(bundle info yalphabetize | head -n 1 | cut -d "(" -f2 | cut -d ")" -f1)" >> $GITHUB_OUTPUT
       - name: Publish release
-        if: ${{ steps.published_version.outputs.published_version < steps.bundled_version.outputs.bundled_version }}
+        if: ${{ steps.published_version.outputs.PUBLISHED_VERSION < steps.bundled_version.outputs.BUNDLED_VERSION }}
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.bundled_version.outputs.bundled_version }}
+          tag_name: v${{ steps.bundled_version.outputs.BUNDLED_VERSION }}
       - name: Publish to RubyGems
-        if: ${{ steps.published_version.outputs.published_version < steps.bundled_version.outputs.bundled_version }}
+        if: ${{ steps.published_version.outputs.PUBLISHED_VERSION < steps.bundled_version.outputs.BUNDLED_VERSION }}
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
