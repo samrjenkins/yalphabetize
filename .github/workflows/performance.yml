@@ -1,0 +1,31 @@
+name: Performance
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        performance_test_args:
+          # Key length | File length | No of files | Iterations | Benchmark (s)
+          - 1            1             1             200          0.061
+          - 1            1             10000         20           0.57
+          - 1            100000        1             25           0.43
+          - 1            1000          1000          6            2.6
+          - 1024         1             1             200          0.062
+          - 1024         1             40000         10           2.4
+          - 1024         100000        1             10           1.1
+          - 1024         800           340           10           2.3
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: head
+          bundler-cache: true
+      - run: bundle exec bin/performance_test ${{ matrix.performance_test_args }}
