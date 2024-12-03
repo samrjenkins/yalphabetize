@@ -12,17 +12,19 @@ jobs:
       matrix:
         performance_test_args:
           # Key length | File length | No of files | Iterations | Benchmark (s)
-          - 1            1             1             1200         0.20
-          - 1            1             10000         220          1.1
-          - 1            100000        1             220          1.1
-          - 1            1000          1000          40           5.9
-          - 1024         1             1             1200         0.20
-          - 1024         1             40000         80           3.2
-          - 1024         100000        1             120          2.1
-          - 1024         800           340           60           4.1
+          - 1            1             1             120          0.20
+          - 1            1             10000         22           1.1
+          - 1            100000        1             22           1.1
+          - 1            1000          1000          4            5.9
+          - 1024         1             1             120          0.20
+          - 1024         1             40000         8            3.2
+          - 1024         100000        1             12           2.1
+          - 1024         800           340           6            4.1
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - name: set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -30,9 +32,6 @@ jobs:
           bundler-cache: true
       - run: bundle exec bin/performance_test ${{ matrix.performance_test_args }}
 
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
       - run: git checkout HEAD~
       - name: set up Ruby
         uses: ruby/setup-ruby@v1
