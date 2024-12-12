@@ -116,12 +116,12 @@ RSpec.configure do |config|
   end
 
   config.before do
-    stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object)
-  end
-
-  config.before do
     FileUtils.remove_dir('spec/tmp', true)
     Dir.mkdir('spec/tmp')
+  end
+
+  config.before do |example|
+    stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object) unless example.metadata[:enable_logging]
   end
 
   config.after { FileUtils.remove_dir('spec/tmp', true) }
