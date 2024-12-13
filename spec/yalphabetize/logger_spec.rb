@@ -6,7 +6,9 @@ RSpec.describe Yalphabetize::Logger do
   describe '#initial_summary' do
     subject { logger.initial_summary(%w[path1 path2 path3]) }
 
-    it 'logs the number of YAML files being inspected', :enable_logging do
+    let(:logger) { described_class.new($stdout) }
+
+    it 'logs the number of YAML files being inspected' do
       expect { subject }.to output("Inspecting 3 YAML files\n").to_stdout
     end
   end
@@ -14,8 +16,10 @@ RSpec.describe Yalphabetize::Logger do
   describe '#final_summary' do
     subject { logger.final_summary }
 
+    let(:logger) { described_class.new($stdout) }
+
     context 'when no offences have been detected' do
-      it 'logs the expected output', :enable_logging do
+      it 'logs the expected output' do
         expect { subject }.to output("\nInspected: 0\n\e[32mOffences: 0\e[0m\n").to_stdout
       end
     end
@@ -36,7 +40,7 @@ RSpec.describe Yalphabetize::Logger do
         STR
       end
 
-      it 'logs the expected output', :enable_logging do
+      it 'logs the expected output' do
         expect { subject }.to output(expected_output).to_stdout
       end
     end
