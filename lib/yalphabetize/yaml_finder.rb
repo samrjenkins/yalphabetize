@@ -25,7 +25,7 @@ module Yalphabetize
         process_paths(paths)
       end
 
-      files.flatten.select { |file| valid?(file) }.map { |f| File.expand_path(f) }.uniq
+      files.flatten.select { |file| valid?(file) }.uniq
     end
 
     private
@@ -56,7 +56,7 @@ module Yalphabetize
         '--exclude-standard', '--others', '--cached', '--modified'
       )
 
-      output.split("\0").uniq.map { |git_file| "#{Dir.pwd}/#{git_file}" } if status.success?
+      output.split("\0").uniq if status.success?
     end
 
     def valid?(path)
