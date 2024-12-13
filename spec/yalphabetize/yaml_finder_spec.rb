@@ -24,10 +24,10 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yml_in_sub_dir.yml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yml_in_sub_dir.yml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -39,8 +39,8 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory except those in excluded directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml'
             )
           end
         end
@@ -52,9 +52,9 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory excluding the one file' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -66,10 +66,10 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yml_in_sub_dir.yml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yml_in_sub_dir.yml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -81,8 +81,8 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory excluding those matching the glob' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -94,10 +94,10 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yml_in_sub_dir.yml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yml_in_sub_dir.yml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -109,10 +109,10 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('yml_in_top_dir.yml'),
-              File.expand_path('yaml_in_top_dir.yaml'),
-              File.expand_path('sub_dir/yml_in_sub_dir.yml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'yml_in_top_dir.yml',
+              'yaml_in_top_dir.yaml',
+              'sub_dir/yml_in_sub_dir.yml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -124,8 +124,8 @@ RSpec.describe Yalphabetize::YamlFinder do
         it 'lists all yaml files in working directory' do
           Dir.chdir('spec/tmp') do
             expect(subject).to contain_exactly(
-              File.expand_path('sub_dir/yml_in_sub_dir.yml'),
-              File.expand_path('sub_dir/yaml_in_sub_dir.yaml')
+              'sub_dir/yml_in_sub_dir.yml',
+              'sub_dir/yaml_in_sub_dir.yaml'
             )
           end
         end
@@ -137,8 +137,8 @@ RSpec.describe Yalphabetize::YamlFinder do
 
       it 'lists all yaml files in specified directory' do
         expect(subject).to contain_exactly(
-          File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml'),
-          File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')
+          'spec/tmp/sub_dir/yml_in_sub_dir.yml',
+          'spec/tmp/sub_dir/yaml_in_sub_dir.yaml'
         )
       end
 
@@ -146,7 +146,7 @@ RSpec.describe Yalphabetize::YamlFinder do
         let(:exclude) { ['spec/tmp/sub_dir/yml_in_sub_dir.yml'] }
 
         it 'lists all yaml files in specified directory excluding the specified file' do
-          expect(subject).to contain_exactly(File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml'))
+          expect(subject).to contain_exactly('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')
         end
       end
     end
@@ -155,7 +155,7 @@ RSpec.describe Yalphabetize::YamlFinder do
       let(:only) { ['spec/tmp/sub_dir/yml_in_sub_dir.yml'] }
 
       it 'lists only the specified file' do
-        expect(subject).to contain_exactly(File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml'))
+        expect(subject).to contain_exactly('spec/tmp/sub_dir/yml_in_sub_dir.yml')
       end
     end
 
@@ -172,9 +172,9 @@ RSpec.describe Yalphabetize::YamlFinder do
 
       it 'lists all specified yaml files and yaml files in specified directories' do
         expect(subject).to contain_exactly(
-          File.expand_path('spec/tmp/yml_in_top_dir.yml'),
-          File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml'),
-          File.expand_path('spec/tmp/sub_dir/yaml_in_sub_dir.yaml')
+          'spec/tmp/yml_in_top_dir.yml',
+          'spec/tmp/sub_dir/yml_in_sub_dir.yml',
+          'spec/tmp/sub_dir/yaml_in_sub_dir.yaml'
         )
       end
     end
@@ -184,8 +184,8 @@ RSpec.describe Yalphabetize::YamlFinder do
 
       it 'lists all matching files' do
         expect(subject).to contain_exactly(
-          File.expand_path('spec/tmp/yml_in_top_dir.yml'),
-          File.expand_path('spec/tmp/sub_dir/yml_in_sub_dir.yml')
+          'spec/tmp/yml_in_top_dir.yml',
+          'spec/tmp/sub_dir/yml_in_sub_dir.yml'
         )
       end
     end
