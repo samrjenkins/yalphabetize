@@ -2,36 +2,37 @@
 
 module Yalphabetize
   class Logger
-    DEFAULT_OUTPUT = Kernel
+    DEFAULT_OUTPUT = $stdout
 
-    def initialize
+    def initialize(output = DEFAULT_OUTPUT)
+      @output = output
       @inspected_count = 0
       @offences = {}
     end
 
     def initial_summary(file_paths)
-      DEFAULT_OUTPUT.puts "Inspecting #{file_paths.size} YAML files"
+      output.puts "Inspecting #{file_paths.size} YAML files"
     end
 
     def log_offence(file_path)
       self.inspected_count += 1
       offences[file_path] = :detected
-      DEFAULT_OUTPUT.print red 'O'
+      output.print red 'O'
     end
 
     def log_no_offence
       self.inspected_count += 1
-      DEFAULT_OUTPUT.print green '.'
+      output.print green '.'
     end
 
     def final_summary
-      DEFAULT_OUTPUT.puts "\nInspected: #{inspected_count}"
-      DEFAULT_OUTPUT.puts send(list_offences_color, "Offences: #{offences.size}")
+      output.puts "\nInspected: #{inspected_count}"
+      output.puts send(list_offences_color, "Offences: #{offences.size}")
 
       offences.each { |file_path, status| puts_offence(file_path, status) }
       return unless uncorrected_offences?
 
-      DEFAULT_OUTPUT.puts 'Offences can be automatically fixed with `-a` or `--autocorrect`'
+      output.puts 'Offences can be automatically fixed with `-a` or `--autocorrect`'
     end
 
     def uncorrected_offences?
@@ -44,15 +45,15 @@ module Yalphabetize
 
     private
 
-    attr_reader :offences
+    attr_reader :offences, :output
     attr_accessor :inspected_count
 
     def puts_offence(file_path, status)
       case status
       when :detected
-        DEFAULT_OUTPUT.puts yellow file_path
+        output.puts yellow file_path
       when :corrected
-        DEFAULT_OUTPUT.puts("#{yellow(file_path)} #{green('CORRECTED')}")
+        output.puts("#{yellow(file_path)} #{green('CORRECTED')}")
       end
     end
 
