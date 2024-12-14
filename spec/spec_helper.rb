@@ -115,8 +115,8 @@ RSpec.configure do |config|
     allow(File).to receive(:exist?).with('.yalphabetize.yml').and_return(false)
   end
 
-  config.before do
-    stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object)
+  config.before do |example|
+    stub_const('Yalphabetize::Logger::DEFAULT_OUTPUT', double.as_null_object) unless example.metadata[:enable_logging]
   end
 
   config.before do
