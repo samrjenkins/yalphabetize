@@ -1,3 +1,4 @@
 exclude:
   - .github/
+  - performance/
   - spec/fixtures/
