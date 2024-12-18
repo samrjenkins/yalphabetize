@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'benchmark'
+require 'fileutils'
+require 'securerandom'
+require 'yalphabetize'
+
+key_length = ARGV[0].to_i
+file_length = ARGV[1].to_i
+number_of_files = ARGV[2].to_i
+iterations = ARGV[3].to_i
+expected = ARGV[4].to_f
+
+def suppress_output
+  original_stdout = $stdout.clone
+  $stdout.reopen(File.new(File::NULL, 'w'))
+  yield
+ensure
+  $stdout.reopen(original_stdout)
+end
+
+puts "Running performance test:\n\n"
+puts "key_length: #{key_length}"
+puts "file_length: #{file_length}"
+puts "number_of_files: #{number_of_files}"
+puts "iterations: #{iterations}"
+puts "expected: #{expected}\n\n"
+
+fixtures_dir = "performance/fixtures/#{key_length}_#{file_length}_#{number_of_files}"
+
+if !Dir.exist?(fixtures_dir) && !ENV['CI']
+  FileUtils.makedirs(fixtures_dir)
+
+  number_of_files.times do |i|
+    yaml = ''
+    file_length.times do
+      yaml += "#{SecureRandom.alphanumeric(key_length)}: VALUE\n"
+    end
+
+    puts "#{i.fdiv(number_of_files) * 100}% of files written"
+
+    File.write("#{fixtures_dir}/#{i + 1}.yml", yaml)
+  end
+end
+
+if !Dir.exist?(fixtures_dir) && ENV['CI']
+  puts "Could not find fixtures directory #{fixtures_dir}"
+  exit 1
+end
+
+times = []
+
+suppress_output do
+  iterations.times do
+    times << Benchmark.measure do
+      Yalphabetize::CLI.call([fixtures_dir])
+    end.real
+  end
+end
+
+sorted_times = times.sort
+duration = times.sum
+p50 = sorted_times[iterations / 2]
+
+if p50 > expected
+  puts 'FAILED'
+  puts "Duration: #{duration}"
+  puts "P50: #{p50}"
+  exit 1
+else
+  puts "Duration: #{duration}"
+  puts "p50: #{p50}\n\n\n"
+end
