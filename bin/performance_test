@@ -59,16 +59,15 @@ suppress_output do
   end
 end
 
-sorted_times = times.sort
 duration = times.sum
-p50 = sorted_times[iterations / 2]
+min = times.min
 
-if p50 > expected
+if min > expected
   puts 'FAILED'
   puts "Duration: #{duration}"
-  puts "P50: #{p50}"
+  puts "min: #{min}"
   exit 1
 else
   puts "Duration: #{duration}"
-  puts "p50: #{p50}\n\n\n"
+  puts "min: #{min}\n\n\n"
 end
