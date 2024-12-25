@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 #                                Key length | File length | No of files | Iterations | Benchmark (s)
-bundle exec bin/performance_test 1            1             1             250          0.06   #&&
-bundle exec bin/performance_test 1            1             10000         50           0.41   #&&
-bundle exec bin/performance_test 1            100000        1             60           0.41   #&&
-bundle exec bin/performance_test 1            1000          1000          12           2.6    #&&
-bundle exec bin/performance_test 1024         1             1             250          0.06   #&&
-bundle exec bin/performance_test 1024         1             40000         12           1.9    #&&
-bundle exec bin/performance_test 1024         100000        1             30           1.1    #&&
-bundle exec bin/performance_test 1024         800           340           12           2.3
+bundle exec bin/performance_test 1            1             1             1000         0.06   #&&
+bundle exec bin/performance_test 1            1             10000         200          0.41   #&&
+bundle exec bin/performance_test 1            100000        1             250          0.41   #&&
+bundle exec bin/performance_test 1            1000          1000          50           2.6    #&&
+bundle exec bin/performance_test 1024         1             1             1000         0.06   #&&
+bundle exec bin/performance_test 1024         1             40000         50           1.9    #&&
+bundle exec bin/performance_test 1024         100000        1             100          1.1    #&&
+bundle exec bin/performance_test 1024         800           340           50           2.3
