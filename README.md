@@ -259,7 +259,7 @@ script:
 We aim for yalphabetize to be compatible with all actively maintained Ruby versions.
 
 We currently support:
-- MRI 3.1 - 3.3
+- MRI 3.1 - 3.4
 
 ## Known issues
 - Yalphabetize cannot currently preserve inline comments while automatically alphabetising a YAML file. We recommend
