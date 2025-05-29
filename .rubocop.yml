@@ -1,6 +1,6 @@
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
 Gemspec/RequiredRubyVersion:
   Enabled: false
 Layout/EndOfLine:
@@ -27,7 +27,7 @@ RSpec/StubbedMock:
   Enabled: false
 Style/Documentation:
   Enabled: false
-require:
+plugins:
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rspec
