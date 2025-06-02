@@ -33,7 +33,7 @@ GEM
     diff-lcs (1.6.2)
     docile (1.4.0)
     drb (2.2.3)
-    factory_bot (6.5.2)
+    factory_bot (6.5.3)
       activesupport (>= 6.1.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
