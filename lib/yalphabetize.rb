@@ -13,6 +13,7 @@ require_relative 'yalphabetize/order_checkers/alphabetical_then_capitalized_last
 require_relative 'yalphabetize/order_checkers/capitalized_last_then_alphabetical'
 require_relative 'yalphabetize/order_checkers/capitalized_first_then_alphabetical'
 require_relative 'yalphabetize/order_checkers/custom'
+require_relative 'yalphabetize/order_checkers/custom_pattern'
 require_relative 'yalphabetize/order_checkers'
 require_relative 'yalphabetize/parsing_error'
 require_relative 'yalphabetize/reader'
