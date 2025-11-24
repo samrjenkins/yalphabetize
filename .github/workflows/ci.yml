@@ -25,7 +25,7 @@ jobs:
           echo "TMPDIR=$env:RUNNER_TEMP" >> $GITHUB_ENV
           git config --system core.autocrlf false
       - name: checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: set up Ruby
         uses: ruby/setup-ruby@v1
         with:
