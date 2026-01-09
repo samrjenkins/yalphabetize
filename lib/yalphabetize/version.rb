@@ -2,6 +2,6 @@
 
 module Yalphabetize
   class Version
-    STRING = '0.11.0'
+    STRING = '0.12.0'
   end
 end
