@@ -4,6 +4,14 @@ RSpec.describe Yalphabetize::OptionParser do
   describe '.parse!' do
     subject { described_class.parse!(argv) }
 
+    let(:expected_usage_message) do
+      <<~STRING
+        Usage: yalphabetize [options] [file1, file2, ...]
+            -a, --autocorrect                Automatically alphabetize inspected yaml files
+            -h, --help                       Prints this help
+      STRING
+    end
+
     context 'when no options provided' do
       let(:argv) { %w[foo bar baz] }
 
@@ -13,30 +21,18 @@ RSpec.describe Yalphabetize::OptionParser do
     context 'when -h option provided' do
       let(:argv) { ['-h'] }
 
-      expected = <<~STRING
-        Usage: yalphabetize [options] [file1, file2, ...]
-            -a, --autocorrect                Automatically alphabetize inspected yaml files
-            -h, --help                       Prints this help
-      STRING
-
       it do
         expect(Kernel).to receive(:exit)
-        expect { subject }.to output(expected).to_stdout
+        expect { subject }.to output(expected_usage_message).to_stdout
       end
     end
 
     context 'when --help option provided' do
       let(:argv) { ['--help'] }
 
-      expected = <<~STRING
-        Usage: yalphabetize [options] [file1, file2, ...]
-            -a, --autocorrect                Automatically alphabetize inspected yaml files
-            -h, --help                       Prints this help
-      STRING
-
       it do
         expect(Kernel).to receive(:exit)
-        expect { subject }.to output(expected).to_stdout
+        expect { subject }.to output(expected_usage_message).to_stdout
       end
     end
 
