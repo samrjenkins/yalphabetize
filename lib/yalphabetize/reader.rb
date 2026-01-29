@@ -7,6 +7,7 @@ module Yalphabetize
   class Reader
     def initialize(path)
       @path = path
+      @handler = handler
     end
 
     def to_ast
@@ -15,14 +16,15 @@ module Yalphabetize
 
     private
 
-    attr_reader :path
+    attr_reader :path, :handler
 
     def file
       @_file ||= File.read(path)
     end
 
     def stream_node
-      parser = parser_class.new(Psych::TreeBuilder.new)
+      handler = Yalphabetize::Handler.new
+      parser = parser_class.new(handler)
       parser.parse(file)
 
       @_stream_node ||= parser.handler.root
