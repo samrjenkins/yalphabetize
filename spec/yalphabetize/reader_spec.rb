@@ -2,8 +2,10 @@
 
 RSpec.describe Yalphabetize::Reader do
   describe '#to_ast' do
-    subject { described_class.new(file_path).to_ast }
+    subject { described_class.new(file_path, handler).to_ast }
 
+    let(:order_checker_class) { Yalphabetize::OrderCheckers::CapitalizedFirstThenAlphabetical }
+    let(:handler) { Yalphabetize::Handler.new(order_checker_class) }
     let(:file_path) { 'spec/fixtures/comment.yml' }
 
     it { is_expected.to be_a Psych::Nodes::Stream }

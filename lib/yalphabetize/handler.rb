@@ -5,7 +5,6 @@ module Yalphabetize
     def initialize(order_checker_class)
       super()
       @order_checker_class = order_checker_class
-      @duplicates = []
       @offences = false
     end
 
@@ -20,12 +19,13 @@ module Yalphabetize
 
     private
 
-    attr_reader :order_checker_class, :offences, :last
+    attr_reader :order_checker_class, :last
+    attr_accessor :offences
 
     def check_offences
       return if offences?
 
-      @offences = true unless alphabetized_children?(last)
+      self.offences = true unless alphabetized_children?(last)
     end
 
     def alphabetized_children?(node)
@@ -33,17 +33,6 @@ module Yalphabetize
 
       node.children.each_slice(2).each_cons(2).all? do |a, b|
         order_checker.ordered?(a.first.value, b.first.value)
-      end
-    end
-
-    def check_duplicates
-      tally = {}
-
-      last.children.each_slice(2) do |key_node, _value_node|
-        key = key_node.value
-        duplicates << key if tally[key]
-
-        tally[key] = true
       end
     end
   end
