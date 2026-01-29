@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'psych/comments/parser'
 require_relative 'yalphabetize/aliaser'
 require_relative 'yalphabetize/alphabetizer'
 require_relative 'yalphabetize/cli'

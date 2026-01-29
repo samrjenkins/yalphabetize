@@ -22,7 +22,10 @@ module Yalphabetize
     end
 
     def stream_node
-      @_stream_node ||= parser_class.parse_stream file
+      parser = parser_class.new(Psych::TreeBuilder.new)
+      parser.parse(file)
+
+      @_stream_node ||= parser.handler.root
     rescue Psych::SyntaxError => e
       raise Yalphabetize::ParsingError.new(
         path,
@@ -36,9 +39,9 @@ module Yalphabetize
 
     def parser_class
       if Yalphabetize.config['preserve_comments']
-        Psych::Comments
+        Psych::Comments::Parser
       else
-        Psych
+        Psych::Parser
       end
     end
   end

@@ -4,29 +4,23 @@ RSpec.describe Yalphabetize::Reader do
   describe '#to_ast' do
     subject { described_class.new(file_path).to_ast }
 
-    let(:file_path) { 'spec/fixtures/empty.yml' }
+    let(:file_path) { 'spec/fixtures/comment.yml' }
 
     it { is_expected.to be_a Psych::Nodes::Stream }
 
     context 'when preserve_comments is enabled' do
       include_context 'with configuration', 'preserve_comments' => true
 
-      it 'opens and parses the file' do
-        expect(File).to receive(:read).with(file_path).and_return('the_file')
-        expect(Psych::Comments).to receive(:parse_stream).with('the_file').and_return('the_parsed_file_with_comments')
-
-        expect(subject).to eq 'the_parsed_file_with_comments'
+      it 'parses the file with comments' do
+        expect(subject).to be_a(Psych::Nodes::Stream).and have_attributes(trailing_comments: ['# comment'], leading_comments: [])
       end
     end
 
     context 'when preserve_comments is disabled' do
       include_context 'with configuration', 'preserve_comments' => false
 
-      it 'opens and parses the file' do
-        expect(File).to receive(:read).with(file_path).and_return('the_file')
-        expect(Psych).to receive(:parse_stream).with('the_file').and_return('the_parsed_file_without_comments')
-
-        expect(subject).to eq 'the_parsed_file_without_comments'
+      it 'parses the file without comments' do
+        expect(subject).to be_a(Psych::Nodes::Stream).and have_attributes(trailing_comments: [], leading_comments: [])
       end
     end
 
