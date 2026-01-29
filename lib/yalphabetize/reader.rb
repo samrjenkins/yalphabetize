@@ -5,7 +5,7 @@ require 'psych/comments'
 
 module Yalphabetize
   class Reader
-    def initialize(path)
+    def initialize(path, handler)
       @path = path
       @handler = handler
     end
@@ -23,7 +23,6 @@ module Yalphabetize
     end
 
     def stream_node
-      handler = Yalphabetize::Handler.new
       parser = parser_class.new(handler)
       parser.parse(file)
 

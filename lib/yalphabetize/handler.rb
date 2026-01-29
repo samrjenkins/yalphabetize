@@ -2,24 +2,49 @@
 
 module Yalphabetize
   class Handler < Psych::TreeBuilder
-    def initialize
-      super
+    def initialize(order_checker_class)
+      super()
+      @order_checker_class = order_checker_class
       @duplicates = []
+      @offences = false
     end
 
-    attr_reader :duplicates
+    def offences?
+      offences
+    end
 
     def end_mapping
+      check_offences
+      super
+    end
+
+    private
+
+    attr_reader :order_checker_class, :offences, :last
+
+    def check_offences
+      return if offences?
+
+      @offences = true unless alphabetized_children?(last)
+    end
+
+    def alphabetized_children?(node)
+      order_checker = order_checker_class.new_for(node)
+
+      node.children.each_slice(2).each_cons(2).all? do |a, b|
+        order_checker.ordered?(a.first.value, b.first.value)
+      end
+    end
+
+    def check_duplicates
       tally = {}
 
-      @last.children.each_slice(2) do |key_node, _value_node|
+      last.children.each_slice(2) do |key_node, _value_node|
         key = key_node.value
         duplicates << key if tally[key]
 
         tally[key] = true
       end
-
-      super
     end
   end
 end
