@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'psych/comments'
+
 module Yalphabetize
   class Writer
     MAX_LINE_WIDTH = -1
