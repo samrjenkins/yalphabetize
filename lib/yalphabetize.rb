@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'psych/comments/parser'
 require_relative 'yalphabetize/aliaser'
 require_relative 'yalphabetize/alphabetizer'
 require_relative 'yalphabetize/cli'
+require_relative 'yalphabetize/comment_extractor'
 require_relative 'yalphabetize/file_yalphabetizer'
 require_relative 'yalphabetize/handler'
 require_relative 'yalphabetize/logger'
@@ -44,5 +44,15 @@ module Yalphabetize
         DEFAULT_CONFIG.merge(specified)
       end
     end
+  end
+end
+
+class Psych::Nodes::Node
+  def leading_comments
+    @leading_comments ||= []
+  end
+
+  def trailing_comments
+    @trailing_comments ||= []
   end
 end

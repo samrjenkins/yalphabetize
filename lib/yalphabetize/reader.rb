@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'psych'
-require 'psych/comments'
 
 module Yalphabetize
   class Reader
@@ -23,7 +22,8 @@ module Yalphabetize
     end
 
     def stream_node
-      parser = parser_class.new(handler)
+      handler.comment_extractor = CommentExtractor.new(file) if preserve_comments?
+      parser = Psych::Parser.new(handler)
       parser.parse(file)
 
       @_stream_node ||= parser.handler.root
@@ -38,12 +38,8 @@ module Yalphabetize
       )
     end
 
-    def parser_class
-      if Yalphabetize.config['preserve_comments']
-        Psych::Comments::Parser
-      else
-        Psych::Parser
-      end
+    def preserve_comments?
+      Yalphabetize.config['preserve_comments']
     end
   end
 end
