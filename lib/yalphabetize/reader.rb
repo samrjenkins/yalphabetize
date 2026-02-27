@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'psych'
-require 'psych/comments'
 
 module Yalphabetize
   class Reader
-    def initialize(path)
+    def initialize(path, handler)
       @path = path
+      @handler = handler
     end
 
     def to_ast
@@ -15,14 +15,18 @@ module Yalphabetize
 
     private
 
-    attr_reader :path
+    attr_reader :path, :handler
 
     def file
       @_file ||= File.read(path)
     end
 
     def stream_node
-      @_stream_node ||= parser_class.parse_stream file
+      handler.comment_extractor = CommentExtractor.new(file) if preserve_comments?
+      parser = Psych::Parser.new(handler)
+      parser.parse(file)
+
+      @_stream_node ||= parser.handler.root
     rescue Psych::SyntaxError => e
       raise Yalphabetize::ParsingError.new(
         path,
@@ -34,12 +38,8 @@ module Yalphabetize
       )
     end
 
-    def parser_class
-      if Yalphabetize.config['preserve_comments']
-        Psych::Comments
-      else
-        Psych
-      end
+    def preserve_comments?
+      Yalphabetize.config['preserve_comments']
     end
   end
 end

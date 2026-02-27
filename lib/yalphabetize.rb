@@ -3,9 +3,10 @@
 require_relative 'yalphabetize/aliaser'
 require_relative 'yalphabetize/alphabetizer'
 require_relative 'yalphabetize/cli'
+require_relative 'yalphabetize/comment_extractor'
 require_relative 'yalphabetize/file_yalphabetizer'
+require_relative 'yalphabetize/handler'
 require_relative 'yalphabetize/logger'
-require_relative 'yalphabetize/offence_detector'
 require_relative 'yalphabetize/option_parser'
 require_relative 'yalphabetize/order_checkers/base'
 require_relative 'yalphabetize/order_checkers/alphabetical_then_capitalized_first'
@@ -43,5 +44,15 @@ module Yalphabetize
         DEFAULT_CONFIG.merge(specified)
       end
     end
+  end
+end
+
+class Psych::Nodes::Node
+  def leading_comments
+    @leading_comments ||= []
+  end
+
+  def trailing_comments
+    @trailing_comments ||= []
   end
 end
