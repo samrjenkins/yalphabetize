@@ -5,15 +5,16 @@ module Yalphabetize
     def initialize(file_path, **options)
       @file_path = file_path
       @reader_class = options[:reader_class]
-      @offence_detector_class = options[:offence_detector_class]
       @logger = options[:logger]
       @autocorrect = options[:autocorrect]
       @alphabetizer_class = options[:alphabetizer_class]
       @writer_class = options[:writer_class]
       @order_checker_class = options[:order_checker_class]
+      @handler = Handler.new(@order_checker_class)
     end
 
     def call
+      stream_node
       return logger.log_no_offence unless offences?
 
       logger.log_offence(file_path)
@@ -22,8 +23,8 @@ module Yalphabetize
 
     private
 
-    attr_reader :file_path, :reader_class, :offence_detector_class, :logger, :autocorrect,
-                :alphabetizer_class, :writer_class, :order_checker_class
+    attr_reader :file_path, :reader_class, :logger, :autocorrect,
+                :alphabetizer_class, :writer_class, :order_checker_class, :handler
 
     def autocorrect_file
       alphabetize
@@ -33,7 +34,7 @@ module Yalphabetize
     end
 
     def offences?
-      offence_detector_class.new(stream_node, order_checker_class:).offences?
+      @handler.offences?
     end
 
     def alphabetize
@@ -53,7 +54,7 @@ module Yalphabetize
     end
 
     def reader
-      @_reader ||= reader_class.new(file_path)
+      @_reader ||= reader_class.new(file_path, handler)
     end
 
     def stream_node

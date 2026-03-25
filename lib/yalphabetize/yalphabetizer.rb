@@ -33,7 +33,6 @@ module Yalphabetize
       file_yalphabetizer_class.new(
         file_path,
         reader_class:,
-        offence_detector_class:,
         logger:,
         autocorrect: options[:autocorrect],
         alphabetizer_class:,
@@ -73,10 +72,6 @@ module Yalphabetize
 
     def writer_class
       Yalphabetize::Writer
-    end
-
-    def offence_detector_class
-      Yalphabetize::OffenceDetector
     end
 
     def logger
