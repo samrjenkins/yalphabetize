@@ -36,8 +36,8 @@ GEM
     drb (2.2.3)
     erb (4.0.4.1)
       cgi (>= 0.3.3)
-    factory_bot (6.6.0)
-      activesupport (>= 6.1.0)
+    factory_bot (6.4.5)
+      activesupport (>= 5.0.0)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
@@ -133,7 +133,7 @@ PLATFORMS
 
 DEPENDENCIES
   debug
-  factory_bot
+  factory_bot (< 6.4.6)
   rspec
   rubocop
   rubocop-factory_bot

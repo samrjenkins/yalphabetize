@@ -173,7 +173,7 @@ numbers:
   one: 1
   two: 2
   three: 3
-numbers_extended: 
+numbers_extended:
 # The keys in this mapping do not match an allow order or a subset of an allowed order (notice the extra `zero` key
 # which does not appear in the allowed order of numbers).
 # They are ordered alphabetically.
@@ -259,7 +259,7 @@ script:
 We aim for yalphabetize to be compatible with all actively maintained Ruby versions.
 
 We currently support:
-- MRI 3.0 - 4.0
+- MRI 2.7 - 4.0
 
 ## Known issues
 - Yalphabetize cannot currently preserve inline comments while automatically alphabetising a YAML file. We recommend
