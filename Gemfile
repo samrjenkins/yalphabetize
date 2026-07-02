@@ -6,6 +6,7 @@ gemspec
 
 gem 'debug'
 gem 'factory_bot'
+gem 'parallel', '< 2'
 gem 'rspec'
 gem 'rubocop'
 gem 'rubocop-factory_bot'

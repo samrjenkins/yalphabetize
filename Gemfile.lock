@@ -141,6 +141,7 @@ PLATFORMS
 DEPENDENCIES
   debug
   factory_bot
+  parallel (< 2)
   rspec
   rubocop
   rubocop-factory_bot
