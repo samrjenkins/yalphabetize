@@ -133,7 +133,7 @@ PLATFORMS
 
 DEPENDENCIES
   debug
-  factory_bot (< 6.4.6)
+  factory_bot
   rspec
   rubocop
   rubocop-factory_bot
