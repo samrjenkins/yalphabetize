@@ -8,6 +8,7 @@ jobs:
   main:
     name: >-
       ${{ matrix.os }} ${{ matrix.ruby }}
+    continue-on-error: ${{ matrix.ruby == 'head' }}
     runs-on: ${{ matrix.os }}-latest
     env:
       # See https://github.com/tmm1/test-queue#environment-variables
