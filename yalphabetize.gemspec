@@ -16,5 +16,6 @@ Gem::Specification.new do |s|
     'source_code_uri' => "https://github.com/samrjenkins/yalphabetize/tree/v#{Yalphabetize::Version::STRING}",
     'rubygems_mfa_required' => 'true'
   }
+  s.required_ruby_version = '>= 2.7'
   s.add_dependency 'psych-comments'
 end
