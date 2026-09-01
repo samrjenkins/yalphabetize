@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['{bin,lib}/**/*']
   s.executables << 'yalphabetize'
   s.homepage = 'https://github.com/samrjenkins/yalphabetize'
+  s.license = 'MIT'
   s.metadata = {
     'bug_tracker_uri' => 'https://github.com/samrjenkins/yalphabetize/issues',
     'changelog_uri' => "https://github.com/samrjenkins/yalphabetize/releases/tag/v#{Yalphabetize::Version::STRING}",
