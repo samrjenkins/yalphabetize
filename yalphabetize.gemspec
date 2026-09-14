@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Yalphabetize::Version::STRING
   s.summary     = 'Alphabetize your YAML files'
   s.authors     = ['Sam Jenkins']
-  s.files       = Dir['{bin,lib}/**/*']
+  s.files       = Dir['{bin,lib}/**/*', 'LICENSE', 'README.md']
   s.executables << 'yalphabetize'
   s.homepage = 'https://github.com/samrjenkins/yalphabetize'
   s.license = 'MIT'
